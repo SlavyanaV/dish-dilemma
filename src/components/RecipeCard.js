@@ -1,20 +1,22 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Button } from '@mui/material';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import {
+  styled,
+  Card,
+  CardHeader,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Collapse,
+  Button,
+  IconButton,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from '@mui/material';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -43,7 +45,7 @@ export const RecipeCard = () => {
       />
       <CardMedia
         component="img"
-        height="400"
+        height="500"
         image="https://www.themealdb.com/images/media/meals/hglsbl1614346998.jpg"
         alt="Dish picture"
       />
@@ -66,7 +68,7 @@ export const RecipeCard = () => {
         </ExpandMore>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
+        <CardContent sx={{ maxWidth: 650 }}>
           <Typography paragraph>Ingredients:</Typography>
           <Table sx={{ minWidth: 650 }} aria-label="ingredients table">
             <TableHead>
@@ -98,7 +100,6 @@ export const RecipeCard = () => {
     </Card>
   );
 };
-
 
 // Mock data for recipe card
 const meals = [
