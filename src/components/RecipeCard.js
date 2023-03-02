@@ -1,0 +1,156 @@
+import * as React from 'react';
+import { styled } from '@mui/material/styles';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Collapse from '@mui/material/Collapse';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Button } from '@mui/material';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
+
+export const RecipeCard = () => {
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
+  return (
+    <Card sx={{ maxWidth: 700 }}>
+      <CardHeader
+        sx={{ textAlign: 'center' }}
+        title="Piri-piri chicken and slaw"
+        subheader="Portuguese"
+      />
+      <CardMedia
+        component="img"
+        height="400"
+        image="https://www.themealdb.com/images/media/meals/hglsbl1614346998.jpg"
+        alt="Dish picture"
+      />
+      <CardContent>
+        <Typography variant="body2" color="text.secondary">
+          This is your lucky recipe. If you want to try it, expand the details
+          to see ingredients and instructions.
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing>
+        <Button color="inherit">See another recipe</Button>
+        <Button color="inherit">See a list with recipes</Button>
+        <ExpandMore
+          expand={expanded}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
+        </ExpandMore>
+      </CardActions>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent>
+          <Typography paragraph>Ingredients:</Typography>
+          <Table sx={{ minWidth: 650 }} aria-label="ingredients table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Ingredient</TableCell>
+                <TableCell align="right">Measure</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>Chicken</TableCell>
+                <TableCell align="right">1.5kg</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Red Chilli</TableCell>
+                <TableCell align="right">3 chopped</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+
+          <Typography paragraph>Instructions:</Typography>
+          <Typography paragraph sx={{ textAlign: 'justify' }}>
+            {
+              'STEP 1\r\n\r\nWhizz together all of the marinade ingredients in a small food processor. Rub the marinade onto the chicken and leave for 1 hour at room temperature.\r\n\r\nSTEP 2\r\n\r\nHeat the oven to 190C/fan 170C/gas 5. Put the chicken in a roasting tray and cook for 1 hour 20 minutes. Rest under loose foil for 20 minutes. While the chicken is resting, mix together the slaw ingredients and season. Serve the chicken with slaw, fries and condiments.'
+            }
+          </Typography>
+        </CardContent>
+      </Collapse>
+    </Card>
+  );
+};
+
+
+// Mock data for recipe card
+const meals = [
+  {
+    idMeal: '53039',
+    strMeal: 'Piri-piri chicken and slaw',
+    strArea: 'Portuguese',
+    strInstructions:
+      'STEP 1\r\n\r\nWhizz together all of the marinade ingredients in a small food processor. Rub the marinade onto the chicken and leave for 1 hour at room temperature.\r\n\r\nSTEP 2\r\n\r\nHeat the oven to 190C/fan 170C/gas 5. Put the chicken in a roasting tray and cook for 1 hour 20 minutes. Rest under loose foil for 20 minutes. While the chicken is resting, mix together the slaw ingredients and season. Serve the chicken with slaw, fries and condiments.',
+    strMealThumb:
+      'https://www.themealdb.com/images/media/meals/hglsbl1614346998.jpg',
+    strIngredient1: 'Chicken',
+    strIngredient2: 'Red Chilli',
+    strIngredient3: 'Garlic',
+    strIngredient4: 'Ginger',
+    strIngredient5: 'Dried Oregano',
+    strIngredient6: 'Coriander',
+    strIngredient7: 'Paprika',
+    strIngredient8: 'Red Wine Vinegar',
+    strIngredient9: 'Oil',
+    strIngredient10: 'Red Onions',
+    strIngredient11: 'Carrots',
+    strIngredient12: 'Beetroot',
+    strIngredient13: 'Cabbage',
+    strIngredient14: 'Mayonnaise',
+    strIngredient15: 'Greek Yogurt',
+    strIngredient16: 'Red Wine Vinegar',
+    strIngredient17: 'Cumin Seeds',
+    strIngredient18: '',
+    strIngredient19: '',
+    strIngredient20: '',
+    strMeasure1: '1.5kg',
+    strMeasure2: '3 chopped',
+    strMeasure3: '2 cloves',
+    strMeasure4: '1 tsp ',
+    strMeasure5: '1 tsp ',
+    strMeasure6: '1 tsp ',
+    strMeasure7: '1 tsp ',
+    strMeasure8: '2 tbs',
+    strMeasure9: '2 tbs',
+    strMeasure10: '1 sliced',
+    strMeasure11: '2',
+    strMeasure12: '1',
+    strMeasure13: '4 leaves',
+    strMeasure14: '2 tbs',
+    strMeasure15: '2 tbs',
+    strMeasure16: '2 tbs',
+    strMeasure17: '1 tsp ',
+    strMeasure18: ' ',
+    strMeasure19: ' ',
+    strMeasure20: ' ',
+    strSource:
+      'https://www.olivemagazine.com/recipes/family/piri-piri-chicken-and-winter-slaw/',
+  },
+];
