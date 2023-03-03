@@ -13,8 +13,8 @@ export const ContentContainer = () => {
       }}
     >
       {/* <RecipeCard /> */}
-      {/* <Register /> */}
-      <Login />
+      <Register />
+      {/* <Login /> */}
     </Box>
   );
 };
