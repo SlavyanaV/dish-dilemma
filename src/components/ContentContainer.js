@@ -1,5 +1,7 @@
 import { Box } from '@mui/material';
+import { Login } from './Login';
 import { RecipeCard } from './RecipeCard';
+import { Register } from './Register';
 
 export const ContentContainer = () => {
   return (
@@ -10,7 +12,9 @@ export const ContentContainer = () => {
         backgroundColor: '#adb773',
       }}
     >
-      <RecipeCard />
+      {/* <RecipeCard /> */}
+      {/* <Register /> */}
+      <Login />
     </Box>
   );
 };
