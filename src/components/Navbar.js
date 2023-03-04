@@ -7,14 +7,26 @@ import {
   Tooltip,
   IconButton,
   Avatar,
+  Typography,
 } from '@mui/material';
 
 export const Navbar = () => {
   return (
     <Box>
       <AppBar position="static">
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', backgroundColor: '#394110' }}>
-          <Box>
+        <Toolbar
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            backgroundColor: '#394110',
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
             <Tooltip title="Open Home page">
               <IconButton>
                 <Avatar
@@ -23,6 +35,21 @@ export const Navbar = () => {
                 />
               </IconButton>
             </Tooltip>
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                ml: 2,
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              Dish Dilemma
+            </Typography>
           </Box>
           <Box>
             <Button color="inherit">Random recipe</Button>
