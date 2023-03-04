@@ -29,7 +29,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export const RecipeCard = () => {
+export const RecipeCard = ({ size }) => {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -37,7 +37,7 @@ export const RecipeCard = () => {
   };
 
   return (
-    <Card sx={{ maxWidth: 700 }}>
+    <Card sx={{ maxWidth: size === 'main' ? 700 : 450 }}>
       <CardHeader
         sx={{ textAlign: 'center' }}
         title="Piri-piri chicken and slaw"
@@ -45,7 +45,7 @@ export const RecipeCard = () => {
       />
       <CardMedia
         component="img"
-        height="500"
+        height={size === 'main' ? '500' : '200'}
         image="https://www.themealdb.com/images/media/meals/hglsbl1614346998.jpg"
         alt="Dish picture"
       />
