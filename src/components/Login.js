@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {
   Box,
+  Button,
   IconButton,
   FilledInput,
   InputLabel,
@@ -53,6 +54,7 @@ export const Login = () => {
           *Mandatory field!
         </FormHelperText>
       </FormControl>
+      <Button color="inherit">Submit</Button>
     </Box>
   );
 };

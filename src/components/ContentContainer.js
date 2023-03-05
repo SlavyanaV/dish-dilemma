@@ -13,9 +13,9 @@ export const ContentContainer = () => {
         backgroundColor: '#adb773',
       }}
     >
-      {/* <RecipeCard size={'main'} /> */}
-      {/* <Register /> */}
-      {/* <Login /> */}
+      <RecipeCard size={'main'} />
+      <Register />
+      <Login />
       <CardsList />
     </Box>
   );
