@@ -11,11 +11,6 @@ import {
   Button,
   IconButton,
   Typography,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
 } from '@mui/material';
 
 const ExpandMore = styled((props) => {
@@ -51,8 +46,8 @@ export const RecipeCard = ({ size }) => {
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          This is your lucky recipe. If you want to try it, expand the details
-          to see ingredients and instructions.
+          If you want to try this recipe, expand the details to see
+          instructions.
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -69,32 +64,14 @@ export const RecipeCard = ({ size }) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent sx={{ maxWidth: 650 }}>
-          <Typography paragraph>Ingredients:</Typography>
-          <Table sx={{ minWidth: 650 }} aria-label="ingredients table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Ingredient</TableCell>
-                <TableCell align="right">Measure</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell>Chicken</TableCell>
-                <TableCell align="right">1.5kg</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Red Chilli</TableCell>
-                <TableCell align="right">3 chopped</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-
           <Typography paragraph>Instructions:</Typography>
           <Typography paragraph sx={{ textAlign: 'justify' }}>
             {
               'STEP 1\r\n\r\nWhizz together all of the marinade ingredients in a small food processor. Rub the marinade onto the chicken and leave for 1 hour at room temperature.\r\n\r\nSTEP 2\r\n\r\nHeat the oven to 190C/fan 170C/gas 5. Put the chicken in a roasting tray and cook for 1 hour 20 minutes. Rest under loose foil for 20 minutes. While the chicken is resting, mix together the slaw ingredients and season. Serve the chicken with slaw, fries and condiments.'
             }
           </Typography>
+          <Button color="inherit">Edit</Button>
+          <Button color="inherit">Delete</Button>
         </CardContent>
       </Collapse>
     </Card>
