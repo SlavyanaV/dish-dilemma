@@ -3,6 +3,7 @@ import { Login } from './Login';
 import { RecipeCard } from './RecipeCard';
 import { Register } from './Register';
 import { CardsList } from './CardsList';
+import { AddRecipeCard } from './AddRecipeCard';
 
 export const ContentContainer = () => {
   return (
@@ -13,10 +14,11 @@ export const ContentContainer = () => {
         backgroundColor: '#adb773',
       }}
     >
-      <RecipeCard size={'main'} />
+      {/* <RecipeCard size={'main'} />
       <Register />
       <Login />
-      <CardsList />
+      <CardsList /> */}
+      <AddRecipeCard />
     </Box>
   );
 };
