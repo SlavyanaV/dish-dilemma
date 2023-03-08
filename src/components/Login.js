@@ -24,7 +24,7 @@ export const Login = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <TextField
-        label="Enter username"
+        label="Username"
         id="filled-start-adornment"
         sx={{ m: 1, width: '25ch' }}
         variant="filled"
@@ -32,7 +32,7 @@ export const Login = () => {
       />
       <FormControl sx={{ m: 1, width: '25ch' }} variant="filled">
         <InputLabel htmlFor="filled-adornment-password">
-          Enter password
+          Password
         </InputLabel>
         <FilledInput
           id="filled-adornment-password"
