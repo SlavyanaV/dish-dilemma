@@ -1,3 +1,4 @@
+import { Routes, Route } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { Login } from './Login';
 import { RecipeCard } from './RecipeCard';
@@ -14,11 +15,13 @@ export const ContentContainer = () => {
         backgroundColor: '#adb773',
       }}
     >
-      <RecipeCard size={'main'} />
-      <Register />
-      <Login />
-      <CardsList />
-      <AddRecipeCard />
+      <Routes>
+        <Route path="/" element={<RecipeCard size={'main'} />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/list" element={<CardsList />} />
+        <Route path="/add" element={<AddRecipeCard />} />
+      </Routes>
     </Box>
   );
 };
