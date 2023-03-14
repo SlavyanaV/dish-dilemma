@@ -16,11 +16,11 @@ export const ContentContainer = () => {
       }}
     >
       <Routes>
-        <Route path="/" element={<RecipeCard size={'main'} />} />
+        <Route path="/" element={<RecipeCard cardType={'main'} />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/list" element={<CardsList />} />
-        <Route path="/add" element={<AddRecipeCard />} />
+        <Route path="/all-recipes" element={<CardsList />} />
+        <Route path="/add-recipe" element={<AddRecipeCard />} />
       </Routes>
     </Box>
   );

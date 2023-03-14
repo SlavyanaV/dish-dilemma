@@ -11,20 +11,11 @@ import {
   Button,
   IconButton,
   Typography,
+  Box,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
-
-export const RecipeCard = ({ size }) => {
+export const RecipeCard = ({ cardType }) => {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -32,7 +23,7 @@ export const RecipeCard = ({ size }) => {
   };
 
   return (
-    <Card sx={{ maxWidth: size === 'main' ? 700 : 450 }}>
+    <Card sx={{ maxWidth: cardType === 'main' ? 700 : 450 }}>
       <CardHeader
         sx={{ textAlign: 'center' }}
         title="Piri-piri chicken and slaw"
@@ -40,7 +31,7 @@ export const RecipeCard = ({ size }) => {
       />
       <CardMedia
         component="img"
-        height={size === 'main' ? '500' : '200'}
+        height={cardType === 'main' ? '500' : '200'}
         image="https://www.themealdb.com/images/media/meals/hglsbl1614346998.jpg"
         alt="Dish picture"
       />
@@ -51,16 +42,31 @@ export const RecipeCard = ({ size }) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <Button color="inherit">See another recipe</Button>
-        <Button color="inherit">See a list with recipes</Button>
-        <ExpandMore
-          expand={expanded}
+        {cardType === 'main' ? (
+          <Box>
+            <Button color="inherit">See another recipe</Button>
+            <Link
+              to="/all-recipes"
+              style={{ color: 'inherit', textDecoration: 'none' }}
+            >
+              <Button color="inherit">See all recipes</Button>
+            </Link>
+          </Box>
+        ) : (
+          <Box>
+            <Button color="inherit">Edit</Button>
+            <Button color="inherit">Delete</Button>
+          </Box>
+        )}
+
+        <IconButton
+          sx={{ marginLeft: 'auto' }}
           onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more"
         >
           <ExpandMoreIcon />
-        </ExpandMore>
+        </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent sx={{ maxWidth: 650 }}>
@@ -70,8 +76,6 @@ export const RecipeCard = ({ size }) => {
               'STEP 1\r\n\r\nWhizz together all of the marinade ingredients in a small food processor. Rub the marinade onto the chicken and leave for 1 hour at room temperature.\r\n\r\nSTEP 2\r\n\r\nHeat the oven to 190C/fan 170C/gas 5. Put the chicken in a roasting tray and cook for 1 hour 20 minutes. Rest under loose foil for 20 minutes. While the chicken is resting, mix together the slaw ingredients and season. Serve the chicken with slaw, fries and condiments.'
             }
           </Typography>
-          <Button color="inherit">Edit</Button>
-          <Button color="inherit">Delete</Button>
         </CardContent>
       </Collapse>
     </Card>
