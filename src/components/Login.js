@@ -1,60 +1,74 @@
-import * as React from 'react';
-import {
-  Box,
-  Button,
-  IconButton,
-  FilledInput,
-  InputLabel,
-  InputAdornment,
-  FormHelperText,
-  FormControl,
-  TextField,
-} from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Box, Button, TextField } from '@mui/material';
 
 export const Login = () => {
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [loginDataState, setLoginDataState] = useState({
+    email: '',
+    password: '',
+  });
+  const navigate = useNavigate();
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleOnChange = (event) => {
+    const { name, value } = event.target;
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
+    setLoginDataState({
+      ...loginDataState,
+      [name]: value,
+    });
+  };
+
+  const handleOnSubmit = async () => {
+    try {
+      const response = await fetch('http://localhost:3030/users/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(loginDataState),
+      });
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(response.message);
+      }
+
+      navigate('/');
+
+      localStorage.setItem('accessToken', responseData.accessToken);
+      localStorage.setItem('username', responseData.username);
+      localStorage.setItem('_id', responseData._id);
+    } catch (err) {
+      alert('Failed!');
+    }
   };
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <TextField
+        name="email"
+        id="filled-required"
         label="Username"
-        id="filled-start-adornment"
-        sx={{ m: 1, width: '25ch' }}
         variant="filled"
         helperText="*Mandatory field!"
+        sx={{ m: 1, width: '25ch' }}
+        onChange={handleOnChange}
       />
-      <FormControl sx={{ m: 1, width: '25ch' }} variant="filled">
-        <InputLabel htmlFor="filled-adornment-password">
-          Password
-        </InputLabel>
-        <FilledInput
-          id="filled-adornment-password"
-          type={showPassword ? 'text' : 'password'}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-        <FormHelperText id="filled-adornment-password">
-          *Mandatory field!
-        </FormHelperText>
-      </FormControl>
-      <Button color="inherit">Submit</Button>
+
+      <TextField
+        name="password"
+        id="filled-password-input"
+        label="Password"
+        type="password"
+        variant="filled"
+        autoComplete="current-password"
+        helperText="*Mandatory field!"
+        sx={{ m: 1, width: '25ch' }}
+        onChange={handleOnChange}
+      />
+
+      <Button color="inherit" onClick={handleOnSubmit}>
+        Submit
+      </Button>
     </Box>
   );
 };
