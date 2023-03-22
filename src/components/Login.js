@@ -29,16 +29,16 @@ export const Login = () => {
       const responseData = await response.json();
 
       if (!response.ok) {
-        throw new Error(response.message);
+        throw new Error(responseData.message);
       }
 
       navigate('/');
 
       localStorage.setItem('accessToken', responseData.accessToken);
-      localStorage.setItem('username', responseData.username);
+      localStorage.setItem('email', responseData.email);
       localStorage.setItem('_id', responseData._id);
     } catch (err) {
-      alert('Failed!');
+      alert(err);
     }
   };
 
@@ -47,7 +47,7 @@ export const Login = () => {
       <TextField
         name="email"
         id="filled-required"
-        label="Username"
+        label="Email"
         variant="filled"
         helperText="*Mandatory field!"
         sx={{ m: 1, width: '25ch' }}
