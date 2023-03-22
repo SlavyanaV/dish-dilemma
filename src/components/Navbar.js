@@ -82,20 +82,27 @@ export const Navbar = () => {
             <Link to="/all-recipes" style={linkStyles}>
               <Button color="inherit">All recipes</Button>
             </Link>
-            <Link to="/add-recipe" style={linkStyles}>
-              <Button color="inherit">Add recipe</Button>
-            </Link>
-            <Link to="/login" style={linkStyles}>
-              <Button color="inherit">Login</Button>
-            </Link>
-            <Link to="/register" style={linkStyles}>
-              <Button color="inherit">Register</Button>
-            </Link>
-            <Link to="/" style={linkStyles}>
-              <Button color="inherit" onClick={handleOnLogout}>
-                Logout
-              </Button>
-            </Link>
+            {!!accessToken ? (
+              <>
+                <Link to="/add-recipe" style={linkStyles}>
+                  <Button color="inherit">Add recipe</Button>
+                </Link>
+                <Link to="/" style={linkStyles}>
+                  <Button color="inherit" onClick={handleOnLogout}>
+                    Logout
+                  </Button>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/login" style={linkStyles}>
+                  <Button color="inherit">Login</Button>
+                </Link>
+                <Link to="/register" style={linkStyles}>
+                  <Button color="inherit">Register</Button>
+                </Link>
+              </>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
