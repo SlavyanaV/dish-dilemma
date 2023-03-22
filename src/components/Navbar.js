@@ -9,10 +9,32 @@ import {
   Avatar,
   Typography,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const Navbar = () => {
+  const navigate = useNavigate();
+  const accessToken = localStorage.getItem('accessToken');
+
   const linkStyles = { color: 'inherit', textDecoration: 'none' };
+
+  const handleOnLogout = async () => {
+    try {
+      const response = await fetch('http://localhost:3030/users/logout', {
+        method: 'GET',
+        headers: { 'X-Authorization': accessToken },
+      });
+
+      if (!response.ok) {
+        throw new Error();
+      }
+
+      localStorage.clear();
+
+      navigate('/login');
+    } catch (err) {
+      alert('Failed to log out!');
+    }
+  };
 
   return (
     <Box>
@@ -70,7 +92,9 @@ export const Navbar = () => {
               <Button color="inherit">Register</Button>
             </Link>
             <Link to="/" style={linkStyles}>
-              <Button color="inherit">Logout</Button>
+              <Button color="inherit" onClick={handleOnLogout}>
+                Logout
+              </Button>
             </Link>
           </Box>
         </Toolbar>
