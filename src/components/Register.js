@@ -1,84 +1,91 @@
-import * as React from 'react';
-import {
-  Box,
-  Button,
-  IconButton,
-  FilledInput,
-  InputLabel,
-  InputAdornment,
-  FormHelperText,
-  FormControl,
-  TextField,
-} from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import React, { useState } from 'react';
+import { Box, Button, TextField } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export const Register = () => {
-  const [showPassword, setShowPassword] = React.useState(false);
+  const navigate = useNavigate();
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const [registerDataState, setRegisterDataState] = useState({
+    email: '',
+    password: '',
+    repassword: '',
+  });
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
+  const handleOnChange = (event) => {
+    const { name, value } = event.target;
+
+    setRegisterDataState({
+      ...registerDataState,
+      [name]: value,
+    });
+  };
+
+  const handleOnSubmit = async () => {
+    try {
+      const response = await fetch('http://localhost:3030/users/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: registerDataState.email,
+          password: registerDataState.password,
+        }),
+      });
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+
+      navigate('/');
+
+      localStorage.setItem('accessToken', responseData.accessToken);
+      localStorage.setItem('email', responseData.email);
+      localStorage.setItem('_id', responseData._id);
+    } catch (err) {
+      alert(err);
+    }
   };
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <TextField
-        label="Username"
-        id="filled-start-adornment"
-        sx={{ m: 1, width: '25ch' }}
+        name="email"
+        id="filled-required"
+        label="Email"
         variant="filled"
         helperText="*Mandatory field!"
+        sx={{ m: 1, width: '25ch' }}
+        onChange={handleOnChange}
       />
-      <FormControl sx={{ m: 1, width: '25ch' }} variant="filled">
-        <InputLabel htmlFor="filled-adornment-password">
-          Password
-        </InputLabel>
-        <FilledInput
-          id="filled-adornment-password"
-          type={showPassword ? 'text' : 'password'}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-        <FormHelperText id="filled-adornment-password">
-          *Mandatory field!
-        </FormHelperText>
-      </FormControl>
-      <FormControl sx={{ m: 1, width: '25ch' }} variant="filled">
-        <InputLabel htmlFor="filled-adornment-password">
-          Repeat password
-        </InputLabel>
-        <FilledInput
-          id="filled-adornment-password"
-          type={showPassword ? 'text' : 'password'}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-        <FormHelperText id="filled-adornment-password">
-          *Mandatory field!
-        </FormHelperText>
-      </FormControl>
-      <Button color="inherit">Submit</Button>
+
+      <TextField
+        name="password"
+        id="filled-password-input"
+        label="Password"
+        type="password"
+        variant="filled"
+        autoComplete="current-password"
+        helperText="*Mandatory field!"
+        sx={{ m: 1, width: '25ch' }}
+        onChange={handleOnChange}
+      />
+
+      <TextField
+        name="repassword"
+        id="filled-repassword-input"
+        label="Repeat password"
+        type="password"
+        variant="filled"
+        autoComplete="current-password"
+        helperText="*Mandatory field!"
+        sx={{ m: 1, width: '25ch' }}
+        onChange={handleOnChange}
+      />
+
+      <Button color="inherit" onClick={handleOnSubmit}>
+        Submit
+      </Button>
     </Box>
   );
 };
