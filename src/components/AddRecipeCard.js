@@ -1,7 +1,52 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { Box, TextField, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export const AddRecipeCard = () => {
+  const [cardDataState, setCardDataState] = useState({
+    title: '',
+    category: '',
+    picture: '',
+    description: '',
+  });
+
+  const navigate = useNavigate();
+  const accessToken = localStorage.getItem('accessToken');
+
+  const handleOnChange = (event) => {
+    const { name, value } = event.target;
+
+    setCardDataState({
+      ...cardDataState,
+      [name]: value,
+    });
+  };
+
+  const handleOnSubmit = async () => {
+    try {
+      const response = await fetch('http://localhost:3030/data/recipes', {
+        method: 'POST',
+        headers: {
+          'X-Authorization': accessToken,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(cardDataState),
+      });
+
+      const responseData = await response.json();
+
+      console.log(responseData);
+
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+
+      navigate('/all-recipes');
+    } catch (err) {
+      alert(err);
+    }
+  };
+
   return (
     <Box
       component="form"
@@ -15,6 +60,7 @@ export const AddRecipeCard = () => {
       autoComplete="off"
     >
       <TextField
+        name="title"
         sx={{ m: 1 }}
         id="filled-multiline-flexible"
         label="Recipe title"
@@ -22,8 +68,10 @@ export const AddRecipeCard = () => {
         multiline
         maxRows={2}
         variant="filled"
+        onChange={handleOnChange}
       />
       <TextField
+        name="category"
         sx={{ m: 1 }}
         id="filled-multiline-flexible"
         label="Category"
@@ -31,8 +79,10 @@ export const AddRecipeCard = () => {
         multiline
         maxRows={2}
         variant="filled"
+        onChange={handleOnChange}
       />
       <TextField
+        name="picture"
         sx={{ m: 1 }}
         id="filled-multiline-flexible"
         label="Picture address"
@@ -40,8 +90,10 @@ export const AddRecipeCard = () => {
         multiline
         maxRows={2}
         variant="filled"
+        onChange={handleOnChange}
       />
       <TextField
+        name="description"
         sx={{ m: 1 }}
         id="filled-multiline-static"
         label="Description"
@@ -49,8 +101,9 @@ export const AddRecipeCard = () => {
         multiline
         rows={8}
         variant="filled"
+        onChange={handleOnChange}
       />
-      <Button sx={{ m: 1 }} color="inherit" fullWidth>
+      <Button onClick={handleOnSubmit} sx={{ m: 1 }} color="inherit" fullWidth>
         Add recipe
       </Button>
     </Box>
