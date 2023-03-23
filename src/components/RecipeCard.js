@@ -1,7 +1,6 @@
 import * as React from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
-  styled,
   Card,
   CardHeader,
   CardMedia,
@@ -15,7 +14,7 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-export const RecipeCard = ({ cardType }) => {
+export const RecipeCard = ({ cardType, card }) => {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -26,13 +25,13 @@ export const RecipeCard = ({ cardType }) => {
     <Card sx={{ maxWidth: cardType === 'main' ? 700 : 450 }}>
       <CardHeader
         sx={{ textAlign: 'center' }}
-        title="Piri-piri chicken and slaw"
-        subheader="Portuguese"
+        title={card?.title}
+        subheader={card?.category}
       />
       <CardMedia
         component="img"
         height={cardType === 'main' ? '500' : '200'}
-        image="https://www.themealdb.com/images/media/meals/hglsbl1614346998.jpg"
+        image={card?.picture}
         alt="Dish picture"
       />
       <CardContent>
@@ -72,9 +71,7 @@ export const RecipeCard = ({ cardType }) => {
         <CardContent sx={{ maxWidth: 650 }}>
           <Typography paragraph>Instructions:</Typography>
           <Typography paragraph sx={{ textAlign: 'justify' }}>
-            {
-              'STEP 1\r\n\r\nWhizz together all of the marinade ingredients in a small food processor. Rub the marinade onto the chicken and leave for 1 hour at room temperature.\r\n\r\nSTEP 2\r\n\r\nHeat the oven to 190C/fan 170C/gas 5. Put the chicken in a roasting tray and cook for 1 hour 20 minutes. Rest under loose foil for 20 minutes. While the chicken is resting, mix together the slaw ingredients and season. Serve the chicken with slaw, fries and condiments.'
-            }
+            {card?.description}
           </Typography>
         </CardContent>
       </Collapse>

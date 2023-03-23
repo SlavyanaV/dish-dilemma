@@ -24,7 +24,7 @@ export const AddRecipeCard = () => {
 
   const handleOnSubmit = async () => {
     try {
-      const response = await fetch('http://localhost:3030/data/recipes', {
+      const response = await fetch('http://localhost:3030/data/all-recipes', {
         method: 'POST',
         headers: {
           'X-Authorization': accessToken,
@@ -34,8 +34,6 @@ export const AddRecipeCard = () => {
       });
 
       const responseData = await response.json();
-
-      console.log(responseData);
 
       if (!response.ok) {
         throw new Error(responseData.message);
