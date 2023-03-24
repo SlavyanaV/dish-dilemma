@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Card,
@@ -15,7 +15,9 @@ import {
 import { Link } from 'react-router-dom';
 
 export const RecipeCard = ({ cardType, card }) => {
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
+
+  const userId = localStorage.getItem('_id');
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -51,11 +53,13 @@ export const RecipeCard = ({ cardType, card }) => {
               <Button color="inherit">See all recipes</Button>
             </Link>
           </Box>
-        ) : (
+        ) : userId === card._ownerId ? (
           <Box>
             <Button color="inherit">Edit</Button>
             <Button color="inherit">Delete</Button>
           </Box>
+        ) : (
+          <></>
         )}
 
         <IconButton
