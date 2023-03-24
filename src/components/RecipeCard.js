@@ -14,13 +14,34 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-export const RecipeCard = ({ cardType, card }) => {
+export const RecipeCard = ({ cardType, card, fetchCards }) => {
   const [expanded, setExpanded] = useState(false);
 
+  const accessToken = localStorage.getItem('accessToken');
   const userId = localStorage.getItem('_id');
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const handleOnDelete = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3030/data/all-recipes/${card._id}`,
+        {
+          method: 'DELETE',
+          headers: { 'X-Authorization': accessToken },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error();
+      }
+
+      fetchCards();
+    } catch (err) {
+      alert(err);
+    }
   };
 
   return (
@@ -56,7 +77,9 @@ export const RecipeCard = ({ cardType, card }) => {
         ) : userId === card._ownerId ? (
           <Box>
             <Button color="inherit">Edit</Button>
-            <Button color="inherit">Delete</Button>
+            <Button color="inherit" onClick={handleOnDelete}>
+              Delete
+            </Button>
           </Box>
         ) : (
           <></>

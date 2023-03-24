@@ -5,23 +5,25 @@ import { RecipeCard } from './RecipeCard';
 export const CardsList = () => {
   const [cardsDataState, setCardsDataState] = useState([]);
 
-  useEffect(() => {
-    const fetchCards = async () => {
-      try {
-        const response = await fetch('http://localhost:3030/data/all-recipes');
-        const responseData = await response.json();
+  const fetchCards = async () => {
+    try {
+      const response = await fetch('http://localhost:3030/data/all-recipes');
+      const responseData = await response.json();
 
-        if (!response.ok) {
-          throw new Error(responseData.message);
-        }
-
-        setCardsDataState(responseData);
-      } catch (err) {
-        alert(err);
+      if (!response.ok) {
+        throw new Error(responseData.message);
       }
-    };
+
+      setCardsDataState(responseData);
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  useEffect(() => {
     fetchCards();
   }, []);
+
 
   return (
     <Grid
@@ -33,7 +35,7 @@ export const CardsList = () => {
         <>
           {cardsDataState.map((card, index) => (
             <Grid item xs={'auto'} key={index}>
-              <RecipeCard card={card} />
+              <RecipeCard card={card} fetchCards={fetchCards} />
             </Grid>
           ))}
         </>
