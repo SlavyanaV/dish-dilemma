@@ -21,6 +21,7 @@ export const ContentContainer = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/all-recipes" element={<CardsList />} />
         <Route path="/add-recipe" element={<AddRecipeCard />} />
+        <Route path="/edit-recipe/:id" element={<AddRecipeCard actionType={'edit'}/>} />
       </Routes>
     </Box>
   );

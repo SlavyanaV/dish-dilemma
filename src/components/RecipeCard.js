@@ -20,6 +20,8 @@ export const RecipeCard = ({ cardType, card, fetchCards }) => {
   const accessToken = localStorage.getItem('accessToken');
   const userId = localStorage.getItem('_id');
 
+  const linkStyles = { color: 'inherit', textDecoration: 'none' };
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -76,7 +78,9 @@ export const RecipeCard = ({ cardType, card, fetchCards }) => {
           </Box>
         ) : userId === card._ownerId ? (
           <Box>
-            <Button color="inherit">Edit</Button>
+            <Link to={`/edit-recipe/${card._id}`} style={linkStyles}>
+              <Button color="inherit">Edit</Button>
+            </Link>
             <Button color="inherit" onClick={handleOnDelete}>
               Delete
             </Button>

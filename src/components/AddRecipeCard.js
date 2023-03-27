@@ -1,14 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, TextField, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-export const AddRecipeCard = () => {
-  const [cardDataState, setCardDataState] = useState({
-    title: '',
-    category: '',
-    picture: '',
-    description: '',
-  });
+const initalState = {
+  title: '',
+  category: '',
+  picture: '',
+  description: '',
+}
+
+export const AddRecipeCard = ({ actionType }) => {
+  const [cardDataState, setCardDataState] = useState(initalState);
+
+  const { id } = useParams();
+
+  const getCard = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3030/data/all-recipes/${id}`
+      );
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+
+      setCardDataState(responseData);
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  
+  useEffect(() => {
+    if (actionType === 'edit') {
+      getCard();
+    } else {
+      setCardDataState(initalState)
+    }
+  }, [actionType]);
 
   const navigate = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
@@ -24,14 +54,19 @@ export const AddRecipeCard = () => {
 
   const handleOnSubmit = async () => {
     try {
-      const response = await fetch('http://localhost:3030/data/all-recipes', {
-        method: 'POST',
-        headers: {
-          'X-Authorization': accessToken,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(cardDataState),
-      });
+      const response = await fetch(
+        `http://localhost:3030/data/all-recipes${
+          actionType === 'edit' ? '/' + id : ''
+        }`,
+        {
+          method: `${actionType === 'edit' ? 'PUT' : 'POST'}`,
+          headers: {
+            'X-Authorization': accessToken,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(cardDataState),
+        }
+      );
 
       const responseData = await response.json();
 
@@ -59,6 +94,7 @@ export const AddRecipeCard = () => {
     >
       <TextField
         name="title"
+        value={cardDataState.title}
         sx={{ m: 1 }}
         id="filled-multiline-flexible"
         label="Recipe title"
@@ -70,6 +106,7 @@ export const AddRecipeCard = () => {
       />
       <TextField
         name="category"
+        value={cardDataState.category}
         sx={{ m: 1 }}
         id="filled-multiline-flexible"
         label="Category"
@@ -81,6 +118,7 @@ export const AddRecipeCard = () => {
       />
       <TextField
         name="picture"
+        value={cardDataState.picture}
         sx={{ m: 1 }}
         id="filled-multiline-flexible"
         label="Picture address"
@@ -92,6 +130,7 @@ export const AddRecipeCard = () => {
       />
       <TextField
         name="description"
+        value={cardDataState.description}
         sx={{ m: 1 }}
         id="filled-multiline-static"
         label="Description"
@@ -102,7 +141,7 @@ export const AddRecipeCard = () => {
         onChange={handleOnChange}
       />
       <Button onClick={handleOnSubmit} sx={{ m: 1 }} color="inherit" fullWidth>
-        Add recipe
+        {actionType === 'edit' ? 'Edit recipe' : 'Add recipe'}
       </Button>
     </Box>
   );
