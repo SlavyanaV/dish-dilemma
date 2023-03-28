@@ -87,6 +87,9 @@ export const Navbar = () => {
                 <Link to="/add-recipe" style={linkStyles}>
                   <Button color="inherit">Add recipe</Button>
                 </Link>
+                <Link to="/my-profile" style={linkStyles}>
+                  <Button color="inherit">My profile</Button>
+                </Link>
                 <Link to="/" style={linkStyles}>
                   <Button color="inherit" onClick={handleOnLogout}>
                     Logout
