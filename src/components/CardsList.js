@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Typography } from '@mui/material';
-import { RecipeCard } from './RecipeCard';
+import { SmallCard } from './SmallCard';
 
 export const CardsList = () => {
   const [cardsDataState, setCardsDataState] = useState([]);
@@ -24,18 +24,23 @@ export const CardsList = () => {
     fetchCards();
   }, []);
 
-
   return (
     <Grid
       container
-      spacing={5}
-      sx={{ display: 'flex', justifyContent: 'space-around' }}
+      sx={{
+        margin: '20px 0',
+        display: 'grid',
+        gridTemplateColumns: '500px 500px 500px',        
+        columnGap: '50px',
+        rowGap: '50px',
+        justifyContent: 'center',
+      }}
     >
       {cardsDataState.length ? (
         <>
           {cardsDataState.map((card, index) => (
             <Grid item xs={'auto'} key={index}>
-              <RecipeCard card={card} fetchCards={fetchCards} />
+              <SmallCard card={card} />
             </Grid>
           ))}
         </>

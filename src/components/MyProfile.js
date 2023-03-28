@@ -3,8 +3,6 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
-import { CardActions } from '@mui/material';
-import { Button } from '@mui/material';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
@@ -61,11 +59,6 @@ export const MyProfile = () => {
           </Box>
         </Box>
       </CardContent>
-      <CardActions>
-        <Button onClick={getUser} sx={{ m: 1 }} color="inherit" fullWidth>
-          Test
-        </Button>
-      </CardActions>
     </Card>
   );
 };

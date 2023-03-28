@@ -13,13 +13,6 @@ export const ContentContainer = () => {
       sx={{
         display: 'flex',
         justifyContent: 'center',
-        // backgroundImage:
-        //   'url("https://i.ibb.co/s1yNGV6/Psychozub-Realistic-wooden-kitchen-board-with-kitchen-utensils-f6c72a8a-d4c0-4be8-9e3b-aca73ea1dff6.png")',
-
-        // minHeight: '100vh',
-        // backgroundPosition: 'center',
-        // backgroundRepeat: 'no-repeat',
-        // backgroundSize: 'cover',
       }}
     >
       <Routes>
@@ -33,7 +26,7 @@ export const ContentContainer = () => {
           path="/edit-recipe/:id"
           element={<AddRecipeCard actionType={'edit'} />}
         />
-        <Route path="/card-details/:id" element={<RecipeCard />} />
+        <Route path="/recipe-details/:id" element={<RecipeCard />} />
       </Routes>
     </Box>
   );

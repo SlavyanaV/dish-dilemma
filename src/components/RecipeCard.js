@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Card,
@@ -14,22 +15,52 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-export const RecipeCard = ({ cardType, card, fetchCards }) => {
+export const RecipeCard = ({ cardType }) => {
   const [expanded, setExpanded] = useState(false);
+  const [cardDataState, setCardDataState] = useState({});
 
   const accessToken = localStorage.getItem('accessToken');
   const userId = localStorage.getItem('_id');
 
+  const navigate = useNavigate();
+
   const linkStyles = { color: 'inherit', textDecoration: 'none' };
+
+  const { id } = useParams();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  const getCard = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3030/data/all-recipes/${id}`
+      );
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+
+      setCardDataState(responseData);
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  useEffect(() => {
+    if (cardType !== 'main') {
+      getCard();
+    } else {
+      setCardDataState({});
+    }
+  }, [cardType]);
+
   const handleOnDelete = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3030/data/all-recipes/${card._id}`,
+        `http://localhost:3030/data/all-recipes/${cardDataState._id}`,
         {
           method: 'DELETE',
           headers: { 'X-Authorization': accessToken },
@@ -40,73 +71,80 @@ export const RecipeCard = ({ cardType, card, fetchCards }) => {
         throw new Error();
       }
 
-      fetchCards();
+      navigate('/all-recipes');
     } catch (err) {
       alert(err);
     }
   };
 
   return (
-    <Card sx={{ maxWidth: cardType === 'main' ? 700 : 450 }}>
-      <CardHeader
-        sx={{ textAlign: 'center' }}
-        title={card?.title}
-        subheader={card?.category}
-      />
-      <CardMedia
-        component="img"
-        height={cardType === 'main' ? '500' : '200'}
-        image={card?.picture}
-        alt="Dish picture"
-      />
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          If you want to try this recipe, expand the details to see
-          instructions.
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        {cardType === 'main' ? (
-          <Box>
-            <Button color="inherit">See another recipe</Button>
-            <Link
-              to="/all-recipes"
-              style={{ color: 'inherit', textDecoration: 'none' }}
-            >
-              <Button color="inherit">See all recipes</Button>
-            </Link>
-          </Box>
-        ) : userId === card._ownerId ? (
-          <Box>
-            <Link to={`/edit-recipe/${card._id}`} style={linkStyles}>
-              <Button color="inherit">Edit</Button>
-            </Link>
-            <Button color="inherit" onClick={handleOnDelete}>
-              Delete
-            </Button>
-          </Box>
-        ) : (
-          <></>
-        )}
-
-        <IconButton
-          sx={{ marginLeft: 'auto' }}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent sx={{ maxWidth: 650 }}>
-          <Typography paragraph>Instructions:</Typography>
-          <Typography paragraph sx={{ textAlign: 'justify' }}>
-            {card?.description}
+    <Box sx={{ width: 700, mt: '50px' }}>
+      <Card>
+        <CardHeader
+          sx={{ textAlign: 'center' }}
+          title={cardDataState?.title}
+          subheader={cardDataState?.category}
+        />
+        <CardMedia
+          component="img"
+          height={'500'}
+          image={cardDataState?.picture}
+          alt="Dish picture"
+        />
+        <CardContent>
+          <Typography variant="body2" color="text.secondary">
+            If you want to try this recipe, expand the details to see
+            instructions.
           </Typography>
         </CardContent>
-      </Collapse>
-    </Card>
+        <CardActions disableSpacing>
+          {cardType === 'main' ? (
+            <Box>
+              <Button color="inherit">See another recipe</Button>
+              <Link
+                to="/all-recipes"
+                style={{ color: 'inherit', textDecoration: 'none' }}
+              >
+                <Button color="inherit">See all recipes</Button>
+              </Link>
+            </Box>
+          ) : userId === cardDataState?._ownerId ? (
+            <Box>
+              <Link
+                to={`/edit-recipe/${cardDataState?._id}`}
+                style={linkStyles}
+              >
+                <Button color="inherit">Edit</Button>
+              </Link>
+              <Button color="inherit" onClick={handleOnDelete}>
+                Delete
+              </Button>
+            </Box>
+          ) : (
+            <></>
+          )}
+          <IconButton
+            sx={{ marginLeft: 'auto' }}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon/>
+          </IconButton>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent sx={{ maxWidth: 650 }}>
+            <Typography paragraph>Instructions:</Typography>
+            <Typography
+              paragraph
+              sx={{ textAlign: 'justify', overflowWrap: 'anywhere' }}
+            >
+              {cardDataState?.description}
+            </Typography>
+          </CardContent>
+        </Collapse>
+      </Card>
+    </Box>
   );
 };
 

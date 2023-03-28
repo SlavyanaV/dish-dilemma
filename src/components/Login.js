@@ -32,7 +32,7 @@ export const Login = () => {
         throw new Error(responseData.message);
       }
 
-      navigate('/');
+      navigate('/my-profile');
 
       localStorage.setItem('accessToken', responseData.accessToken);
       localStorage.setItem('email', responseData.email);
