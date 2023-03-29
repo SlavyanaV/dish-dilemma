@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Paper, Box, CardContent, Typography, Grid } from '@mui/material';
+import {
+  Card,
+  Paper,
+  Box,
+  CardContent,
+  Typography,
+  Grid,
+  Stack,
+  Alert,
+} from '@mui/material';
 import { SmallCard } from './SmallCard';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import InfoIcon from '@mui/icons-material/Info';
 
 export const MyProfile = () => {
   const [createdOn, setCreatedOn] = useState('');
@@ -60,7 +70,7 @@ export const MyProfile = () => {
   }, []);
 
   return (
-    <Box sx={{display: 'flex', flexDirection: 'column'}}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', width: '50%' }}>
       <Card sx={{ minWidth: 800, mt: '50px', backgroundColor: '#E4BF89' }}>
         <CardContent>
           <Paper
@@ -90,31 +100,40 @@ export const MyProfile = () => {
           </Box>
         </CardContent>
       </Card>
-      <Grid
-        container
-        sx={{
-          margin: '20px 0',
-          display: 'grid',
-          gridTemplateColumns: '500px 500px 500px',
-          columnGap: '50px',
-          rowGap: '50px',
-          justifyContent: 'center',
-        }}
-      >
-        {cardsDataState.length ? (
-          <>
-            {cardsDataState.map((card, index) => (
-              <Grid item xs={'auto'} key={index}>
-                <SmallCard card={card} />
-              </Grid>
-            ))}
-          </>
-        ) : (
-          <Typography variant="h3" sx={{ marginTop: '50px' }}>
-            No recipes found
-          </Typography>
-        )}
-      </Grid>
+
+      {cardsDataState.length ? (
+        <Grid
+          container
+          sx={{
+            margin: '20px 0',
+            display: 'grid',
+            gridTemplateColumns: '500px 500px 500px',
+            columnGap: '50px',
+            rowGap: '50px',
+            justifyContent: 'center',
+          }}
+        >
+          {cardsDataState.map((card, index) => (
+            <Grid item xs={'auto'} key={index}>
+              <SmallCard card={card} />
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <Stack sx={{ width: '100%' }} spacing={2}>
+          <Alert
+            severity="info"
+            sx={{
+              backgroundColor: '#E4BF89',
+              color: 'black',
+              mt: 1.5,
+            }}
+            icon={<InfoIcon sx={{ color: '#394110' }} />}
+          >
+            Currently there are no recipes added by you
+          </Alert>
+        </Stack>
+      )}
     </Box>
   );
 };
