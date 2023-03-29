@@ -38,7 +38,7 @@ export const Navbar = () => {
 
   return (
     <Box>
-      <AppBar position="static">
+      <AppBar component="nav">
         <Toolbar
           sx={{
             display: 'flex',

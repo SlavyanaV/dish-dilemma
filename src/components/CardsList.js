@@ -26,12 +26,19 @@ export const CardsList = () => {
   }, []);
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', width: '50%' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '50%',
+        mt: '50px',
+      }}
+    >
       {cardsDataState.length ? (
         <Grid
           container
           sx={{
-            margin: '20px 0',
+            mb: '50px',
             display: 'grid',
             gridTemplateColumns: '500px 500px 500px',
             columnGap: '50px',

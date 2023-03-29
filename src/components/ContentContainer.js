@@ -13,6 +13,7 @@ export const ContentContainer = () => {
       sx={{
         display: 'flex',
         justifyContent: 'center',
+        mt: '50px',
       }}
     >
       <Routes>
