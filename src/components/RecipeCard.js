@@ -47,6 +47,34 @@ export const RecipeCard = ({ cardType }) => {
       setCardDataState(responseData);
     } catch (err) {
       alert(err);
+      setCardDataState({});
+    }
+  };
+
+  const getRandomCard = async () => {
+    try {
+      const response = await fetch(
+        'https://themealdb.com/api/json/v1/1/random.php'
+      );
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+
+      console.log(responseData);
+
+      const randomRecipe = responseData.meals.map((meal) => ({
+        title: meal.strMeal,
+        category: meal.strCategory,
+        picture: meal.strMealThumb,
+        description: meal.strInstructions,
+      }));
+
+      setCardDataState(randomRecipe[0]);
+    } catch (err) {
+      alert(err);
+      setCardDataState({});
     }
   };
 
@@ -54,7 +82,7 @@ export const RecipeCard = ({ cardType }) => {
     if (cardType !== 'main') {
       getCard();
     } else {
-      setCardDataState({});
+      getRandomCard();
     }
   }, [cardType]);
 
@@ -111,7 +139,12 @@ export const RecipeCard = ({ cardType }) => {
         <CardActions disableSpacing>
           {cardType === 'main' ? (
             <Box>
-              <Button variant="outlined" color="inherit" sx={{ margin: 1 }}>
+              <Button
+                variant="outlined"
+                color="inherit"
+                sx={{ margin: 1 }}
+                onClick={getRandomCard}
+              >
                 See another recipe
               </Button>
               <Link
