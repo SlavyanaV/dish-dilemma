@@ -69,6 +69,7 @@ export const Navbar = () => {
                   ml: 2,
                   fontWeight: 700,
                   letterSpacing: '.3rem',
+                  color: '#E4BF89',
                 }}
               >
                 Dish Dilemma
@@ -77,21 +78,21 @@ export const Navbar = () => {
           </Box>
           <Box>
             <Link to="/" style={linkStyles}>
-              <Button color="inherit">Random recipe</Button>
+              <Button sx={{ color: '#E4BF89' }}>Random recipe</Button>
             </Link>
             <Link to="/all-recipes" style={linkStyles}>
-              <Button color="inherit">All recipes</Button>
+              <Button sx={{ color: '#E4BF89' }}>All recipes</Button>
             </Link>
             {!!accessToken ? (
               <>
                 <Link to="/add-recipe" style={linkStyles}>
-                  <Button color="inherit">Add recipe</Button>
+                  <Button sx={{ color: '#E4BF89' }}>Add recipe</Button>
                 </Link>
                 <Link to="/my-profile" style={linkStyles}>
-                  <Button color="inherit">My profile</Button>
+                  <Button sx={{ color: '#E4BF89' }}>My profile</Button>
                 </Link>
                 <Link to="/" style={linkStyles}>
-                  <Button color="inherit" onClick={handleOnLogout}>
+                  <Button sx={{ color: '#E4BF89' }} onClick={handleOnLogout}>
                     Logout
                   </Button>
                 </Link>
@@ -99,10 +100,10 @@ export const Navbar = () => {
             ) : (
               <>
                 <Link to="/login" style={linkStyles}>
-                  <Button color="inherit">Login</Button>
+                  <Button sx={{ color: '#E4BF89' }}>Login</Button>
                 </Link>
                 <Link to="/register" style={linkStyles}>
-                  <Button color="inherit">Register</Button>
+                  <Button sx={{ color: '#E4BF89' }}>Register</Button>
                 </Link>
               </>
             )}

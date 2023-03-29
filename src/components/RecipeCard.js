@@ -12,6 +12,7 @@ import {
   IconButton,
   Typography,
   Box,
+  Paper,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
@@ -78,8 +79,18 @@ export const RecipeCard = ({ cardType }) => {
   };
 
   return (
-    <Box sx={{ width: 700, mt: '50px' }}>
-      <Card>
+    <Box sx={{ width: 700, mt: '50px', mb: '50px' }}>
+      <Card sx={{ backgroundColor: '#E4BF89' }}>
+        <Paper elevation={10} sx={{ backgroundColor: '#394110' }}>
+          <Typography
+            variant="h4"
+            sx={{ textAlign: 'center', pb: 1.5, pt: 1.5, color: '#E4BF89' }}
+          >
+            {cardType === 'main'
+              ? 'This is your random recipe'
+              : 'Recipe details'}
+          </Typography>
+        </Paper>
         <CardHeader
           sx={{ textAlign: 'center' }}
           title={cardDataState?.title}
@@ -100,12 +111,16 @@ export const RecipeCard = ({ cardType }) => {
         <CardActions disableSpacing>
           {cardType === 'main' ? (
             <Box>
-              <Button color="inherit">See another recipe</Button>
+              <Button variant="outlined" color="inherit" sx={{ margin: 1 }}>
+                See another recipe
+              </Button>
               <Link
                 to="/all-recipes"
                 style={{ color: 'inherit', textDecoration: 'none' }}
               >
-                <Button color="inherit">See all recipes</Button>
+                <Button variant="outlined" color="inherit" sx={{ margin: 1 }}>
+                  See all recipes
+                </Button>
               </Link>
             </Box>
           ) : userId === cardDataState?._ownerId ? (
@@ -114,9 +129,16 @@ export const RecipeCard = ({ cardType }) => {
                 to={`/edit-recipe/${cardDataState?._id}`}
                 style={linkStyles}
               >
-                <Button color="inherit">Edit</Button>
+                <Button variant="outlined" color="inherit" sx={{ margin: 1 }}>
+                  Edit
+                </Button>
               </Link>
-              <Button color="inherit" onClick={handleOnDelete}>
+              <Button
+                variant="outlined"
+                color="inherit"
+                sx={{ margin: 1 }}
+                onClick={handleOnDelete}
+              >
                 Delete
               </Button>
             </Box>
@@ -129,7 +151,7 @@ export const RecipeCard = ({ cardType }) => {
             aria-expanded={expanded}
             aria-label="show more"
           >
-            <ExpandMoreIcon/>
+            <ExpandMoreIcon />
           </IconButton>
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, TextField, Button } from '@mui/material';
+import { Box, TextField, Button, Paper, Typography } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const initalState = {
@@ -7,7 +7,7 @@ const initalState = {
   category: '',
   picture: '',
   description: '',
-}
+};
 
 export const AddRecipeCard = ({ actionType }) => {
   const [cardDataState, setCardDataState] = useState(initalState);
@@ -31,12 +31,11 @@ export const AddRecipeCard = ({ actionType }) => {
     }
   };
 
-  
   useEffect(() => {
     if (actionType === 'edit') {
       getCard();
     } else {
-      setCardDataState(initalState)
+      setCardDataState(initalState);
     }
   }, [actionType]);
 
@@ -81,68 +80,90 @@ export const AddRecipeCard = ({ actionType }) => {
   };
 
   return (
-    <Box
-      component="form"
+    <Paper
+      variant="outlined"
       sx={{
-        width: 700,
-        maxWidth: '100%',
-        display: 'flex',
-        flexDirection: 'column',
+        minWidth: 500,
+        mt: '50px',
+        padding: '20px',
+        backgroundColor: '#E4BF89',
       }}
-      noValidate
-      autoComplete="off"
     >
-      <TextField
-        name="title"
-        value={cardDataState.title}
-        sx={{ m: 1 }}
-        id="filled-multiline-flexible"
-        label="Recipe title"
-        fullWidth
-        multiline
-        maxRows={2}
-        variant="filled"
-        onChange={handleOnChange}
-      />
-      <TextField
-        name="category"
-        value={cardDataState.category}
-        sx={{ m: 1 }}
-        id="filled-multiline-flexible"
-        label="Category"
-        fullWidth
-        multiline
-        maxRows={2}
-        variant="filled"
-        onChange={handleOnChange}
-      />
-      <TextField
-        name="picture"
-        value={cardDataState.picture}
-        sx={{ m: 1 }}
-        id="filled-multiline-flexible"
-        label="Picture address"
-        fullWidth
-        multiline
-        maxRows={2}
-        variant="filled"
-        onChange={handleOnChange}
-      />
-      <TextField
-        name="description"
-        value={cardDataState.description}
-        sx={{ m: 1 }}
-        id="filled-multiline-static"
-        label="Description"
-        fullWidth
-        multiline
-        rows={8}
-        variant="filled"
-        onChange={handleOnChange}
-      />
-      <Button onClick={handleOnSubmit} sx={{ m: 1 }} color="inherit" fullWidth>
-        {actionType === 'edit' ? 'Edit recipe' : 'Add recipe'}
-      </Button>
-    </Box>
+      <Box
+        component="form"
+        sx={{
+          width: 700,
+          maxWidth: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+        autoComplete="off"
+      >
+        <Paper
+          elevation={10}
+          sx={{ mb: 1.5, mt: 1.5, backgroundColor: '#394110' }}
+        >
+          <Typography
+            variant="h4"
+            sx={{ textAlign: 'center', pb: 1.5, pt: 1.5, color: '#E4BF89' }}
+          >
+            {actionType === 'edit' ? 'Edit your recipe' : 'Add your recipe'}
+          </Typography>
+        </Paper>
+
+        <TextField
+          name="title"
+          value={cardDataState.title}
+          sx={{ mt: 1 }}
+          id="filled-multiline-flexible"
+          label="Recipe title"
+          variant="outlined"
+          color="success"
+          onChange={handleOnChange}
+        />
+        <TextField
+          name="category"
+          value={cardDataState.category}
+          sx={{ mt: 2.5 }}
+          id="filled-multiline-flexible"
+          label="Category"
+          variant="outlined"
+          color="success"
+          onChange={handleOnChange}
+        />
+        <TextField
+          name="picture"
+          value={cardDataState.picture}
+          sx={{ mt: 2.5 }}
+          id="filled-multiline-flexible"
+          label="Picture address"
+          multiline
+          maxRows={2}
+          variant="outlined"
+          color="success"
+          onChange={handleOnChange}
+        />
+        <TextField
+          name="description"
+          value={cardDataState.description}
+          sx={{ mt: 2.5 }}
+          id="filled-multiline-static"
+          label="Description"
+          multiline
+          rows={8}
+          variant="outlined"
+          color="success"
+          onChange={handleOnChange}
+        />
+        <Button
+          variant="outlined"
+          onClick={handleOnSubmit}
+          sx={{ mt: 2.5 }}
+          color="inherit"
+        >
+          {actionType === 'edit' ? 'Edit recipe' : 'Add recipe'}
+        </Button>
+      </Box>
+    </Paper>
   );
 };

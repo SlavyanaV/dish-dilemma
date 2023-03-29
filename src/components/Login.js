@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, TextField, Paper, Typography } from '@mui/material';
 
 export const Login = () => {
   const [loginDataState, setLoginDataState] = useState({
@@ -43,32 +43,64 @@ export const Login = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      <TextField
-        name="email"
-        id="filled-required"
-        label="Email"
-        variant="filled"
-        helperText="*Mandatory field!"
-        sx={{ m: 1, width: '25ch' }}
-        onChange={handleOnChange}
-      />
+    <Paper
+      variant="outlined"
+      sx={{
+        minWidth: 500,
+        mt: '50px',
+        padding: '20px',
+        backgroundColor: '#E4BF89',
+      }}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <Paper
+          elevation={10}
+          sx={{ margin: '5px 10px 20px 10px', backgroundColor: '#394110' }}
+        >
+          <Typography
+            variant="h4"
+            sx={{ textAlign: 'center', pb: 1.5, pt: 1.5, color: '#E4BF89' }}
+          >
+            Log into your profile
+          </Typography>
+        </Paper>
+        <TextField
+          name="email"
+          id="filled-required"
+          label="Email"
+          variant="outlined"
+          color="success"
+          helperText="*Mandatory field!"
+          sx={{ m: 1 }}
+          onChange={handleOnChange}
+        />
 
-      <TextField
-        name="password"
-        id="filled-password-input"
-        label="Password"
-        type="password"
-        variant="filled"
-        autoComplete="current-password"
-        helperText="*Mandatory field!"
-        sx={{ m: 1, width: '25ch' }}
-        onChange={handleOnChange}
-      />
-
-      <Button color="inherit" onClick={handleOnSubmit}>
-        Submit
-      </Button>
-    </Box>
+        <TextField
+          name="password"
+          id="filled-password-input"
+          label="Password"
+          type="password"
+          variant="outlined"
+          color="success"
+          autoComplete="current-password"
+          helperText="*Mandatory field!"
+          sx={{ m: 1 }}
+          onChange={handleOnChange}
+        />
+        <Button
+          variant="outlined"
+          color="inherit"
+          sx={{ margin: 1 }}
+          onClick={handleOnSubmit}
+        >
+          Submit
+        </Button>
+      </Box>
+    </Paper>
   );
 };

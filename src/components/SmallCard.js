@@ -11,7 +11,7 @@ export const SmallCard = ({ card }) => {
   const linkStyles = { color: 'inherit', textDecoration: 'none' };
 
   return (
-    <Card >
+    <Card sx={{ backgroundColor: '#E4BF89' }}>
       <CardMedia
         component="img"
         height="300"
@@ -28,7 +28,9 @@ export const SmallCard = ({ card }) => {
         sx={{ display: 'flex', justifyContent: 'center' }}
       >
         <Link to={`/recipe-details/${card._id}`} style={linkStyles}>
-          <Button color="inherit">See details</Button>
+          <Button variant="outlined" color="inherit">
+            See details
+          </Button>
         </Link>
       </CardActions>
     </Card>

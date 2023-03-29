@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import { Box } from '@mui/system';
+import { Card, Paper, Box, CardContent, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
@@ -39,11 +36,19 @@ export const MyProfile = () => {
   }, []);
 
   return (
-    <Card sx={{ minWidth: 800 }}>
+    <Card sx={{ minWidth: 800, mt: '50px', backgroundColor: '#E4BF89' }}>
       <CardContent>
-        <Typography variant="h4" sx={{ textAlign: 'center', mb: 1.5 }}>
-          My profile
-        </Typography>
+        <Paper
+          elevation={10}
+          sx={{ margin: '5px 10px 20px 10px', backgroundColor: '#394110' }}
+        >
+          <Typography
+            variant="h4"
+            sx={{ textAlign: 'center', pb: 1.5, pt: 1.5, color: '#E4BF89' }}
+          >
+            My profile
+          </Typography>
+        </Paper>
         <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
           <Box>
             <Typography sx={{ fontSize: 14 }} color="text.secondary">
