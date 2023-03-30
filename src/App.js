@@ -1,7 +1,7 @@
 import { Navbar } from './components/Navbar';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ContentContainer } from './components/ContentContainer';
-import './App.css';
+import './shared/styles/sharedStyles.css'
 
 function App() {
   return (

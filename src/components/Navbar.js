@@ -10,12 +10,11 @@ import {
   Typography,
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
+import { colors, link } from '../shared/styles/sharedStyles';
 
 export const Navbar = () => {
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('accessToken');
-
-  const linkStyles = { color: 'inherit', textDecoration: 'none' };
+  const accessToken = localStorage.getItem('accessToken');  
 
   const handleOnLogout = async () => {
     try {
@@ -43,7 +42,7 @@ export const Navbar = () => {
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            backgroundColor: '#394110',
+            backgroundColor: colors.dark,
           }}
         >
           <Box
@@ -52,7 +51,7 @@ export const Navbar = () => {
               alignItems: 'center',
             }}
           >
-            <Link to="/" style={linkStyles}>
+            <Link to="/" style={link}>
               <Tooltip title="Open Home page">
                 <IconButton>
                   <Avatar
@@ -69,7 +68,7 @@ export const Navbar = () => {
                   ml: 2,
                   fontWeight: 700,
                   letterSpacing: '.3rem',
-                  color: '#E4BF89',
+                  color: colors.light,
                 }}
               >
                 Dish Dilemma
@@ -77,33 +76,33 @@ export const Navbar = () => {
             </Link>
           </Box>
           <Box>
-            <Link to="/" style={linkStyles}>
-              <Button sx={{ color: '#E4BF89' }}>Random recipe</Button>
+            <Link to="/" style={link}>
+              <Button sx={{ color: colors.light }}>Random recipe</Button>
             </Link>
-            <Link to="/all-recipes" style={linkStyles}>
-              <Button sx={{ color: '#E4BF89' }}>All recipes</Button>
+            <Link to="/all-recipes" style={link}>
+              <Button sx={{ color: colors.light }}>All recipes</Button>
             </Link>
             {!!accessToken ? (
               <>
-                <Link to="/add-recipe" style={linkStyles}>
-                  <Button sx={{ color: '#E4BF89' }}>Add recipe</Button>
+                <Link to="/add-recipe" style={link}>
+                  <Button sx={{ color: colors.light }}>Add recipe</Button>
                 </Link>
-                <Link to="/my-profile" style={linkStyles}>
-                  <Button sx={{ color: '#E4BF89' }}>My profile</Button>
+                <Link to="/my-profile" style={link}>
+                  <Button sx={{ color: colors.light }}>My profile</Button>
                 </Link>
-                <Link to="/" style={linkStyles}>
-                  <Button sx={{ color: '#E4BF89' }} onClick={handleOnLogout}>
+                <Link to="/" style={link}>
+                  <Button sx={{ color: colors.light }} onClick={handleOnLogout}>
                     Logout
                   </Button>
                 </Link>
               </>
             ) : (
               <>
-                <Link to="/login" style={linkStyles}>
-                  <Button sx={{ color: '#E4BF89' }}>Login</Button>
+                <Link to="/login" style={link}>
+                  <Button sx={{ color: colors.light }}>Login</Button>
                 </Link>
-                <Link to="/register" style={linkStyles}>
-                  <Button sx={{ color: '#E4BF89' }}>Register</Button>
+                <Link to="/register" style={link}>
+                  <Button sx={{ color: colors.light }}>Register</Button>
                 </Link>
               </>
             )}

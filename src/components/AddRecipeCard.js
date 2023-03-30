@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Box, TextField, Button, Paper, Typography } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
+import { outerPaper } from '../shared/styles/formsStyles';
+import {
+  paperHeading,
+  mainBoxContainer,
+  colors,
+} from '../shared/styles/sharedStyles';
 
 const initalState = {
   title: '',
@@ -80,33 +86,21 @@ export const AddRecipeCard = ({ actionType }) => {
   };
 
   return (
-    <Paper
-      variant="outlined"
-      sx={{
-        minWidth: 500,
-        mt: '50px',
-        padding: '20px',
-        backgroundColor: '#E4BF89',
-      }}
-    >
+    <Paper variant="outlined" sx={outerPaper}>
       <Box
         component="form"
         sx={{
           width: 700,
           maxWidth: '100%',
-          display: 'flex',
-          flexDirection: 'column',
+          ...mainBoxContainer,
         }}
         autoComplete="off"
       >
         <Paper
           elevation={10}
-          sx={{ mb: 1.5, mt: 1.5, backgroundColor: '#394110' }}
+          sx={{ mb: 1.5, mt: 1.5, backgroundColor: colors.dark }}
         >
-          <Typography
-            variant="h4"
-            sx={{ textAlign: 'center', pb: 1.5, pt: 1.5, color: '#E4BF89' }}
-          >
+          <Typography variant="h4" sx={paperHeading}>
             {actionType === 'edit' ? 'Edit your recipe' : 'Add your recipe'}
           </Typography>
         </Paper>

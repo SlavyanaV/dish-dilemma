@@ -13,19 +13,22 @@ import {
   Typography,
   Box,
   Paper,
+  Dialog,
+  DialogTitle,
+  DialogActions,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { colors, link, paperHeading } from '../shared/styles/sharedStyles';
 
 export const RecipeCard = ({ cardType }) => {
   const [expanded, setExpanded] = useState(false);
   const [cardDataState, setCardDataState] = useState({});
+  const [isOpen, setIsOpen] = useState(false);
 
   const accessToken = localStorage.getItem('accessToken');
   const userId = localStorage.getItem('_id');
 
   const navigate = useNavigate();
-
-  const linkStyles = { color: 'inherit', textDecoration: 'none' };
 
   const { id } = useParams();
 
@@ -106,22 +109,19 @@ export const RecipeCard = ({ cardType }) => {
 
   return (
     <Box sx={{ width: 700, mt: '50px', mb: '50px' }}>
-      <Card sx={{ backgroundColor: '#E4BF89' }}>
-        <Paper elevation={10} sx={{ backgroundColor: '#394110' }}>
-          <Typography
-            variant="h4"
-            sx={{ textAlign: 'center', pb: 1.5, pt: 1.5, color: '#E4BF89' }}
-          >
+      <Card sx={{ backgroundColor: colors.light }}>
+        <Paper elevation={10} sx={{ backgroundColor: colors.dark }}>
+          <Typography variant="h4" sx={paperHeading}>
             {cardType === 'main' ? 'Not sure what to cook?' : 'Ready to cook?'}
           </Typography>
         </Paper>
         <Paper
           elevation={10}
-          sx={{ margin: '15px 25px 0 25px', backgroundColor: '#394110' }}
+          sx={{ m: '15px 25px 0 25px', backgroundColor: colors.dark }}
         >
           <Typography
             variant="h5"
-            sx={{ textAlign: 'center', pb: 1, pt: 1, color: '#E4BF89' }}
+            sx={{ textAlign: 'center', pb: 1, pt: 1, color: colors.light }}
           >
             {cardType === 'main'
               ? 'This is your random recipe:'
@@ -151,7 +151,7 @@ export const RecipeCard = ({ cardType }) => {
               <Button
                 variant="outlined"
                 color="inherit"
-                sx={{ margin: 1 }}
+                sx={{ m: 1 }}
                 onClick={getRandomCard}
               >
                 See another recipe
@@ -160,35 +160,56 @@ export const RecipeCard = ({ cardType }) => {
                 to="/all-recipes"
                 style={{ color: 'inherit', textDecoration: 'none' }}
               >
-                <Button variant="outlined" color="inherit" sx={{ margin: 1 }}>
+                <Button variant="outlined" color="inherit" sx={{ m: 1 }}>
                   See all recipes
                 </Button>
               </Link>
             </Box>
           ) : userId === cardDataState?._ownerId ? (
             <Box>
-              <Link
-                to={`/edit-recipe/${cardDataState?._id}`}
-                style={linkStyles}
-              >
-                <Button variant="outlined" color="inherit" sx={{ margin: 1 }}>
+              <Link to={`/edit-recipe/${cardDataState?._id}`} style={link}>
+                <Button variant="outlined" color="inherit" sx={{ m: 1 }}>
                   Edit
                 </Button>
               </Link>
               <Button
                 variant="outlined"
                 color="inherit"
-                sx={{ margin: 1 }}
-                onClick={handleOnDelete}
+                sx={{ m: 1 }}
+                onClick={() => setIsOpen(true)}
               >
                 Delete
               </Button>
+              <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
+                <DialogTitle id="alert-dialog-title">
+                  Are you sure you want to delete this recipe?
+                </DialogTitle>
+                <DialogActions>
+                  <Button
+                    variant="outlined"
+                    color="inherit"
+                    sx={{ m: 1 }}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    No
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="inherit"
+                    sx={{ m: 1 }}
+                    onClick={handleOnDelete}
+                    autoFocus
+                  >
+                    Yes
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </Box>
           ) : (
             <></>
           )}
           <IconButton
-            sx={{ marginLeft: 'auto' }}
+            sx={{ ml: 'auto' }}
             onClick={handleExpandClick}
             aria-expanded={expanded}
             aria-label="show more"
@@ -211,58 +232,3 @@ export const RecipeCard = ({ cardType }) => {
     </Box>
   );
 };
-
-// Mock data for recipe card
-const meals = [
-  {
-    idMeal: '53039',
-    strMeal: 'Piri-piri chicken and slaw',
-    strArea: 'Portuguese',
-    strInstructions:
-      'STEP 1\r\n\r\nWhizz together all of the marinade ingredients in a small food processor. Rub the marinade onto the chicken and leave for 1 hour at room temperature.\r\n\r\nSTEP 2\r\n\r\nHeat the oven to 190C/fan 170C/gas 5. Put the chicken in a roasting tray and cook for 1 hour 20 minutes. Rest under loose foil for 20 minutes. While the chicken is resting, mix together the slaw ingredients and season. Serve the chicken with slaw, fries and condiments.',
-    strMealThumb:
-      'https://www.themealdb.com/images/media/meals/hglsbl1614346998.jpg',
-    strIngredient1: 'Chicken',
-    strIngredient2: 'Red Chilli',
-    strIngredient3: 'Garlic',
-    strIngredient4: 'Ginger',
-    strIngredient5: 'Dried Oregano',
-    strIngredient6: 'Coriander',
-    strIngredient7: 'Paprika',
-    strIngredient8: 'Red Wine Vinegar',
-    strIngredient9: 'Oil',
-    strIngredient10: 'Red Onions',
-    strIngredient11: 'Carrots',
-    strIngredient12: 'Beetroot',
-    strIngredient13: 'Cabbage',
-    strIngredient14: 'Mayonnaise',
-    strIngredient15: 'Greek Yogurt',
-    strIngredient16: 'Red Wine Vinegar',
-    strIngredient17: 'Cumin Seeds',
-    strIngredient18: '',
-    strIngredient19: '',
-    strIngredient20: '',
-    strMeasure1: '1.5kg',
-    strMeasure2: '3 chopped',
-    strMeasure3: '2 cloves',
-    strMeasure4: '1 tsp ',
-    strMeasure5: '1 tsp ',
-    strMeasure6: '1 tsp ',
-    strMeasure7: '1 tsp ',
-    strMeasure8: '2 tbs',
-    strMeasure9: '2 tbs',
-    strMeasure10: '1 sliced',
-    strMeasure11: '2',
-    strMeasure12: '1',
-    strMeasure13: '4 leaves',
-    strMeasure14: '2 tbs',
-    strMeasure15: '2 tbs',
-    strMeasure16: '2 tbs',
-    strMeasure17: '1 tsp ',
-    strMeasure18: ' ',
-    strMeasure19: ' ',
-    strMeasure20: ' ',
-    strSource:
-      'https://www.olivemagazine.com/recipes/family/piri-piri-chicken-and-winter-slaw/',
-  },
-];

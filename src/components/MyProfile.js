@@ -13,6 +13,12 @@ import { SmallCard } from './SmallCard';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import InfoIcon from '@mui/icons-material/Info';
+import {
+  paperHeading,
+  mainBoxContainer,
+  colors,
+  grid,
+} from '../shared/styles/sharedStyles';
 
 export const MyProfile = () => {
   const [createdOn, setCreatedOn] = useState('');
@@ -70,17 +76,14 @@ export const MyProfile = () => {
   }, []);
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', width: '50%' }}>
-      <Card sx={{ minWidth: 800, mt: '50px', backgroundColor: '#E4BF89' }}>
+    <Box sx={{ width: '50%', ...mainBoxContainer }}>
+      <Card sx={{ minWidth: 800, mt: '50px', backgroundColor: colors.light }}>
         <CardContent>
           <Paper
             elevation={10}
-            sx={{ margin: '5px 10px 20px 10px', backgroundColor: '#394110' }}
+            sx={{ m: '5px 10px 20px 10px', backgroundColor: colors.dark }}
           >
-            <Typography
-              variant="h4"
-              sx={{ textAlign: 'center', pb: 1.5, pt: 1.5, color: '#E4BF89' }}
-            >
+            <Typography variant="h4" sx={paperHeading}>
               My profile
             </Typography>
           </Paper>
@@ -105,12 +108,8 @@ export const MyProfile = () => {
         <Grid
           container
           sx={{
-            margin: '20px 0',
-            display: 'grid',
-            gridTemplateColumns: '500px 500px 500px',
-            columnGap: '50px',
-            rowGap: '50px',
-            justifyContent: 'center',
+            m: '20px 0',
+            ...grid,
           }}
         >
           {cardsDataState.map((card, index) => (
@@ -124,11 +123,11 @@ export const MyProfile = () => {
           <Alert
             severity="info"
             sx={{
-              backgroundColor: '#E4BF89',
+              backgroundColor: colors.light,
               color: 'black',
               mt: 1.5,
             }}
-            icon={<InfoIcon sx={{ color: '#394110' }} />}
+            icon={<InfoIcon sx={{ color: colors.dark }} />}
           >
             Currently there are no recipes added by you
           </Alert>

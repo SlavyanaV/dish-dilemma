@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button, TextField, Paper, Typography } from '@mui/material';
+import { innerPaper, outerPaper } from '../shared/styles/formsStyles';
+import { paperHeading, mainBoxContainer } from '../shared/styles/sharedStyles';
 
 export const Login = () => {
   const [loginDataState, setLoginDataState] = useState({
@@ -43,29 +45,10 @@ export const Login = () => {
   };
 
   return (
-    <Paper
-      variant="outlined"
-      sx={{
-        minWidth: 500,
-        mt: '50px',
-        padding: '20px',
-        backgroundColor: '#E4BF89',
-      }}
-    >
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <Paper
-          elevation={10}
-          sx={{ margin: '5px 10px 20px 10px', backgroundColor: '#394110' }}
-        >
-          <Typography
-            variant="h4"
-            sx={{ textAlign: 'center', pb: 1.5, pt: 1.5, color: '#E4BF89' }}
-          >
+    <Paper variant="outlined" sx={outerPaper}>
+      <Box sx={mainBoxContainer}>
+        <Paper elevation={10} sx={innerPaper}>
+          <Typography variant="h4" sx={paperHeading}>
             Log into your profile
           </Typography>
         </Paper>
@@ -95,7 +78,7 @@ export const Login = () => {
         <Button
           variant="outlined"
           color="inherit"
-          sx={{ margin: 1 }}
+          sx={{ m: 1 }}
           onClick={handleOnSubmit}
         >
           Login

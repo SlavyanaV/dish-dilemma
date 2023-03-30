@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Grid, Stack, Alert, Box } from '@mui/material';
 import { SmallCard } from './SmallCard';
 import InfoIcon from '@mui/icons-material/Info';
+import { mainBoxContainer, colors, grid } from '../shared/styles/sharedStyles';
 
 export const CardsList = () => {
   const [cardsDataState, setCardsDataState] = useState([]);
@@ -28,10 +29,9 @@ export const CardsList = () => {
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
         width: '50%',
         mt: '50px',
+        ...mainBoxContainer,
       }}
     >
       {cardsDataState.length ? (
@@ -39,11 +39,7 @@ export const CardsList = () => {
           container
           sx={{
             mb: '50px',
-            display: 'grid',
-            gridTemplateColumns: '500px 500px 500px',
-            columnGap: '50px',
-            rowGap: '50px',
-            justifyContent: 'center',
+            ...grid,
           }}
         >
           {cardsDataState.map((card, index) => (
@@ -58,11 +54,11 @@ export const CardsList = () => {
             severity="info"
             sx={{
               minWidth: 800,
-              backgroundColor: '#E4BF89',
+              backgroundColor: colors.light,
               color: 'black',
               mt: 1.5,
             }}
-            icon={<InfoIcon sx={{ color: '#394110' }} />}
+            icon={<InfoIcon sx={{ color: colors.dark }} />}
           >
             Currently there are no recipes in database
           </Alert>

@@ -6,12 +6,11 @@ import {
   Button,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { colors, link } from '../shared/styles/sharedStyles';
 
 export const SmallCard = ({ card }) => {
-  const linkStyles = { color: 'inherit', textDecoration: 'none' };
-
   return (
-    <Card sx={{ backgroundColor: '#E4BF89' }}>
+    <Card sx={{ backgroundColor: colors.light }}>
       <CardMedia
         component="img"
         height="300"
@@ -27,7 +26,7 @@ export const SmallCard = ({ card }) => {
         disableSpacing
         sx={{ display: 'flex', justifyContent: 'center' }}
       >
-        <Link to={`/recipe-details/${card._id}`} style={linkStyles}>
+        <Link to={`/recipe-details/${card._id}`} style={link}>
           <Button variant="outlined" color="inherit">
             See details
           </Button>
