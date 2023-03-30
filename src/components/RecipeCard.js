@@ -62,8 +62,6 @@ export const RecipeCard = ({ cardType }) => {
         throw new Error(responseData.message);
       }
 
-      console.log(responseData);
-
       const randomRecipe = responseData.meals.map((meal) => ({
         title: meal.strMeal,
         category: meal.strCategory,
@@ -114,9 +112,20 @@ export const RecipeCard = ({ cardType }) => {
             variant="h4"
             sx={{ textAlign: 'center', pb: 1.5, pt: 1.5, color: '#E4BF89' }}
           >
+            {cardType === 'main' ? 'Not sure what to cook?' : 'Ready to cook?'}
+          </Typography>
+        </Paper>
+        <Paper
+          elevation={10}
+          sx={{ margin: '15px 25px 0 25px', backgroundColor: '#394110' }}
+        >
+          <Typography
+            variant="h5"
+            sx={{ textAlign: 'center', pb: 1, pt: 1, color: '#E4BF89' }}
+          >
             {cardType === 'main'
-              ? 'This is your random recipe'
-              : 'Recipe details'}
+              ? 'This is your random recipe:'
+              : 'Here are the recipe details:'}
           </Typography>
         </Paper>
         <CardHeader

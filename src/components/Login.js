@@ -98,7 +98,7 @@ export const Login = () => {
           sx={{ margin: 1 }}
           onClick={handleOnSubmit}
         >
-          Submit
+          Login
         </Button>
       </Box>
     </Paper>

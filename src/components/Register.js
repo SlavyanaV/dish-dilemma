@@ -109,7 +109,7 @@ export const Register = () => {
           sx={{ margin: 1 }}
           onClick={handleOnSubmit}
         >
-          Submit
+          Register
         </Button>
       </Box>
     </Paper>
