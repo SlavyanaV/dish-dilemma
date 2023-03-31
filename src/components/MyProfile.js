@@ -77,7 +77,7 @@ export const MyProfile = () => {
 
   return (
     <Box sx={{ width: '50%', ...mainBoxContainer }}>
-      <Card sx={{ minWidth: 800, mt: '50px', backgroundColor: colors.light }}>
+      <Card sx={{ minWidth: 800, mt: '80px', backgroundColor: colors.light }}>
         <CardContent>
           <Paper
             elevation={10}

@@ -108,7 +108,7 @@ export const RecipeCard = ({ cardType }) => {
   };
 
   return (
-    <Box sx={{ width: 700, mt: '50px', mb: '50px' }}>
+    <Box sx={{ width: 700, mt: '80px', mb: '50px' }}>
       <Card sx={{ backgroundColor: colors.light }}>
         <Paper elevation={10} sx={{ backgroundColor: colors.dark }}>
           <Typography variant="h4" sx={paperHeading}>
@@ -135,7 +135,7 @@ export const RecipeCard = ({ cardType }) => {
         />
         <CardMedia
           component="img"
-          height={'500'}
+          height={'400'}
           image={cardDataState?.picture}
           alt="Dish picture"
         />

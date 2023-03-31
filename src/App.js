@@ -1,7 +1,8 @@
 import { Navbar } from './components/Navbar';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ContentContainer } from './components/ContentContainer';
-import './shared/styles/sharedStyles.css'
+import './shared/styles/sharedStyles.css';
+import { Footer } from './components/Footer';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Navbar />
         <ContentContainer />
       </div>
+      <Footer />
     </>
   );
 }
