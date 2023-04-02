@@ -19,6 +19,7 @@ import {
   colors,
   grid,
 } from '../shared/styles/sharedStyles';
+import { getUserDetails } from '../shared/services/userService';
 
 export const MyProfile = () => {
   const [createdOn, setCreatedOn] = useState('');
@@ -32,17 +33,7 @@ export const MyProfile = () => {
 
   const getUser = async () => {
     try {
-      const response = await fetch('http://localhost:3030/users/me', {
-        method: 'GET',
-        headers: {
-          'X-Authorization': accessToken,
-        },
-      });
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      }
+      const responseData = await getUserDetails(accessToken);
 
       setCreatedOn(dayjs(responseData._createdOn).fromNow());
     } catch (err) {

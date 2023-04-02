@@ -11,21 +11,15 @@ import {
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { colors, link } from '../shared/styles/sharedStyles';
+import { logout } from '../shared/services/userService';
 
 export const Navbar = () => {
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('accessToken');  
+  const accessToken = localStorage.getItem('accessToken');
 
   const handleOnLogout = async () => {
     try {
-      const response = await fetch('http://localhost:3030/users/logout', {
-        method: 'GET',
-        headers: { 'X-Authorization': accessToken },
-      });
-
-      if (!response.ok) {
-        throw new Error();
-      }
+      await logout(accessToken);
 
       localStorage.clear();
 
@@ -90,11 +84,9 @@ export const Navbar = () => {
                 <Link to="/my-profile" style={link}>
                   <Button sx={{ color: colors.light }}>My profile</Button>
                 </Link>
-                <Link to="/" style={link}>
-                  <Button sx={{ color: colors.light }} onClick={handleOnLogout}>
-                    Logout
-                  </Button>
-                </Link>
+                <Button sx={{ color: colors.light }} onClick={handleOnLogout}>
+                  Logout
+                </Button>
               </>
             ) : (
               <>

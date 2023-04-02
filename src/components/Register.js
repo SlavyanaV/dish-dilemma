@@ -3,6 +3,7 @@ import { Box, Button, TextField, Paper, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { innerPaper, outerPaper } from '../shared/styles/formsStyles';
 import { paperHeading, mainBoxContainer } from '../shared/styles/sharedStyles';
+import { register } from '../shared/services/userService';
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -24,20 +25,7 @@ export const Register = () => {
 
   const handleOnSubmit = async () => {
     try {
-      const response = await fetch('http://localhost:3030/users/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: registerDataState.email,
-          password: registerDataState.password,
-        }),
-      });
-
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      }
+      const responseData = await register(registerDataState);
 
       navigate('/');
 

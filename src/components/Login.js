@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Button, TextField, Paper, Typography } from '@mui/material';
 import { innerPaper, outerPaper } from '../shared/styles/formsStyles';
 import { paperHeading, mainBoxContainer } from '../shared/styles/sharedStyles';
+import { login } from '../shared/services/userService';
 
 export const Login = () => {
   const [loginDataState, setLoginDataState] = useState({
@@ -22,17 +23,7 @@ export const Login = () => {
 
   const handleOnSubmit = async () => {
     try {
-      const response = await fetch('http://localhost:3030/users/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(loginDataState),
-      });
-
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      }
+      const responseData = await login(loginDataState);
 
       navigate('/my-profile');
 
