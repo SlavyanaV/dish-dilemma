@@ -6,11 +6,12 @@ import { paperHeading, mainBoxContainer } from '../shared/styles/sharedStyles';
 import { login } from '../shared/services/userService';
 
 export const Login = () => {
+  const navigate = useNavigate();
+  
   const [loginDataState, setLoginDataState] = useState({
     email: '',
     password: '',
   });
-  const navigate = useNavigate();
 
   const handleOnChange = (event) => {
     const { name, value } = event.target;

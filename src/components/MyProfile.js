@@ -20,6 +20,7 @@ import {
   grid,
 } from '../shared/styles/sharedStyles';
 import { getUserDetails } from '../shared/services/userService';
+import { fetchAllRecipesByUserId } from '../shared/services/recipeService';
 
 export const MyProfile = () => {
   const [createdOn, setCreatedOn] = useState('');
@@ -45,16 +46,9 @@ export const MyProfile = () => {
     getUser();
   }, []);
 
-  const fetchUserCards = async () => {
+  const getUserRecipes = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:3030/data/all-recipes?where=_ownerId%3D%22${userId}%22`
-      );
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      }
+      const responseData = await fetchAllRecipesByUserId(userId);
 
       setCardsDataState(responseData);
     } catch (err) {
@@ -63,7 +57,7 @@ export const MyProfile = () => {
   };
 
   useEffect(() => {
-    fetchUserCards();
+    getUserRecipes();
   }, []);
 
   return (

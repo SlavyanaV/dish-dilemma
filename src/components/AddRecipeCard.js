@@ -7,6 +7,10 @@ import {
   mainBoxContainer,
   colors,
 } from '../shared/styles/sharedStyles';
+import {
+  fetchRecipeById,
+  manageRecipe,
+} from '../shared/services/recipeService';
 
 const initalState = {
   title: '',
@@ -16,20 +20,15 @@ const initalState = {
 };
 
 export const AddRecipeCard = ({ actionType }) => {
-  const [cardDataState, setCardDataState] = useState(initalState);
-
+  const navigate = useNavigate();
+  const accessToken = localStorage.getItem('accessToken');
   const { id } = useParams();
 
-  const getCard = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:3030/data/all-recipes/${id}`
-      );
-      const responseData = await response.json();
+  const [cardDataState, setCardDataState] = useState(initalState);
 
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      }
+  const getRecipe = async () => {
+    try {
+      const responseData = await fetchRecipeById(id);
 
       setCardDataState(responseData);
     } catch (err) {
@@ -39,14 +38,11 @@ export const AddRecipeCard = ({ actionType }) => {
 
   useEffect(() => {
     if (actionType === 'edit') {
-      getCard();
+      getRecipe();
     } else {
       setCardDataState(initalState);
     }
   }, [actionType]);
-
-  const navigate = useNavigate();
-  const accessToken = localStorage.getItem('accessToken');
 
   const handleOnChange = (event) => {
     const { name, value } = event.target;
@@ -59,25 +55,7 @@ export const AddRecipeCard = ({ actionType }) => {
 
   const handleOnSubmit = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:3030/data/all-recipes${
-          actionType === 'edit' ? '/' + id : ''
-        }`,
-        {
-          method: `${actionType === 'edit' ? 'PUT' : 'POST'}`,
-          headers: {
-            'X-Authorization': accessToken,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(cardDataState),
-        }
-      );
-
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      }
+      await manageRecipe(actionType, id, accessToken, cardDataState);
 
       navigate('/all-recipes');
     } catch (err) {

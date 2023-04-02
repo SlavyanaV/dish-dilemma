@@ -19,34 +19,30 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { colors, link, paperHeading } from '../shared/styles/sharedStyles';
-import { fetchRandomCard } from '../shared/services/randomRecipeService';
+import { fetchRandomRecipe } from '../shared/services/randomRecipeService';
+import {
+  deleteRecipe,
+  fetchRecipeById,
+} from '../shared/services/recipeService';
 
 export const RecipeCard = ({ cardType }) => {
-  const [expanded, setExpanded] = useState(false);
-  const [cardDataState, setCardDataState] = useState({});
-  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const { id } = useParams();
 
   const accessToken = localStorage.getItem('accessToken');
   const userId = localStorage.getItem('_id');
 
-  const navigate = useNavigate();
-
-  const { id } = useParams();
+  const [expanded, setExpanded] = useState(false);
+  const [cardDataState, setCardDataState] = useState({});
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const getCard = async () => {
+  const getRecipe = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:3030/data/all-recipes/${id}`
-      );
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      }
+      const responseData = await fetchRecipeById(id);
 
       setCardDataState(responseData);
     } catch (err) {
@@ -55,9 +51,9 @@ export const RecipeCard = ({ cardType }) => {
     }
   };
 
-  const getRandomCard = async () => {
+  const getRandomRecipe = async () => {
     try {
-      const randomRecipe = await fetchRandomCard();
+      const randomRecipe = await fetchRandomRecipe();
 
       setCardDataState(randomRecipe);
     } catch (err) {
@@ -68,25 +64,15 @@ export const RecipeCard = ({ cardType }) => {
 
   useEffect(() => {
     if (cardType !== 'main') {
-      getCard();
+      getRecipe();
     } else {
-      getRandomCard();
+      getRandomRecipe();
     }
   }, [cardType]);
 
   const handleOnDelete = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:3030/data/all-recipes/${cardDataState._id}`,
-        {
-          method: 'DELETE',
-          headers: { 'X-Authorization': accessToken },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error();
-      }
+      await deleteRecipe(cardDataState._id, accessToken);
 
       navigate('/all-recipes');
     } catch (err) {
@@ -139,7 +125,7 @@ export const RecipeCard = ({ cardType }) => {
                 variant="outlined"
                 color="inherit"
                 sx={{ m: 1 }}
-                onClick={getRandomCard}
+                onClick={getRandomRecipe}
               >
                 See another recipe
               </Button>

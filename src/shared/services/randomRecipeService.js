@@ -1,4 +1,4 @@
-export const fetchRandomCard = async () => {
+export const fetchRandomRecipe = async () => {
   const response = await fetch(
     'https://themealdb.com/api/json/v1/1/random.php'
   );

@@ -1,5 +1,4 @@
 .MuiDialog-paper {
-    background-color: #394110;
-    color: #e4bf89;
-  }
-  
+  background-color: #394110 !important;
+  color: #e4bf89 !important;
+}

@@ -3,18 +3,14 @@ import { Grid, Stack, Alert, Box } from '@mui/material';
 import { SmallCard } from './SmallCard';
 import InfoIcon from '@mui/icons-material/Info';
 import { mainBoxContainer, colors, grid } from '../shared/styles/sharedStyles';
+import { fetchAllRecipes } from '../shared/services/recipeService';
 
 export const CardsList = () => {
   const [cardsDataState, setCardsDataState] = useState([]);
 
-  const fetchCards = async () => {
+  const fetchRecipes = async () => {
     try {
-      const response = await fetch('http://localhost:3030/data/all-recipes');
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      }
+     const responseData = await fetchAllRecipes()
 
       setCardsDataState(responseData);
     } catch (err) {
@@ -23,7 +19,7 @@ export const CardsList = () => {
   };
 
   useEffect(() => {
-    fetchCards();
+    fetchRecipes();
   }, []);
 
   return (
