@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { colors, link, paperHeading } from '../shared/styles/sharedStyles';
+import { fetchRandomCard } from '../shared/services/randomRecipeService';
 
 export const RecipeCard = ({ cardType }) => {
   const [expanded, setExpanded] = useState(false);
@@ -56,23 +57,9 @@ export const RecipeCard = ({ cardType }) => {
 
   const getRandomCard = async () => {
     try {
-      const response = await fetch(
-        'https://themealdb.com/api/json/v1/1/random.php'
-      );
-      const responseData = await response.json();
+      const randomRecipe = await fetchRandomCard();
 
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      }
-
-      const randomRecipe = responseData.meals.map((meal) => ({
-        title: meal.strMeal,
-        category: meal.strCategory,
-        picture: meal.strMealThumb,
-        description: meal.strInstructions,
-      }));
-
-      setCardDataState(randomRecipe[0]);
+      setCardDataState(randomRecipe);
     } catch (err) {
       alert(err);
       setCardDataState({});
