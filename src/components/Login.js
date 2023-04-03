@@ -4,14 +4,16 @@ import { Box, Button, TextField, Paper, Typography } from '@mui/material';
 import { innerPaper, outerPaper } from '../shared/styles/formsStyles';
 import { paperHeading, mainBoxContainer } from '../shared/styles/sharedStyles';
 import { login } from '../shared/services/userService';
+import { formValidation } from '../shared/validations';
 
 export const Login = () => {
   const navigate = useNavigate();
-  
+
   const [loginDataState, setLoginDataState] = useState({
     email: '',
     password: '',
   });
+  const [errorState, setErrorState] = useState({ email: '', password: '' });
 
   const handleOnChange = (event) => {
     const { name, value } = event.target;
@@ -23,16 +25,22 @@ export const Login = () => {
   };
 
   const handleOnSubmit = async () => {
-    try {
-      const responseData = await login(loginDataState);
+    const { errors, hasErrors } = formValidation(loginDataState);
 
-      navigate('/my-profile');
+    setErrorState(errors);
 
-      localStorage.setItem('accessToken', responseData.accessToken);
-      localStorage.setItem('email', responseData.email);
-      localStorage.setItem('_id', responseData._id);
-    } catch (err) {
-      alert(err);
+    if (!hasErrors) {
+      try {
+        const responseData = await login(loginDataState);
+
+        navigate('/my-profile');
+
+        localStorage.setItem('accessToken', responseData.accessToken);
+        localStorage.setItem('email', responseData.email);
+        localStorage.setItem('_id', responseData._id);
+      } catch (err) {
+        alert(err);
+      }
     }
   };
 
@@ -50,7 +58,8 @@ export const Login = () => {
           label="Email"
           variant="outlined"
           color="success"
-          helperText="*Mandatory field!"
+          helperText={errorState.email}
+          error={!!errorState.email}
           sx={{ m: 1 }}
           onChange={handleOnChange}
         />
@@ -63,7 +72,8 @@ export const Login = () => {
           variant="outlined"
           color="success"
           autoComplete="current-password"
-          helperText="*Mandatory field!"
+          helperText={errorState.password}
+          error={!!errorState.password}
           sx={{ m: 1 }}
           onChange={handleOnChange}
         />

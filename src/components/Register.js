@@ -4,11 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import { innerPaper, outerPaper } from '../shared/styles/formsStyles';
 import { paperHeading, mainBoxContainer } from '../shared/styles/sharedStyles';
 import { register } from '../shared/services/userService';
+import { formValidation } from '../shared/validations';
 
 export const Register = () => {
   const navigate = useNavigate();
 
   const [registerDataState, setRegisterDataState] = useState({
+    email: '',
+    password: '',
+    repassword: '',
+  });
+
+  const [errorState, setErrorState] = useState({
     email: '',
     password: '',
     repassword: '',
@@ -24,16 +31,22 @@ export const Register = () => {
   };
 
   const handleOnSubmit = async () => {
-    try {
-      const responseData = await register(registerDataState);
+    const { errors, hasErrors } = formValidation(registerDataState);
 
-      navigate('/');
+    setErrorState(errors);
 
-      localStorage.setItem('accessToken', responseData.accessToken);
-      localStorage.setItem('email', responseData.email);
-      localStorage.setItem('_id', responseData._id);
-    } catch (err) {
-      alert(err);
+    if (!hasErrors) {
+      try {
+        const responseData = await register(registerDataState);
+
+        navigate('/');
+
+        localStorage.setItem('accessToken', responseData.accessToken);
+        localStorage.setItem('email', responseData.email);
+        localStorage.setItem('_id', responseData._id);
+      } catch (err) {
+        alert(err);
+      }
     }
   };
 
@@ -51,7 +64,8 @@ export const Register = () => {
           label="Email"
           variant="outlined"
           color="success"
-          helperText="*Mandatory field!"
+          helperText={errorState.email}
+          error={!!errorState.email}
           sx={{ m: 1 }}
           onChange={handleOnChange}
         />
@@ -63,7 +77,8 @@ export const Register = () => {
           variant="outlined"
           color="success"
           autoComplete="current-password"
-          helperText="*Mandatory field!"
+          helperText={errorState.password}
+          error={!!errorState.password}
           sx={{ m: 1 }}
           onChange={handleOnChange}
         />
@@ -75,7 +90,8 @@ export const Register = () => {
           variant="outlined"
           color="success"
           autoComplete="current-password"
-          helperText="*Mandatory field!"
+          helperText={errorState.repassword}
+          error={!!errorState.repassword}
           sx={{ m: 1 }}
           onChange={handleOnChange}
         />

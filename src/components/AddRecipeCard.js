@@ -11,6 +11,7 @@ import {
   fetchRecipeById,
   manageRecipe,
 } from '../shared/services/recipeService';
+import { formValidation } from '../shared/validations';
 
 const initalState = {
   title: '',
@@ -25,6 +26,13 @@ export const AddRecipeCard = ({ actionType }) => {
   const { id } = useParams();
 
   const [cardDataState, setCardDataState] = useState(initalState);
+
+  const [errorState, setErrorState] = useState({
+    title: '',
+    category: '',
+    picture: '',
+    description: '',
+  });
 
   const getRecipe = async () => {
     try {
@@ -54,12 +62,18 @@ export const AddRecipeCard = ({ actionType }) => {
   };
 
   const handleOnSubmit = async () => {
-    try {
-      await manageRecipe(actionType, id, accessToken, cardDataState);
+    const { errors, hasErrors } = formValidation(cardDataState);
 
-      navigate('/all-recipes');
-    } catch (err) {
-      alert(err);
+    setErrorState(errors);
+
+    if (!hasErrors) {
+      try {
+        await manageRecipe(actionType, id, accessToken, cardDataState);
+
+        navigate('/all-recipes');
+      } catch (err) {
+        alert(err);
+      }
     }
   };
 
@@ -91,6 +105,8 @@ export const AddRecipeCard = ({ actionType }) => {
           label="Recipe title"
           variant="outlined"
           color="success"
+          helperText={errorState.title}
+          error={!!errorState.title}
           onChange={handleOnChange}
         />
         <TextField
@@ -101,6 +117,8 @@ export const AddRecipeCard = ({ actionType }) => {
           label="Category"
           variant="outlined"
           color="success"
+          helperText={errorState.category}
+          error={!!errorState.category}
           onChange={handleOnChange}
         />
         <TextField
@@ -113,6 +131,8 @@ export const AddRecipeCard = ({ actionType }) => {
           maxRows={2}
           variant="outlined"
           color="success"
+          helperText={errorState.picture}
+          error={!!errorState.picture}
           onChange={handleOnChange}
         />
         <TextField
@@ -125,6 +145,8 @@ export const AddRecipeCard = ({ actionType }) => {
           rows={8}
           variant="outlined"
           color="success"
+          helperText={errorState.description}
+          error={!!errorState.description}
           onChange={handleOnChange}
         />
         <Button
