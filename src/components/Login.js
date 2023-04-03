@@ -6,14 +6,16 @@ import { paperHeading, mainBoxContainer } from '../shared/styles/sharedStyles';
 import { login } from '../shared/services/userService';
 import { formValidation } from '../shared/validations';
 
+const initialState = {
+  email: '',
+  password: '',
+};
+
 export const Login = () => {
   const navigate = useNavigate();
 
-  const [loginDataState, setLoginDataState] = useState({
-    email: '',
-    password: '',
-  });
-  const [errorState, setErrorState] = useState({ email: '', password: '' });
+  const [loginDataState, setLoginDataState] = useState(initialState);
+  const [errorState, setErrorState] = useState(initialState);
 
   const handleOnChange = (event) => {
     const { name, value } = event.target;

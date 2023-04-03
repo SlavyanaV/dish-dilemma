@@ -8,6 +8,8 @@ import {
   Grid,
   Stack,
   Alert,
+  AlertTitle,
+  Snackbar,
 } from '@mui/material';
 import { SmallCard } from './SmallCard';
 import dayjs from 'dayjs';
@@ -25,6 +27,8 @@ import { fetchAllRecipesByUserId } from '../shared/services/recipeService';
 export const MyProfile = () => {
   const [createdOn, setCreatedOn] = useState('');
   const [cardsDataState, setCardsDataState] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
 
   const userEmail = localStorage.getItem('email');
   const userId = localStorage.getItem('_id');
@@ -38,7 +42,8 @@ export const MyProfile = () => {
 
       setCreatedOn(dayjs(responseData._createdOn).fromNow());
     } catch (err) {
-      alert(err);
+      setAlertMessage(err.message);
+      setIsOpen(true);
     }
   };
 
@@ -52,7 +57,8 @@ export const MyProfile = () => {
 
       setCardsDataState(responseData);
     } catch (err) {
-      alert(err);
+      setAlertMessage(err.message);
+      setIsOpen(true);
     }
   };
 
@@ -118,6 +124,22 @@ export const MyProfile = () => {
           </Alert>
         </Stack>
       )}
+      <Snackbar
+        open={isOpen}
+        autoHideDuration={4000}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        onClose={() => setIsOpen(false)}
+      >
+        <Alert
+          onClose={() => setIsOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: '100%', color: colors.light }}
+        >
+          <AlertTitle>Error</AlertTitle>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

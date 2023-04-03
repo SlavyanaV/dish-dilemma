@@ -42,7 +42,7 @@ export const logout = async (accessToken) => {
   });
 
   if (!response.ok) {
-    throw new Error();
+    throw new Error(response.statusText);
   }
 };
 

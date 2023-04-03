@@ -4,7 +4,7 @@ import { Login } from './Login';
 import { RecipeCard } from './RecipeCard';
 import { Register } from './Register';
 import { CardsList } from './CardsList';
-import { AddRecipeCard } from './AddRecipeCard';
+import { ManageRecipeCard } from './ManageRecipeCard';
 import { MyProfile } from './MyProfile';
 
 export const ContentContainer = () => {
@@ -21,11 +21,11 @@ export const ContentContainer = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/all-recipes" element={<CardsList />} />
-        <Route path="/add-recipe" element={<AddRecipeCard />} />
+        <Route path="/add-recipe" element={<ManageRecipeCard />} />
         <Route path="/my-profile" element={<MyProfile />} />
         <Route
           path="/edit-recipe/:id"
-          element={<AddRecipeCard actionType={'edit'} />}
+          element={<ManageRecipeCard actionType={'edit'} />}
         />
         <Route path="/recipe-details/:id" element={<RecipeCard />} />
       </Routes>

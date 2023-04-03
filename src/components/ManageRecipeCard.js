@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Box, TextField, Button, Paper, Typography } from '@mui/material';
+import {
+  Box,
+  TextField,
+  Button,
+  Paper,
+  Typography,
+  Snackbar,
+  Alert,
+  AlertTitle,
+} from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { outerPaper } from '../shared/styles/formsStyles';
 import {
@@ -20,19 +29,15 @@ const initalState = {
   description: '',
 };
 
-export const AddRecipeCard = ({ actionType }) => {
+export const ManageRecipeCard = ({ actionType }) => {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
   const { id } = useParams();
 
   const [cardDataState, setCardDataState] = useState(initalState);
-
-  const [errorState, setErrorState] = useState({
-    title: '',
-    category: '',
-    picture: '',
-    description: '',
-  });
+  const [errorState, setErrorState] = useState(initalState);
+  const [isOpen, setIsOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
 
   const getRecipe = async () => {
     try {
@@ -40,7 +45,8 @@ export const AddRecipeCard = ({ actionType }) => {
 
       setCardDataState(responseData);
     } catch (err) {
-      alert(err);
+      setAlertMessage(err.message);
+      setIsOpen(true);
     }
   };
 
@@ -72,7 +78,8 @@ export const AddRecipeCard = ({ actionType }) => {
 
         navigate('/all-recipes');
       } catch (err) {
-        alert(err);
+        setAlertMessage(err.message);
+        setIsOpen(true);
       }
     }
   };
@@ -158,6 +165,22 @@ export const AddRecipeCard = ({ actionType }) => {
           {actionType === 'edit' ? 'Edit recipe' : 'Add recipe'}
         </Button>
       </Box>
+      <Snackbar
+        open={isOpen}
+        autoHideDuration={4000}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        onClose={() => setIsOpen(false)}
+      >
+        <Alert
+          onClose={() => setIsOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: '100%', color: colors.light }}
+        >
+          <AlertTitle>Error</AlertTitle>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </Paper>
   );
 };

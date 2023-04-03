@@ -1,25 +1,37 @@
 import React, { useState } from 'react';
-import { Box, Button, TextField, Paper, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  TextField,
+  Paper,
+  Typography,
+  Snackbar,
+  Alert,
+  AlertTitle,
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { innerPaper, outerPaper } from '../shared/styles/formsStyles';
-import { paperHeading, mainBoxContainer } from '../shared/styles/sharedStyles';
+import {
+  paperHeading,
+  mainBoxContainer,
+  colors,
+} from '../shared/styles/sharedStyles';
 import { register } from '../shared/services/userService';
 import { formValidation } from '../shared/validations';
+
+const initialState = {
+  email: '',
+  password: '',
+  repassword: '',
+};
 
 export const Register = () => {
   const navigate = useNavigate();
 
-  const [registerDataState, setRegisterDataState] = useState({
-    email: '',
-    password: '',
-    repassword: '',
-  });
-
-  const [errorState, setErrorState] = useState({
-    email: '',
-    password: '',
-    repassword: '',
-  });
+  const [registerDataState, setRegisterDataState] = useState(initialState);
+  const [errorState, setErrorState] = useState(initialState);
+  const [isOpen, setIsOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
 
   const handleOnChange = (event) => {
     const { name, value } = event.target;
@@ -45,7 +57,8 @@ export const Register = () => {
         localStorage.setItem('email', responseData.email);
         localStorage.setItem('_id', responseData._id);
       } catch (err) {
-        alert(err);
+        setAlertMessage(err.message);
+        setIsOpen(true);
       }
     }
   };
@@ -104,6 +117,22 @@ export const Register = () => {
           Register
         </Button>
       </Box>
+      <Snackbar
+        open={isOpen}
+        autoHideDuration={4000}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        onClose={() => setIsOpen(false)}
+      >
+        <Alert
+          onClose={() => setIsOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: '100%', color: colors.light }}
+        >
+          <AlertTitle>Error</AlertTitle>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </Paper>
   );
 };

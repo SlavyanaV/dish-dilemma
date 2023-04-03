@@ -16,6 +16,9 @@ import {
   Dialog,
   DialogTitle,
   DialogActions,
+  Snackbar,
+  Alert,
+  AlertTitle,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { colors, link, paperHeading } from '../shared/styles/sharedStyles';
@@ -34,7 +37,9 @@ export const RecipeCard = ({ cardType }) => {
 
   const [expanded, setExpanded] = useState(false);
   const [cardDataState, setCardDataState] = useState({});
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -46,7 +51,8 @@ export const RecipeCard = ({ cardType }) => {
 
       setCardDataState(responseData);
     } catch (err) {
-      alert(err);
+      setAlertMessage(err.message);
+      setIsOpen(true);
       setCardDataState({});
     }
   };
@@ -57,7 +63,8 @@ export const RecipeCard = ({ cardType }) => {
 
       setCardDataState(randomRecipe);
     } catch (err) {
-      alert(err);
+      setAlertMessage(err.message);
+      setIsOpen(true);
       setCardDataState({});
     }
   };
@@ -76,7 +83,8 @@ export const RecipeCard = ({ cardType }) => {
 
       navigate('/all-recipes');
     } catch (err) {
-      alert(err);
+      setAlertMessage(err.message);
+      setIsOpen(true);
     }
   };
 
@@ -149,11 +157,14 @@ export const RecipeCard = ({ cardType }) => {
                 variant="outlined"
                 color="inherit"
                 sx={{ m: 1 }}
-                onClick={() => setIsOpen(true)}
+                onClick={() => setIsDialogOpen(true)}
               >
                 Delete
               </Button>
-              <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
+              <Dialog
+                open={isDialogOpen}
+                onClose={() => setIsDialogOpen(false)}
+              >
                 <DialogTitle id="alert-dialog-title">
                   Are you sure you want to delete this recipe?
                 </DialogTitle>
@@ -162,7 +173,7 @@ export const RecipeCard = ({ cardType }) => {
                     variant="outlined"
                     color="inherit"
                     sx={{ m: 1 }}
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => setIsDialogOpen(false)}
                   >
                     No
                   </Button>
@@ -202,6 +213,22 @@ export const RecipeCard = ({ cardType }) => {
           </CardContent>
         </Collapse>
       </Card>
+      <Snackbar
+        open={isOpen}
+        autoHideDuration={4000}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        onClose={() => setIsOpen(false)}
+      >
+        <Alert
+          onClose={() => setIsOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: '100%', color: colors.light }}
+        >
+          <AlertTitle>Error</AlertTitle>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

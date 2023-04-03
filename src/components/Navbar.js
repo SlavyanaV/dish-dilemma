@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import {
   AppBar,
   Box,
@@ -8,6 +8,9 @@ import {
   IconButton,
   Avatar,
   Typography,
+  Snackbar,
+  Alert,
+  AlertTitle,
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { colors, link } from '../shared/styles/sharedStyles';
@@ -17,6 +20,9 @@ export const Navbar = () => {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+
   const handleOnLogout = async () => {
     try {
       await logout(accessToken);
@@ -25,7 +31,8 @@ export const Navbar = () => {
 
       navigate('/login');
     } catch (err) {
-      alert('Failed to log out!');
+      setAlertMessage(err.message);
+      setIsOpen(true);
     }
   };
 
@@ -101,6 +108,22 @@ export const Navbar = () => {
           </Box>
         </Toolbar>
       </AppBar>
+      <Snackbar
+        open={isOpen}
+        autoHideDuration={4000}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        onClose={() => setIsOpen(false)}
+      >
+        <Alert
+          onClose={() => setIsOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: '100%', color: colors.light }}
+        >
+          <AlertTitle>Error</AlertTitle>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
