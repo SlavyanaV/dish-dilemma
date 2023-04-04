@@ -6,6 +6,8 @@ import { Register } from './Register';
 import { CardsList } from './CardsList';
 import { ManageRecipeCard } from './ManageRecipeCard';
 import { MyProfile } from './MyProfile';
+import { PrivateRoutes } from './RoutesGuards/PrivateRoutes';
+import { PublicRoutes } from './RoutesGuards/PublicRoutes';
 
 export const ContentContainer = () => {
   return (
@@ -18,16 +20,20 @@ export const ContentContainer = () => {
     >
       <Routes>
         <Route path="/" element={<RecipeCard cardType={'main'} />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/all-recipes" element={<CardsList />} />
-        <Route path="/add-recipe" element={<ManageRecipeCard />} />
-        <Route path="/my-profile" element={<MyProfile />} />
-        <Route
-          path="/edit-recipe/:id"
-          element={<ManageRecipeCard actionType={'edit'} />}
-        />
-        <Route path="/recipe-details/:id" element={<RecipeCard />} />
+        <Route element={<PublicRoutes />}>
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+        </Route>
+        <Route element={<PrivateRoutes />}>
+          <Route path="/add-recipe" element={<ManageRecipeCard />} />
+          <Route path="/my-profile" element={<MyProfile />} />
+          <Route
+            path="/edit-recipe/:id"
+            element={<ManageRecipeCard actionType={'edit'} />}
+          />
+          <Route path="/recipe-details/:id" element={<RecipeCard />} />
+        </Route>
       </Routes>
     </Box>
   );
