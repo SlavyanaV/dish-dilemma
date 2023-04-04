@@ -21,6 +21,7 @@ import {
   manageRecipe,
 } from '../shared/services/recipeService';
 import { formValidation } from '../shared/validations';
+import { useUserContext } from '../hooks/useUserContext';
 
 const initalState = {
   title: '',
@@ -31,7 +32,9 @@ const initalState = {
 
 export const ManageRecipeCard = ({ actionType }) => {
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('accessToken');
+  const {
+    user: { accessToken },
+  } = useUserContext();
   const { id } = useParams();
 
   const [cardDataState, setCardDataState] = useState(initalState);

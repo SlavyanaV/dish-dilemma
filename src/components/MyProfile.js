@@ -23,6 +23,7 @@ import {
 } from '../shared/styles/sharedStyles';
 import { getUserDetails } from '../shared/services/userService';
 import { fetchAllRecipesByUserId } from '../shared/services/recipeService';
+import { useUserContext } from '../hooks/useUserContext';
 
 export const MyProfile = () => {
   const [createdOn, setCreatedOn] = useState('');
@@ -30,9 +31,9 @@ export const MyProfile = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
 
-  const userEmail = localStorage.getItem('email');
-  const userId = localStorage.getItem('_id');
-  const accessToken = localStorage.getItem('accessToken');
+  const {
+    user: { accessToken, _id, email },
+  } = useUserContext();
 
   dayjs.extend(relativeTime);
 
@@ -53,7 +54,7 @@ export const MyProfile = () => {
 
   const getUserRecipes = async () => {
     try {
-      const responseData = await fetchAllRecipesByUserId(userId);
+      const responseData = await fetchAllRecipesByUserId(_id);
 
       setCardsDataState(responseData);
     } catch (err) {
@@ -83,7 +84,7 @@ export const MyProfile = () => {
               <Typography sx={{ fontSize: 14 }} color="text.secondary">
                 Email address:
               </Typography>
-              <Typography variant="h5">{userEmail}</Typography>
+              <Typography variant="h5">{email}</Typography>
             </Box>
             <Box>
               <Typography sx={{ fontSize: 14 }} color="text.secondary">

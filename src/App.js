@@ -4,10 +4,11 @@ import { ContentContainer } from './components/ContentContainer';
 import './shared/styles/sharedStyles.css';
 import { Footer } from './components/Footer';
 import backgroundImg from './images/background-image.png';
+import { UserContextProvider } from './contexts/UserContext';
 
 function App() {
   return (
-    <>
+    <UserContextProvider>
       <CssBaseline />
       <div
         style={{
@@ -24,7 +25,7 @@ function App() {
         <ContentContainer />
       </div>
       <Footer />
-    </>
+    </UserContextProvider>
   );
 }
 

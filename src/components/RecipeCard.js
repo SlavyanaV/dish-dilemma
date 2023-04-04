@@ -27,13 +27,14 @@ import {
   deleteRecipe,
   fetchRecipeById,
 } from '../shared/services/recipeService';
+import { useUserContext } from '../hooks/useUserContext';
 
 export const RecipeCard = ({ cardType }) => {
   const navigate = useNavigate();
   const { id } = useParams();
-
-  const accessToken = localStorage.getItem('accessToken');
-  const userId = localStorage.getItem('_id');
+  const {
+    user: { accessToken, _id },
+  } = useUserContext();
 
   const [expanded, setExpanded] = useState(false);
   const [cardDataState, setCardDataState] = useState({});
@@ -146,7 +147,7 @@ export const RecipeCard = ({ cardType }) => {
                 </Button>
               </Link>
             </Box>
-          ) : userId === cardDataState?._ownerId ? (
+          ) : _id === cardDataState?._ownerId ? (
             <Box>
               <Link to={`/edit-recipe/${cardDataState?._id}`} style={link}>
                 <Button variant="outlined" color="inherit" sx={{ m: 1 }}>

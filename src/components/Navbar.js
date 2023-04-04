@@ -16,10 +16,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { colors, link } from '../shared/styles/sharedStyles';
 import { logout } from '../shared/services/userService';
 import logo from '../images/logo.png';
+import { useUserContext } from '../hooks/useUserContext';
 
 export const Navbar = () => {
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('accessToken');
+  const {
+    user: { accessToken },
+    onLogout,
+  } = useUserContext();
 
   const [isOpen, setIsOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
@@ -28,7 +32,7 @@ export const Navbar = () => {
     try {
       await logout(accessToken);
 
-      localStorage.clear();
+      onLogout();
 
       navigate('/login');
     } catch (err) {

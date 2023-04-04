@@ -18,6 +18,7 @@ import {
 } from '../shared/styles/sharedStyles';
 import { register } from '../shared/services/userService';
 import { formValidation } from '../shared/validations';
+import { useUserContext } from '../hooks/useUserContext';
 
 const initialState = {
   email: '',
@@ -27,6 +28,8 @@ const initialState = {
 
 export const Register = () => {
   const navigate = useNavigate();
+
+  const { onLogin } = useUserContext();
 
   const [registerDataState, setRegisterDataState] = useState(initialState);
   const [errorState, setErrorState] = useState(initialState);
@@ -49,13 +52,10 @@ export const Register = () => {
 
     if (!hasErrors) {
       try {
-        const responseData = await register(registerDataState);
+        const { accessToken, email, _id } = await register(registerDataState);
 
+        onLogin({ accessToken, email, _id });
         navigate('/');
-
-        localStorage.setItem('accessToken', responseData.accessToken);
-        localStorage.setItem('email', responseData.email);
-        localStorage.setItem('_id', responseData._id);
       } catch (err) {
         setAlertMessage(err.message);
         setIsOpen(true);

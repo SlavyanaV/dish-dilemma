@@ -1,10 +1,24 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, TextField, Paper, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  TextField,
+  Paper,
+  Typography,
+  Snackbar,
+  Alert,
+  AlertTitle,
+} from '@mui/material';
 import { innerPaper, outerPaper } from '../shared/styles/formsStyles';
-import { paperHeading, mainBoxContainer } from '../shared/styles/sharedStyles';
+import {
+  paperHeading,
+  mainBoxContainer,
+  colors,
+} from '../shared/styles/sharedStyles';
 import { login } from '../shared/services/userService';
 import { formValidation } from '../shared/validations';
+import { useUserContext } from '../hooks/useUserContext';
 
 const initialState = {
   email: '',
@@ -14,8 +28,12 @@ const initialState = {
 export const Login = () => {
   const navigate = useNavigate();
 
+  const { onLogin } = useUserContext();
+
   const [loginDataState, setLoginDataState] = useState(initialState);
   const [errorState, setErrorState] = useState(initialState);
+  const [isOpen, setIsOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
 
   const handleOnChange = (event) => {
     const { name, value } = event.target;
@@ -33,15 +51,13 @@ export const Login = () => {
 
     if (!hasErrors) {
       try {
-        const responseData = await login(loginDataState);
+        const { accessToken, email, _id } = await login(loginDataState);
 
+        onLogin({ accessToken, email, _id });
         navigate('/my-profile');
-
-        localStorage.setItem('accessToken', responseData.accessToken);
-        localStorage.setItem('email', responseData.email);
-        localStorage.setItem('_id', responseData._id);
       } catch (err) {
-        alert(err);
+        setAlertMessage(err.message);
+        setIsOpen(true);
       }
     }
   };
@@ -88,6 +104,22 @@ export const Login = () => {
           Login
         </Button>
       </Box>
+      <Snackbar
+        open={isOpen}
+        autoHideDuration={4000}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        onClose={() => setIsOpen(false)}
+      >
+        <Alert
+          onClose={() => setIsOpen(false)}
+          severity="error"
+          variant="filled"
+          sx={{ width: '100%', color: colors.light }}
+        >
+          <AlertTitle>Error</AlertTitle>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </Paper>
   );
 };
