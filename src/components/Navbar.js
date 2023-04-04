@@ -15,6 +15,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { colors, link } from '../shared/styles/sharedStyles';
 import { logout } from '../shared/services/userService';
+import logo from '../images/logo.png';
 
 export const Navbar = () => {
   const navigate = useNavigate();
@@ -55,10 +56,7 @@ export const Navbar = () => {
             <Link to="/" style={link}>
               <Tooltip title="Open Home page">
                 <IconButton>
-                  <Avatar
-                    alt="Home page"
-                    src="https://i.ibb.co/NxBkmyC/favicon.png"
-                  />
+                  <Avatar alt="Home page" src={logo} />
                 </IconButton>
               </Tooltip>
               <Typography
