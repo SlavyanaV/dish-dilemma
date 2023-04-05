@@ -5,11 +5,16 @@ import {
   BottomNavigationAction,
   Paper,
   Typography,
+  Tooltip,
+  IconButton,
+  Avatar,
+  Box,
 } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import FilterIcon from '@mui/icons-material/Filter';
 import { colors, link } from '../shared/styles/sharedStyles';
+import logo from '../images/logo.png';
 
 export const Footer = () => {
   return (
@@ -23,7 +28,22 @@ export const Footer = () => {
         alignItems: 'center',
       }}
     >
-      <Typography sx={{ pl: 10 }}>© 2023 Dish Dilemma</Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          pl: 10,
+        }}
+      >
+        <Link to="/" style={link}>
+          <Tooltip title="Open Home page">
+            <IconButton>
+              <Avatar alt="Home page" src={logo} />
+            </IconButton>
+          </Tooltip>
+        </Link>
+        <Typography>© 2023 Dish Dilemma</Typography>
+      </Box>
       <BottomNavigation
         showLabels
         sx={{

@@ -81,16 +81,20 @@ export const MyProfile = () => {
           </Paper>
           <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
             <Box>
-              <Typography sx={{ fontSize: 14 }} color="text.secondary">
+              <Typography sx={{ fontSize: 14 }} color={colors.secondary}>
                 Email address:
               </Typography>
-              <Typography variant="h5">{email}</Typography>
+              <Typography variant="h5" color={colors.dark}>
+                {email}
+              </Typography>
             </Box>
             <Box>
-              <Typography sx={{ fontSize: 14 }} color="text.secondary">
+              <Typography sx={{ fontSize: 14 }} color={colors.secondary}>
                 Created:
               </Typography>
-              <Typography variant="h5">{createdOn}</Typography>
+              <Typography variant="h5" color={colors.dark}>
+                {createdOn}
+              </Typography>
             </Box>
           </Box>
         </CardContent>
@@ -116,7 +120,7 @@ export const MyProfile = () => {
             severity="info"
             sx={{
               backgroundColor: colors.light,
-              color: 'black',
+              color: colors.dark,
               mt: 1.5,
             }}
             icon={<InfoIcon sx={{ color: colors.dark }} />}

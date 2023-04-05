@@ -2,3 +2,19 @@
   background-color: #394110 !important;
   color: #e4bf89 !important;
 }
+
+button {
+  background-color: #394110 !important;
+  color: #e4bf89 !important;
+}
+
+button:hover {
+  background-color: #5f6d30 !important;
+}
+
+.css-r40f8v-MuiTypography-root,
+.css-nrdprl-MuiTypography-root {
+  color: #5f6d30 !important;
+}
+
+

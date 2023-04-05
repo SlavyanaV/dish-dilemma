@@ -111,7 +111,7 @@ export const RecipeCard = ({ cardType }) => {
           </Typography>
         </Paper>
         <CardHeader
-          sx={{ textAlign: 'center' }}
+          sx={{ textAlign: 'center', color: colors.dark }}
           title={cardDataState?.title}
           subheader={cardDataState?.category}
         />
@@ -203,11 +203,14 @@ export const RecipeCard = ({ cardType }) => {
           </IconButton>
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent sx={{ maxWidth: 650 }}>
+          <CardContent sx={{ maxWidth: 650, color: colors.dark }}>
             <Typography paragraph>Instructions:</Typography>
             <Typography
               paragraph
-              sx={{ textAlign: 'justify', overflowWrap: 'anywhere' }}
+              sx={{
+                textAlign: 'justify',
+                overflowWrap: 'anywhere',
+              }}
             >
               {cardDataState?.description}
             </Typography>

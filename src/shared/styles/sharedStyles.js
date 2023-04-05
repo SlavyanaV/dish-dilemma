@@ -14,6 +14,7 @@ export const colors = {
   dark: '#394110',
   light: '#E4BF89',
   error: '#c62828',
+  secondary: '#5F6D30',
 };
 
 export const grid = {

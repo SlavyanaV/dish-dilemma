@@ -18,7 +18,7 @@ export const SmallCard = ({ card }) => {
         alt="Dish picture"
       />
       <CardHeader
-        sx={{ textAlign: 'center' }}
+        sx={{ textAlign: 'center', color: colors.dark }}
         title={card?.title}
         subheader={card?.category}
       />

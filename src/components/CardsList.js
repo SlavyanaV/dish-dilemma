@@ -54,7 +54,7 @@ export const CardsList = () => {
             sx={{
               minWidth: 800,
               backgroundColor: colors.light,
-              color: 'black',
+              color: colors.dark,
               mt: 1.5,
             }}
             icon={<InfoIcon sx={{ color: colors.dark }} />}
