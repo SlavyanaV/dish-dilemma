@@ -1,29 +1,54 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Stack, Alert, Box, Snackbar, AlertTitle } from '@mui/material';
+import {
+  Grid,
+  Stack,
+  Alert,
+  Box,
+  Snackbar,
+  AlertTitle,
+  CircularProgress,
+} from '@mui/material';
 import { SmallCard } from './SmallCard';
 import InfoIcon from '@mui/icons-material/Info';
-import { mainBoxContainer, colors, grid } from '../shared/styles/sharedStyles';
+import {
+  mainBoxContainer,
+  colors,
+  grid,
+  loader,
+} from '../shared/styles/sharedStyles';
 import { fetchAllRecipes } from '../shared/services/recipeService';
 
 export const CardsList = () => {
   const [cardsDataState, setCardsDataState] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasFetched, setHasFetched] = useState(false);
 
   const fetchRecipes = async () => {
+    setIsLoading(true);
+
     try {
       const responseData = await fetchAllRecipes();
 
       setCardsDataState(responseData);
+      setIsLoading(false);
+      setHasFetched(true);
     } catch (err) {
       setAlertMessage(err.message);
       setIsOpen(true);
+      setIsLoading(false);
+      setHasFetched(true);
     }
   };
 
   useEffect(() => {
     fetchRecipes();
   }, []);
+
+  if (isLoading || !hasFetched) {
+    return <CircularProgress sx={loader} size={100} />;
+  }
 
   return (
     <Box

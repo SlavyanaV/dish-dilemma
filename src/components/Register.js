@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Box,
   Button,
@@ -35,6 +36,7 @@ export const Register = () => {
   const [errorState, setErrorState] = useState(initialState);
   const [isOpen, setIsOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleOnChange = (event) => {
     const { name, value } = event.target;
@@ -51,14 +53,17 @@ export const Register = () => {
     setErrorState(errors);
 
     if (!hasErrors) {
+      setIsLoading(true);
       try {
         const { accessToken, email, _id } = await register(registerDataState);
 
         onLogin({ accessToken, email, _id });
         navigate('/');
+        setIsLoading(false);
       } catch (err) {
         setAlertMessage(err.message);
         setIsOpen(true);
+        setIsLoading(false);
       }
     }
   };
@@ -81,6 +86,7 @@ export const Register = () => {
           error={!!errorState.email}
           sx={{ m: 1 }}
           onChange={handleOnChange}
+          className={!!errorState.email ? 'input-error' : 'input-success'}
         />
         <TextField
           name="password"
@@ -94,6 +100,7 @@ export const Register = () => {
           error={!!errorState.password}
           sx={{ m: 1 }}
           onChange={handleOnChange}
+          className={!!errorState.password ? 'input-error' : 'input-success'}
         />
         <TextField
           name="repassword"
@@ -107,15 +114,18 @@ export const Register = () => {
           error={!!errorState.repassword}
           sx={{ m: 1 }}
           onChange={handleOnChange}
+          className={!!errorState.repassword ? 'input-error' : 'input-success'}
         />
-        <Button
+        <LoadingButton
           variant="outlined"
           color="inherit"
           sx={{ m: 1 }}
           onClick={handleOnSubmit}
+          loading={isLoading}
+          loadingPosition="end"
         >
           Register
-        </Button>
+        </LoadingButton>
       </Box>
       <Snackbar
         open={isOpen}

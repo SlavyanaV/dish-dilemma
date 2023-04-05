@@ -10,6 +10,7 @@ import {
   Alert,
   AlertTitle,
   Snackbar,
+  CircularProgress,
 } from '@mui/material';
 import { SmallCard } from './SmallCard';
 import dayjs from 'dayjs';
@@ -20,6 +21,7 @@ import {
   mainBoxContainer,
   colors,
   grid,
+  loader,
 } from '../shared/styles/sharedStyles';
 import { getUserDetails } from '../shared/services/userService';
 import { fetchAllRecipesByUserId } from '../shared/services/recipeService';
@@ -30,6 +32,8 @@ export const MyProfile = () => {
   const [cardsDataState, setCardsDataState] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasFetched, setHasFetched] = useState(false);
 
   const {
     user: { accessToken, _id, email },
@@ -38,13 +42,19 @@ export const MyProfile = () => {
   dayjs.extend(relativeTime);
 
   const getUser = async () => {
+    setIsLoading(true);
+
     try {
       const responseData = await getUserDetails(accessToken);
 
       setCreatedOn(dayjs(responseData._createdOn).fromNow());
+      setIsLoading(false);
+      setHasFetched(true);
     } catch (err) {
       setAlertMessage(err.message);
       setIsOpen(true);
+      setIsLoading(false);
+      setHasFetched(true);
     }
   };
 
@@ -53,19 +63,27 @@ export const MyProfile = () => {
   }, []);
 
   const getUserRecipes = async () => {
+    setIsLoading(true);
+
     try {
       const responseData = await fetchAllRecipesByUserId(_id);
 
       setCardsDataState(responseData);
+      setIsLoading(false);
     } catch (err) {
       setAlertMessage(err.message);
       setIsOpen(true);
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     getUserRecipes();
   }, []);
+
+  if (isLoading || !hasFetched) {
+    return <CircularProgress sx={loader} size={100} />;
+  }
 
   return (
     <Box sx={{ width: '50%', ...mainBoxContainer }}>

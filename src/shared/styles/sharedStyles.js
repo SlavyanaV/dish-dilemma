@@ -29,3 +29,8 @@ export const link = {
   color: 'inherit',
   textDecoration: 'none',
 };
+
+export const loader = {
+  color: colors.light,
+  mt: '20%',
+};

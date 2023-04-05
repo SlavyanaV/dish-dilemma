@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Box,
   TextField,
@@ -41,6 +42,7 @@ export const ManageRecipeCard = ({ actionType }) => {
   const [errorState, setErrorState] = useState(initalState);
   const [isOpen, setIsOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const getRecipe = async () => {
     try {
@@ -76,13 +78,16 @@ export const ManageRecipeCard = ({ actionType }) => {
     setErrorState(errors);
 
     if (!hasErrors) {
+      setIsLoading(true);
       try {
         await manageRecipe(actionType, id, accessToken, cardDataState);
 
         navigate('/all-recipes');
+        setIsLoading(false);
       } catch (err) {
         setAlertMessage(err.message);
         setIsOpen(true);
+        setIsLoading(false);
       }
     }
   };
@@ -118,6 +123,7 @@ export const ManageRecipeCard = ({ actionType }) => {
           helperText={errorState.title}
           error={!!errorState.title}
           onChange={handleOnChange}
+          className={!!errorState.title ? 'input-error' : 'input-success'}
         />
         <TextField
           name="category"
@@ -130,6 +136,7 @@ export const ManageRecipeCard = ({ actionType }) => {
           helperText={errorState.category}
           error={!!errorState.category}
           onChange={handleOnChange}
+          className={!!errorState.category ? 'input-error' : 'input-success'}
         />
         <TextField
           name="picture"
@@ -144,6 +151,7 @@ export const ManageRecipeCard = ({ actionType }) => {
           helperText={errorState.picture}
           error={!!errorState.picture}
           onChange={handleOnChange}
+          className={!!errorState.picture ? 'input-error' : 'input-success'}
         />
         <TextField
           name="description"
@@ -158,15 +166,18 @@ export const ManageRecipeCard = ({ actionType }) => {
           helperText={errorState.description}
           error={!!errorState.description}
           onChange={handleOnChange}
+          className={!!errorState.description ? 'input-error' : 'input-success'}
         />
-        <Button
+        <LoadingButton
           variant="outlined"
           onClick={handleOnSubmit}
           sx={{ mt: 2.5 }}
           color="inherit"
+          loading={isLoading}
+          loadingPosition="end"
         >
           {actionType === 'edit' ? 'Edit recipe' : 'Add recipe'}
-        </Button>
+        </LoadingButton>
       </Box>
       <Snackbar
         open={isOpen}

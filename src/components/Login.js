@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Box,
-  Button,
   TextField,
   Paper,
   Typography,
@@ -34,6 +34,7 @@ export const Login = () => {
   const [errorState, setErrorState] = useState(initialState);
   const [isOpen, setIsOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleOnChange = (event) => {
     const { name, value } = event.target;
@@ -50,14 +51,17 @@ export const Login = () => {
     setErrorState(errors);
 
     if (!hasErrors) {
+      setIsLoading(true);
       try {
         const { accessToken, email, _id } = await login(loginDataState);
 
         onLogin({ accessToken, email, _id });
         navigate('/my-profile');
+        setIsLoading(false);
       } catch (err) {
         setAlertMessage(err.message);
         setIsOpen(true);
+        setIsLoading(false);
       }
     }
   };
@@ -80,6 +84,7 @@ export const Login = () => {
           error={!!errorState.email}
           sx={{ m: 1 }}
           onChange={handleOnChange}
+          className={!!errorState.email ? 'input-error' : 'input-success'}
         />
 
         <TextField
@@ -94,15 +99,18 @@ export const Login = () => {
           error={!!errorState.password}
           sx={{ m: 1 }}
           onChange={handleOnChange}
+          className={!!errorState.password ? 'input-error' : 'input-success'}
         />
-        <Button
+        <LoadingButton
           variant="outlined"
           color="inherit"
           sx={{ m: 1 }}
           onClick={handleOnSubmit}
+          loading={isLoading}
+          loadingPosition="end"
         >
           Login
-        </Button>
+        </LoadingButton>
       </Box>
       <Snackbar
         open={isOpen}

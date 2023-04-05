@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import LoadingButton from '@mui/lab/LoadingButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Card,
@@ -19,9 +20,10 @@ import {
   Snackbar,
   Alert,
   AlertTitle,
+  CircularProgress,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { colors, link, paperHeading } from '../shared/styles/sharedStyles';
+import { colors, link, loader, paperHeading } from '../shared/styles/sharedStyles';
 import { fetchRandomRecipe } from '../shared/services/randomRecipeService';
 import {
   deleteRecipe,
@@ -36,37 +38,52 @@ export const RecipeCard = ({ cardType }) => {
     user: { accessToken, _id },
   } = useUserContext();
 
-  const [expanded, setExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [cardDataState, setCardDataState] = useState({});
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+  const [hasFetched, setHasFetched] = useState(false);
 
   const handleExpandClick = () => {
-    setExpanded(!expanded);
+    setIsExpanded(!isExpanded);
   };
 
   const getRecipe = async () => {
+    setIsLoading(true);
+
     try {
       const responseData = await fetchRecipeById(id);
 
       setCardDataState(responseData);
+      setIsLoading(false);
+      setHasFetched(true);
     } catch (err) {
       setAlertMessage(err.message);
       setIsOpen(true);
       setCardDataState({});
+      setIsLoading(false);
+      setHasFetched(true);
     }
   };
 
   const getRandomRecipe = async () => {
+    setIsLoading(true);
+
     try {
       const randomRecipe = await fetchRandomRecipe();
 
       setCardDataState(randomRecipe);
+      setIsLoading(false);
+      setHasFetched(true);
     } catch (err) {
       setAlertMessage(err.message);
       setIsOpen(true);
       setCardDataState({});
+      setIsLoading(false);
+      setHasFetched(true);
     }
   };
 
@@ -79,15 +96,24 @@ export const RecipeCard = ({ cardType }) => {
   }, [cardType]);
 
   const handleOnDelete = async () => {
+    setIsDeleteLoading(true);
     try {
       await deleteRecipe(cardDataState._id, accessToken);
 
       navigate('/all-recipes');
+      setIsDeleteLoading(false);
     } catch (err) {
       setAlertMessage(err.message);
       setIsOpen(true);
+      setIsDeleteLoading(false);
     }
   };
+
+  if (isLoading || !hasFetched) {
+    return (
+      <CircularProgress sx={loader} size={100} />
+    );
+  }
 
   return (
     <Box sx={{ width: 700, mt: '80px', mb: '50px' }}>
@@ -173,20 +199,22 @@ export const RecipeCard = ({ cardType }) => {
                   <Button
                     variant="outlined"
                     color="inherit"
-                    sx={{ m: 1 }}
+                    sx={{ m: 1, width: '100%' }}
                     onClick={() => setIsDialogOpen(false)}
                   >
                     No
                   </Button>
-                  <Button
+                  <LoadingButton
                     variant="outlined"
                     color="inherit"
-                    sx={{ m: 1 }}
+                    sx={{ m: 1, width: '100%' }}
                     onClick={handleOnDelete}
                     autoFocus
+                    loading={isDeleteLoading}
+                    loadingPosition="end"
                   >
                     Yes
-                  </Button>
+                  </LoadingButton>
                 </DialogActions>
               </Dialog>
             </Box>
@@ -196,13 +224,13 @@ export const RecipeCard = ({ cardType }) => {
           <IconButton
             sx={{ ml: 'auto' }}
             onClick={handleExpandClick}
-            aria-expanded={expanded}
+            aria-expanded={isExpanded}
             aria-label="show more"
           >
             <ExpandMoreIcon />
           </IconButton>
         </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <Collapse in={isExpanded} timeout="auto" unmountOnExit>
           <CardContent sx={{ maxWidth: 650, color: colors.dark }}>
             <Typography paragraph>Instructions:</Typography>
             <Typography
