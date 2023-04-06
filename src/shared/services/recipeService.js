@@ -1,5 +1,7 @@
+const recipesUrl = 'https://dish-dilemma-api.render.com/data/all-recipes';
+
 export const fetchRecipeById = async (id) => {
-  const response = await fetch(`http://localhost:3030/data/all-recipes/${id}`);
+  const response = await fetch(`${recipesUrl}/${id}`);
   const responseData = await response.json();
 
   if (!response.ok) {
@@ -16,9 +18,7 @@ export const manageRecipe = async (
   cardDataState
 ) => {
   const response = await fetch(
-    `http://localhost:3030/data/all-recipes${
-      actionType === 'edit' ? '/' + id : ''
-    }`,
+    `${recipesUrl}${actionType === 'edit' ? '/' + id : ''}`,
     {
       method: `${actionType === 'edit' ? 'PUT' : 'POST'}`,
       headers: {
@@ -37,7 +37,7 @@ export const manageRecipe = async (
 };
 
 export const deleteRecipe = async (id, accessToken) => {
-  const response = await fetch(`http://localhost:3030/data/all-recipes/${id}`, {
+  const response = await fetch(`${recipesUrl}/${id}`, {
     method: 'DELETE',
     headers: { 'X-Authorization': accessToken },
   });
@@ -48,7 +48,7 @@ export const deleteRecipe = async (id, accessToken) => {
 };
 
 export const fetchAllRecipes = async () => {
-  const response = await fetch('http://localhost:3030/data/all-recipes');
+  const response = await fetch(recipesUrl);
   const responseData = await response.json();
 
   if (!response.ok) {
@@ -60,7 +60,7 @@ export const fetchAllRecipes = async () => {
 
 export const fetchAllRecipesByUserId = async (userId) => {
   const response = await fetch(
-    `http://localhost:3030/data/all-recipes?where=_ownerId%3D%22${userId}%22`
+    `${recipesUrl}?where=_ownerId%3D%22${userId}%22`
   );
   const responseData = await response.json();
 

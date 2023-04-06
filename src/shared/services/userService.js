@@ -1,4 +1,4 @@
-const usersUrl = 'http://localhost:3030/users';
+const usersUrl = 'https://dish-dilemma-api.render.com/users';
 
 export const register = async (registerDataState) => {
   const response = await fetch(`${usersUrl}/register`, {
