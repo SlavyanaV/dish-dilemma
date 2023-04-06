@@ -81,7 +81,6 @@ export const Register = () => {
           id="filled-required"
           label="Email"
           variant="outlined"
-          color="success"
           helperText={errorState.email}
           error={!!errorState.email}
           sx={{ m: 1 }}
@@ -94,7 +93,6 @@ export const Register = () => {
           label="Password"
           type="password"
           variant="outlined"
-          color="success"
           autoComplete="current-password"
           helperText={errorState.password}
           error={!!errorState.password}
@@ -108,7 +106,6 @@ export const Register = () => {
           label="Repeat password"
           type="password"
           variant="outlined"
-          color="success"
           autoComplete="current-password"
           helperText={errorState.repassword}
           error={!!errorState.repassword}

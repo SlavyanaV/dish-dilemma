@@ -119,7 +119,6 @@ export const ManageRecipeCard = ({ actionType }) => {
           id="filled-multiline-flexible"
           label="Recipe title"
           variant="outlined"
-          color="success"
           helperText={errorState.title}
           error={!!errorState.title}
           onChange={handleOnChange}
@@ -132,7 +131,6 @@ export const ManageRecipeCard = ({ actionType }) => {
           id="filled-multiline-flexible"
           label="Category"
           variant="outlined"
-          color="success"
           helperText={errorState.category}
           error={!!errorState.category}
           onChange={handleOnChange}
@@ -147,7 +145,6 @@ export const ManageRecipeCard = ({ actionType }) => {
           multiline
           maxRows={2}
           variant="outlined"
-          color="success"
           helperText={errorState.picture}
           error={!!errorState.picture}
           onChange={handleOnChange}
@@ -162,7 +159,6 @@ export const ManageRecipeCard = ({ actionType }) => {
           multiline
           rows={8}
           variant="outlined"
-          color="success"
           helperText={errorState.description}
           error={!!errorState.description}
           onChange={handleOnChange}

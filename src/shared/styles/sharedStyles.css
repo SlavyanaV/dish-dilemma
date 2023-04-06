@@ -12,27 +12,24 @@ button:hover {
   background-color: #5f6d30 !important;
 }
 
-.css-r40f8v-MuiTypography-root,
-.css-nrdprl-MuiTypography-root,
-.css-3v5nb6-MuiFormLabel-root-MuiInputLabel-root,
-.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input,
-.css-1lwa3th-MuiFormLabel-root-MuiInputLabel-root,
-.css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input {
-  color: #5f6d30 !important;
-}
-
-.css-1d3z3hw-MuiOutlinedInput-notchedOutline {
-  border-color: #5f6d30 !important;
-}
-
-.css-3v5nb6-MuiFormLabel-root-MuiInputLabel-root.Mui-error {
+.input-error label {
   color: #d32f2f !important;
 }
 
-.input-error > div > fieldset {
+.input-success label {
+  color: #5f6d30 !important;
+}
+
+.input-error input,
+.input-error textarea,
+.input-error fieldset {
+  color: #d32f2f !important;
   border-color: #d32f2f !important;
 }
 
-.input-success > div > fieldset {
+.input-success input,
+.input-success textarea,
+.input-success fieldset {
+  color: #5f6d30 !important;
   border-color: #5f6d30 !important;
 }

@@ -80,7 +80,6 @@ export const Login = () => {
           id="filled-required"
           label="Email"
           variant="outlined"
-          color="success"
           helperText={errorState.email}
           error={!!errorState.email}
           sx={{ m: 1 }}
@@ -93,7 +92,6 @@ export const Login = () => {
           label="Password"
           type="password"
           variant="outlined"
-          color="success"
           autoComplete="current-password"
           helperText={errorState.password}
           error={!!errorState.password}
