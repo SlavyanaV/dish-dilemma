@@ -8,6 +8,7 @@ import { ManageRecipeCard } from './ManageRecipeCard';
 import { MyProfile } from './MyProfile';
 import { PrivateRoutes } from './RoutesGuards/PrivateRoutes';
 import { PublicRoutes } from './RoutesGuards/PublicRoutes';
+import { NotFound } from './NotFound';
 
 export const ContentContainer = () => {
   return (
@@ -34,6 +35,7 @@ export const ContentContainer = () => {
           />
           <Route path="/recipe-details/:id" element={<RecipeCard />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Box>
   );

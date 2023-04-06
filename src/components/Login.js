@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Box,
@@ -15,6 +15,7 @@ import {
   paperHeading,
   mainBoxContainer,
   colors,
+  link,
 } from '../shared/styles/sharedStyles';
 import { login } from '../shared/services/userService';
 import { formValidation } from '../shared/validations';
@@ -86,7 +87,6 @@ export const Login = () => {
           onChange={handleOnChange}
           className={!!errorState.email ? 'input-error' : 'input-success'}
         />
-
         <TextField
           name="password"
           id="filled-password-input"
@@ -112,6 +112,11 @@ export const Login = () => {
           Login
         </LoadingButton>
       </Box>
+      <Typography color={colors.secondary} sx={{ textAlign: 'center' }}>
+        <Link to="/register" style={link}>
+          Not registered yet?
+        </Link>
+      </Typography>
       <Snackbar
         open={isOpen}
         autoHideDuration={4000}
