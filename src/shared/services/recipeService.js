@@ -1,4 +1,4 @@
-const recipesUrl = 'https://dish-dilemma-api.render.com/data/all-recipes';
+const recipesUrl = 'https://dish-dilemma-api.onrender.com/data/all-recipes';
 
 export const fetchRecipeById = async (id) => {
   const response = await fetch(`${recipesUrl}/${id}`);
