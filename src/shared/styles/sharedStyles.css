@@ -33,3 +33,7 @@ button:hover {
   color: #5f6d30 !important;
   border-color: #5f6d30 !important;
 }
+
+.MuiCardHeader-subheader {
+  color: #5f6d30 !important;
+}

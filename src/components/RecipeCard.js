@@ -23,7 +23,12 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { colors, link, loader, paperHeading } from '../shared/styles/sharedStyles';
+import {
+  colors,
+  link,
+  loader,
+  paperHeading,
+} from '../shared/styles/sharedStyles';
 import { fetchRandomRecipe } from '../shared/services/randomRecipeService';
 import {
   deleteRecipe,
@@ -110,9 +115,7 @@ export const RecipeCard = ({ cardType }) => {
   };
 
   if (isLoading || !hasFetched) {
-    return (
-      <CircularProgress sx={loader} size={100} />
-    );
+    return <CircularProgress sx={loader} size={100} />;
   }
 
   return (
@@ -148,7 +151,7 @@ export const RecipeCard = ({ cardType }) => {
           alt="Dish picture"
         />
         <CardContent>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" color={colors.secondary}>
             If you want to try this recipe, expand the details to see
             instructions.
           </Typography>
