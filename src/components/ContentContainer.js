@@ -22,6 +22,7 @@ export const ContentContainer = () => {
       <Routes>
         <Route path="/" element={<RecipeCard cardType={'main'} />} />
         <Route path="/all-recipes" element={<CardsList />} />
+        <Route path="/recipe-details/:id" element={<RecipeCard />} />
         <Route element={<PublicRoutes />}>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
@@ -33,7 +34,6 @@ export const ContentContainer = () => {
             path="/edit-recipe/:id"
             element={<ManageRecipeCard actionType={'edit'} />}
           />
-          <Route path="/recipe-details/:id" element={<RecipeCard />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
