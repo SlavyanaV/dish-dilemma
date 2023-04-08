@@ -235,7 +235,23 @@ export const RecipeCard = ({ cardType }) => {
         </CardActions>
         <Collapse in={isExpanded} timeout="auto" unmountOnExit>
           <CardContent sx={{ maxWidth: 650, color: colors.dark }}>
-            <Typography paragraph>Instructions:</Typography>
+            {cardType === 'main' ? (
+              <>
+                <Typography paragraph sx={{ fontWeight: 'bold' }}>
+                  Ingredients:
+                </Typography>
+                <ul>
+                  {cardDataState?.ingredients?.map((ingredient) => (
+                    <li>{ingredient}</li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <></>
+            )}
+            <Typography paragraph sx={{ fontWeight: 'bold' }}>
+              Instructions:
+            </Typography>
             <Typography
               paragraph
               sx={{

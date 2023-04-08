@@ -26,13 +26,14 @@ export const Footer = () => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        borderRadius: 0,
       }}
     >
       <Box
         sx={{
           display: 'flex',
           alignItems: 'center',
-          pl: 10,
+          ml: 10,
         }}
       >
         <Link to="/" style={link}>
@@ -48,23 +49,22 @@ export const Footer = () => {
         showLabels
         sx={{
           backgroundColor: colors.dark,
-          pt: 1,
-          pr: 10,
+          mr: 10,
         }}
       >
         <Link to="https://github.com/SlavyanaV/dish-dilemma" style={link}>
           <BottomNavigationAction
             label="GitHub"
             showLabel="true"
-            sx={{ color: colors.light }}
+            sx={{ color: colors.light, p: '9px' }}
             icon={<GitHubIcon />}
           />
         </Link>
-        <Link to="https://www.themealdb.com/" style={link}>
+        <Link to="https://spoonacular.com/food-api" style={link}>
           <BottomNavigationAction
-            label="TheMealDB"
+            label="spoonacular API"
             showLabel="true"
-            sx={{ color: colors.light }}
+            sx={{ color: colors.light, p: '9px' }}
             icon={<RestaurantMenuIcon />}
           />
         </Link>
@@ -72,7 +72,7 @@ export const Footer = () => {
           <BottomNavigationAction
             label="Midjourney"
             showLabel="true"
-            sx={{ color: colors.light }}
+            sx={{ color: colors.light, p: '9px' }}
             icon={<FilterIcon />}
           />
         </Link>
