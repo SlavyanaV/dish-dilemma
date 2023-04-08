@@ -17,6 +17,7 @@ import {
   loader,
 } from '../shared/styles/sharedStyles';
 import { fetchAllRecipes } from '../shared/services/recipeService';
+import { getLikes } from '../shared/services/likesService';
 
 export const CardsList = () => {
   const [cardsDataState, setCardsDataState] = useState([]);
@@ -24,6 +25,7 @@ export const CardsList = () => {
   const [alertMessage, setAlertMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [hasFetched, setHasFetched] = useState(false);
+  const [likesData, setLikesData] = useState([]);
 
   const fetchRecipes = async () => {
     setIsLoading(true);
@@ -44,8 +46,19 @@ export const CardsList = () => {
     }
   };
 
+  const fetchLikes = async () => {
+    try {
+      const likesData = await getLikes();
+      setLikesData(likesData);
+    } catch (err) {
+      setAlertMessage(err.message);
+      setIsOpen(true);
+    }
+  };
+
   useEffect(() => {
     fetchRecipes();
+    fetchLikes();
   }, []);
 
   if (isLoading || !hasFetched) {
@@ -70,7 +83,7 @@ export const CardsList = () => {
         >
           {cardsDataState.map((card, index) => (
             <Grid item xs={'auto'} key={index}>
-              <SmallCard card={card} />
+              <SmallCard card={card} likesData={likesData} />
             </Grid>
           ))}
         </Grid>

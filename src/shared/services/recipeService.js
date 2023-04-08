@@ -1,3 +1,4 @@
+// const recipesUrl = 'http://localhost:3030/data/all-recipes';
 const recipesUrl = 'https://dish-dilemma-api.onrender.com/data/all-recipes';
 
 export const fetchRecipeById = async (id) => {

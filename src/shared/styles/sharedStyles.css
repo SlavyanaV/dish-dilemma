@@ -43,3 +43,11 @@ button:hover {
   background-color: #e4bf89 !important;
   color: #394110 !important;
 }
+
+.Mui-disabled {
+  opacity: 0.5;
+}
+
+.MuiAlert-filledSuccess {
+  background-color: #5f6d30 !important;
+}

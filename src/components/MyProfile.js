@@ -130,7 +130,7 @@ export const MyProfile = () => {
         >
           {cardsDataState.map((card, index) => (
             <Grid item xs={'auto'} key={index}>
-              <SmallCard card={card} />
+              <SmallCard card={card} isOwn={true} />
             </Grid>
           ))}
         </Grid>
