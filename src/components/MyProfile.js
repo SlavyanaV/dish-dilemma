@@ -71,8 +71,10 @@ export const MyProfile = () => {
       setCardsDataState(responseData);
       setIsLoading(false);
     } catch (err) {
-      setAlertMessage(err.message);
-      setIsOpen(true);
+      if (!err.message === 'Resource not found') {
+        setAlertMessage(err.message);
+        setIsOpen(true);
+      }
       setIsLoading(false);
     }
   };

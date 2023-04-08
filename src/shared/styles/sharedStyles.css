@@ -37,3 +37,8 @@ button:hover {
 .MuiCardHeader-subheader {
   color: #5f6d30 !important;
 }
+
+.MuiTooltip-tooltip {
+  background-color: #e4bf89 !important;
+  color: #394110 !important;
+}

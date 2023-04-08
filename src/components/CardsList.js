@@ -35,8 +35,10 @@ export const CardsList = () => {
       setIsLoading(false);
       setHasFetched(true);
     } catch (err) {
-      setAlertMessage(err.message);
-      setIsOpen(true);
+      if (!err.message === 'Resource not found') {
+        setAlertMessage(err.message);
+        setIsOpen(true);
+      }
       setIsLoading(false);
       setHasFetched(true);
     }
