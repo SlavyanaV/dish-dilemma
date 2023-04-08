@@ -36,6 +36,7 @@ button:hover {
 
 .MuiCardHeader-subheader {
   color: #5f6d30 !important;
+  text-transform: capitalize;
 }
 
 .MuiTooltip-tooltip {
