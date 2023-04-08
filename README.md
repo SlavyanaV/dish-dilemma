@@ -61,4 +61,4 @@ Contributions to this project are welcome. If you notice any bugs or would like 
 
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-==Please be aware that this project uses a backend server provided by SoftUni, which is used for student practice purposes only.==
+**Please be aware that this project uses a backend server provided by © SoftUni, which is used for student practice purposes only.**
