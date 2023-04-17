@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import {
   Card,
   CardHeader,
@@ -12,15 +12,22 @@ import {
 } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { Link } from 'react-router-dom';
-import { colors, link } from '../shared/styles/sharedStyles';
-import { useUserContext } from '../hooks/useUserContext';
-import { likeRecipe } from '../shared/services/likesService';
-import { transformLikes } from '../shared/utils';
+import { colors, link } from '../../shared/styles/sharedStyles';
+import { useUserContext } from '../../hooks/useUserContext';
+import { likeRecipe } from '../../shared/services/likesService';
+import { transformLikes } from '../../shared/utils';
+import { CardType, LikesType } from '../../shared/types';
 
-export const SmallCard = ({ card, likesData, isOwn }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [likes, setLikes] = useState([]);
+type Props = {
+  card: CardType;
+  likesData?: LikesType[];
+  isOwn: boolean;
+};
+
+export const SmallCard: FC<Props> = ({ card, likesData, isOwn }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string>('');
+  const [likes, setLikes] = useState<string[]>([]);
 
   const {
     user: { accessToken, _id },

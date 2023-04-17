@@ -1,7 +1,9 @@
+import { RecipeType } from '../types';
+
 // const recipesUrl = 'http://localhost:3030/data/all-recipes';
 const recipesUrl = 'https://dish-dilemma-api.onrender.com/data/all-recipes';
 
-export const fetchRecipeById = async (id) => {
+export const fetchRecipeById = async (id?: string) => {
   const response = await fetch(`${recipesUrl}/${id}`);
   const responseData = await response.json();
 
@@ -13,10 +15,10 @@ export const fetchRecipeById = async (id) => {
 };
 
 export const manageRecipe = async (
-  actionType,
-  id,
-  accessToken,
-  cardDataState
+  cardDataState: RecipeType,
+  accessToken: string,
+  actionType?: string,
+  id?: string
 ) => {
   const response = await fetch(
     `${recipesUrl}${actionType === 'edit' ? '/' + id : ''}`,
@@ -37,7 +39,7 @@ export const manageRecipe = async (
   }
 };
 
-export const deleteRecipe = async (id, accessToken) => {
+export const deleteRecipe = async (accessToken: string, id?: string) => {
   const response = await fetch(`${recipesUrl}/${id}`, {
     method: 'DELETE',
     headers: { 'X-Authorization': accessToken },
@@ -59,7 +61,7 @@ export const fetchAllRecipes = async () => {
   }
 };
 
-export const fetchAllRecipesByUserId = async (userId) => {
+export const fetchAllRecipesByUserId = async (userId: string) => {
   const response = await fetch(
     `${recipesUrl}?where=_ownerId%3D%22${userId}%22`
   );

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Link } from 'react-router-dom';
 import {
   BottomNavigation,
@@ -15,8 +14,9 @@ import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import FilterIcon from '@mui/icons-material/Filter';
 import { colors, link } from '../shared/styles/sharedStyles';
 import logo from '../images/logo.png';
+import { FC } from 'react';
 
-export const Footer = () => {
+export const Footer: FC = () => {
   return (
     <Paper
       sx={{
@@ -46,7 +46,6 @@ export const Footer = () => {
         <Typography>© 2023 Dish Dilemma</Typography>
       </Box>
       <BottomNavigation
-        showLabels
         sx={{
           backgroundColor: colors.dark,
           mr: 10,
@@ -55,7 +54,7 @@ export const Footer = () => {
         <Link to="https://github.com/SlavyanaV/dish-dilemma" style={link}>
           <BottomNavigationAction
             label="GitHub"
-            showLabel="true"
+            showLabel={true}
             sx={{ color: colors.light, p: '9px' }}
             icon={<GitHubIcon />}
           />
@@ -63,7 +62,7 @@ export const Footer = () => {
         <Link to="https://spoonacular.com/food-api" style={link}>
           <BottomNavigationAction
             label="spoonacular API"
-            showLabel="true"
+            showLabel={true}
             sx={{ color: colors.light, p: '9px' }}
             icon={<RestaurantMenuIcon />}
           />
@@ -71,7 +70,7 @@ export const Footer = () => {
         <Link to="https://www.midjourney.com/home/" style={link}>
           <BottomNavigationAction
             label="Midjourney"
-            showLabel="true"
+            showLabel={true}
             sx={{ color: colors.light, p: '9px' }}
             icon={<FilterIcon />}
           />

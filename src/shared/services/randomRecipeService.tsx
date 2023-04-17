@@ -1,3 +1,5 @@
+import { RecipeType } from "../types";
+
 export const fetchRandomRecipe = async () => {
   const response = await fetch('https://api.spoonacular.com/recipes/random', {
     headers: { 'x-api-key': '4a8fada50c5e418a800fca2e231466de' },
@@ -8,7 +10,7 @@ export const fetchRandomRecipe = async () => {
     throw new Error(responseData.message);
   }
 
-  const randomRecipe = responseData.recipes.map((recipe) => ({
+  const randomRecipeArr = responseData.recipes.map((recipe: any) => ({
     title: recipe.title,
     category: recipe.cuisines[0] || recipe.dishTypes[0] || '',
     picture: recipe.image,
@@ -17,9 +19,10 @@ export const fetchRandomRecipe = async () => {
       <div dangerouslySetInnerHTML={{ __html: recipe.instructions }}></div>
     ),
     ingredients: recipe.extendedIngredients.map(
-      (ingredient) => ingredient.original
+      (ingredient: any) => ingredient.original
     ),
   }));
 
-  return randomRecipe[0];
+  const randomRecipe: RecipeType = randomRecipeArr[0];
+  return randomRecipe;
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, FC, ChangeEvent } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Box,
@@ -10,18 +10,19 @@ import {
   AlertTitle,
 } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-import { outerPaper } from '../shared/styles/formsStyles';
+import { outerPaper } from '../../shared/styles/formsStyles';
 import {
   paperHeading,
   mainBoxContainer,
   colors,
-} from '../shared/styles/sharedStyles';
+} from '../../shared/styles/sharedStyles';
 import {
   fetchRecipeById,
   manageRecipe,
-} from '../shared/services/recipeService';
-import { formValidation } from '../shared/validations';
-import { useUserContext } from '../hooks/useUserContext';
+} from '../../shared/services/recipeService';
+import { formValidation } from '../../shared/validations';
+import { useUserContext } from '../../hooks/useUserContext';
+import { RecipeType } from '../../shared/types';
 
 const initalState = {
   title: '',
@@ -30,25 +31,30 @@ const initalState = {
   description: '',
 };
 
-export const ManageRecipeCard = ({ actionType }) => {
+type Props = {
+  actionType?: string;
+};
+
+export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
   const navigate = useNavigate();
   const {
     user: { accessToken },
   } = useUserContext();
   const { id } = useParams();
 
-  const [cardDataState, setCardDataState] = useState(initalState);
-  const [errorState, setErrorState] = useState(initalState);
-  const [isOpen, setIsOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [cardDataState, setCardDataState] = useState<RecipeType>(initalState);
+  const [errorState, setErrorState] =
+    useState<Record<string, string>>(initalState);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const getRecipe = async () => {
     try {
       const responseData = await fetchRecipeById(id);
 
       setCardDataState(responseData);
-    } catch (err) {
+    } catch (err: any) {
       setAlertMessage(err.message);
       setIsOpen(true);
     }
@@ -62,7 +68,7 @@ export const ManageRecipeCard = ({ actionType }) => {
     }
   }, [actionType]);
 
-  const handleOnChange = (event) => {
+  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
     setCardDataState({
@@ -79,11 +85,11 @@ export const ManageRecipeCard = ({ actionType }) => {
     if (!hasErrors) {
       setIsLoading(true);
       try {
-        await manageRecipe(actionType, id, accessToken, cardDataState);
+        await manageRecipe(cardDataState, accessToken, actionType, id);
 
         navigate('/all-recipes');
         setIsLoading(false);
-      } catch (err) {
+      } catch (err: any) {
         setAlertMessage(err.message);
         setIsOpen(true);
         setIsLoading(false);

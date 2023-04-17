@@ -1,9 +1,10 @@
-import { Paper, Typography, Card, CardMedia, CardContent } from '@mui/material';
+import { Paper, Typography, Card, CardMedia } from '@mui/material';
 import { innerPaper, outerPaper } from '../shared/styles/formsStyles';
 import { paperHeading } from '../shared/styles/sharedStyles';
 import dirtyDish from '../images/dirty-plate.jpg';
+import { FC } from 'react';
 
-export const NotFound = () => {
+export const NotFound: FC = () => {
   return (
     <Paper variant="outlined" sx={outerPaper}>
       <Paper elevation={10} sx={innerPaper}>

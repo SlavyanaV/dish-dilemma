@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import {
   Card,
   Paper,
@@ -12,7 +12,7 @@ import {
   Snackbar,
   CircularProgress,
 } from '@mui/material';
-import { SmallCard } from './SmallCard';
+import { SmallCard } from './SmallCard/SmallCard';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import InfoIcon from '@mui/icons-material/Info';
@@ -26,14 +26,15 @@ import {
 import { getUserDetails } from '../shared/services/userService';
 import { fetchAllRecipesByUserId } from '../shared/services/recipeService';
 import { useUserContext } from '../hooks/useUserContext';
+import { CardType } from '../shared/types';
 
-export const MyProfile = () => {
-  const [createdOn, setCreatedOn] = useState('');
-  const [cardsDataState, setCardsDataState] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [hasFetched, setHasFetched] = useState(false);
+export const MyProfile: FC = () => {
+  const [createdOn, setCreatedOn] = useState<string>('');
+  const [cardsDataState, setCardsDataState] = useState<CardType[]>([]);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [hasFetched, setHasFetched] = useState<boolean>(false);
 
   const {
     user: { accessToken, _id, email },
@@ -50,7 +51,7 @@ export const MyProfile = () => {
       setCreatedOn(dayjs(responseData._createdOn).fromNow());
       setIsLoading(false);
       setHasFetched(true);
-    } catch (err) {
+    } catch (err: any) {
       setAlertMessage(err.message);
       setIsOpen(true);
       setIsLoading(false);
@@ -70,8 +71,8 @@ export const MyProfile = () => {
 
       setCardsDataState(responseData);
       setIsLoading(false);
-    } catch (err) {
-      if (!err.message === 'Resource not found') {
+    } catch (err: any) {
+      if (err.message !== 'Resource not found') {
         setAlertMessage(err.message);
         setIsOpen(true);
       }

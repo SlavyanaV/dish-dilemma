@@ -1,4 +1,4 @@
-import { Navbar } from './components/Navbar';
+import { Navbar } from './components/Navbar/Navbar';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ContentContainer } from './components/ContentContainer';
 import './shared/styles/sharedStyles.css';
@@ -6,7 +6,7 @@ import { Footer } from './components/Footer';
 import backgroundImg from './images/background-image.png';
 import { UserContextProvider } from './contexts/UserContext';
 
-function App() {
+export const App = () => {
   return (
     <UserContextProvider>
       <CssBaseline />
@@ -27,6 +27,4 @@ function App() {
       <Footer />
     </UserContextProvider>
   );
-}
-
-export default App;
+};

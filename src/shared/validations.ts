@@ -1,9 +1,9 @@
-export const formValidation = (formState) => {
-  const errors = {};
+export const formValidation = (formState: Record<string, any>) => {
+  const errors: Record<string, string> = {};
 
   Object.keys(formState).forEach((key) => {
     errors[key] =
-      formState[key].length < 3
+      formState[key]?.length < 3
         ? 'The field must contain at least 3 symbols'
         : '';
     if (key === 'repassword' && formState.repassword !== formState.password) {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import LoadingButton from '@mui/lab/LoadingButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -28,29 +28,34 @@ import {
   link,
   loader,
   paperHeading,
-} from '../shared/styles/sharedStyles';
-import { fetchRandomRecipe } from '../shared/services/randomRecipeService';
+} from '../../shared/styles/sharedStyles';
+import { fetchRandomRecipe } from '../../shared/services/randomRecipeService';
 import {
   deleteRecipe,
   fetchRecipeById,
-} from '../shared/services/recipeService';
-import { useUserContext } from '../hooks/useUserContext';
+} from '../../shared/services/recipeService';
+import { useUserContext } from '../../hooks/useUserContext';
+import { RecipeType } from '../../shared/types';
 
-export const RecipeCard = ({ cardType }) => {
+type Props = {
+  cardType?: string;
+};
+
+export const RecipeCard: FC<Props> = ({ cardType }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const {
     user: { accessToken, _id },
   } = useUserContext();
 
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [cardDataState, setCardDataState] = useState({});
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
-  const [hasFetched, setHasFetched] = useState(false);
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [cardDataState, setCardDataState] = useState({} as RecipeType);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false);
+  const [hasFetched, setHasFetched] = useState<boolean>(false);
 
   const handleExpandClick = () => {
     setIsExpanded(!isExpanded);
@@ -65,10 +70,10 @@ export const RecipeCard = ({ cardType }) => {
       setCardDataState(responseData);
       setIsLoading(false);
       setHasFetched(true);
-    } catch (err) {
+    } catch (err: any) {
       setAlertMessage(err.message);
       setIsOpen(true);
-      setCardDataState({});
+      setCardDataState({} as RecipeType);
       setIsLoading(false);
       setHasFetched(true);
     }
@@ -83,10 +88,10 @@ export const RecipeCard = ({ cardType }) => {
       setCardDataState(randomRecipe);
       setIsLoading(false);
       setHasFetched(true);
-    } catch (err) {
+    } catch (err: any) {
       setAlertMessage(err.message);
       setIsOpen(true);
-      setCardDataState({});
+      setCardDataState({} as RecipeType);
       setIsLoading(false);
       setHasFetched(true);
     }
@@ -103,11 +108,11 @@ export const RecipeCard = ({ cardType }) => {
   const handleOnDelete = async () => {
     setIsDeleteLoading(true);
     try {
-      await deleteRecipe(cardDataState._id, accessToken);
+      await deleteRecipe(accessToken, cardDataState._id);
 
       navigate('/all-recipes');
       setIsDeleteLoading(false);
-    } catch (err) {
+    } catch (err: any) {
       setAlertMessage(err.message);
       setIsOpen(true);
       setIsDeleteLoading(false);
@@ -241,8 +246,8 @@ export const RecipeCard = ({ cardType }) => {
                   Ingredients:
                 </Typography>
                 <ul>
-                  {cardDataState?.ingredients?.map((ingredient) => (
-                    <li>{ingredient}</li>
+                  {cardDataState?.ingredients?.map((ingredient: string) => (
+                    <li key={ingredient}>{ingredient}</li>
                   ))}
                 </ul>
               </>

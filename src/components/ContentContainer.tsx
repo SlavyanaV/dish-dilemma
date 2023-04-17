@@ -1,16 +1,17 @@
 import { Routes, Route } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { Login } from './Login';
-import { RecipeCard } from './RecipeCard';
+import { RecipeCard } from './RecipeCard/RecipeCard';
 import { Register } from './Register';
-import { CardsList } from './CardsList';
-import { ManageRecipeCard } from './ManageRecipeCard';
+import { CardsList } from './CardsList/CardsList';
+import { ManageRecipeCard } from './ManageRecipeCard/ManageRecipeCard';
 import { MyProfile } from './MyProfile';
 import { PrivateRoutes } from './RoutesGuards/PrivateRoutes';
 import { PublicRoutes } from './RoutesGuards/PublicRoutes';
 import { NotFound } from './NotFound';
+import { FC } from 'react';
 
-export const ContentContainer = () => {
+export const ContentContainer: FC = () => {
   return (
     <Box
       sx={{

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
   Box,
-  Button,
   TextField,
   Paper,
   Typography,
@@ -10,57 +10,58 @@ import {
   Alert,
   AlertTitle,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import { innerPaper, outerPaper } from '../shared/styles/formsStyles';
 import {
   paperHeading,
   mainBoxContainer,
   colors,
+  link,
 } from '../shared/styles/sharedStyles';
-import { register } from '../shared/services/userService';
+import { login } from '../shared/services/userService';
 import { formValidation } from '../shared/validations';
 import { useUserContext } from '../hooks/useUserContext';
+import { LoginType } from '../shared/types';
 
 const initialState = {
   email: '',
   password: '',
-  repassword: '',
 };
 
-export const Register = () => {
+export const Login: FC = () => {
   const navigate = useNavigate();
 
   const { onLogin } = useUserContext();
 
-  const [registerDataState, setRegisterDataState] = useState(initialState);
-  const [errorState, setErrorState] = useState(initialState);
-  const [isOpen, setIsOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [loginDataState, setLoginDataState] = useState<LoginType>(initialState);
+  const [errorState, setErrorState] =
+    useState<Record<string, string>>(initialState);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleOnChange = (event) => {
+  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
-    setRegisterDataState({
-      ...registerDataState,
+    setLoginDataState({
+      ...loginDataState,
       [name]: value,
     });
   };
 
   const handleOnSubmit = async () => {
-    const { errors, hasErrors } = formValidation(registerDataState);
+    const { errors, hasErrors } = formValidation(loginDataState);
 
     setErrorState(errors);
 
     if (!hasErrors) {
       setIsLoading(true);
       try {
-        const { accessToken, email, _id } = await register(registerDataState);
+        const { accessToken, email, _id } = await login(loginDataState);
 
         onLogin({ accessToken, email, _id });
-        navigate('/');
+        navigate('/my-profile');
         setIsLoading(false);
-      } catch (err) {
+      } catch (err: any) {
         setAlertMessage(err.message);
         setIsOpen(true);
         setIsLoading(false);
@@ -73,7 +74,7 @@ export const Register = () => {
       <Box sx={mainBoxContainer}>
         <Paper elevation={10} sx={innerPaper}>
           <Typography variant="h4" sx={paperHeading}>
-            Register your profile
+            Log into your profile
           </Typography>
         </Paper>
         <TextField
@@ -100,19 +101,6 @@ export const Register = () => {
           onChange={handleOnChange}
           className={!!errorState.password ? 'input-error' : 'input-success'}
         />
-        <TextField
-          name="repassword"
-          id="filled-repassword-input"
-          label="Repeat password"
-          type="password"
-          variant="outlined"
-          autoComplete="current-password"
-          helperText={errorState.repassword}
-          error={!!errorState.repassword}
-          sx={{ m: 1 }}
-          onChange={handleOnChange}
-          className={!!errorState.repassword ? 'input-error' : 'input-success'}
-        />
         <LoadingButton
           variant="outlined"
           color="inherit"
@@ -121,9 +109,14 @@ export const Register = () => {
           loading={isLoading}
           loadingPosition="end"
         >
-          Register
+          Login
         </LoadingButton>
       </Box>
+      <Typography color={colors.secondary} sx={{ textAlign: 'center' }}>
+        <Link to="/register" style={link}>
+          Not registered yet?
+        </Link>
+      </Typography>
       <Snackbar
         open={isOpen}
         autoHideDuration={4000}

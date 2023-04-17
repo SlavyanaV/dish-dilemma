@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { FC, useState } from 'react';
 import {
   AppBar,
   Box,
@@ -13,20 +13,20 @@ import {
   AlertTitle,
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
-import { colors, link } from '../shared/styles/sharedStyles';
-import { logout } from '../shared/services/userService';
-import logo from '../images/logo.png';
-import { useUserContext } from '../hooks/useUserContext';
+import { colors, link } from '../../shared/styles/sharedStyles';
+import { logout } from '../../shared/services/userService';
+import logo from '../../images/logo.png';
+import { useUserContext } from '../../hooks/useUserContext';
 
-export const Navbar = () => {
+export const Navbar: FC = () => {
   const navigate = useNavigate();
   const {
     user: { accessToken },
     onLogout,
   } = useUserContext();
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string>('');
 
   const handleOnLogout = async () => {
     try {
@@ -35,7 +35,7 @@ export const Navbar = () => {
       onLogout();
 
       navigate('/login');
-    } catch (err) {
+    } catch (err: any) {
       setAlertMessage(err.message);
       setIsOpen(true);
     }

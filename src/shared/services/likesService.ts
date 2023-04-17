@@ -1,7 +1,10 @@
 // const likesUrl = 'http://localhost:3030/data/likes';
 const likesUrl = 'https://dish-dilemma-api.onrender.com/data/likes';
 
-export const likeRecipe = async (like, accessToken) => {
+export const likeRecipe = async (
+  like: { cardId: string; likedBy: string },
+  accessToken: string
+) => {
   const response = await fetch(likesUrl, {
     method: 'POST',
     headers: {

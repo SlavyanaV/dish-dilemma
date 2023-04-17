@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, FC } from 'react';
 import {
   Grid,
   Stack,
@@ -8,36 +8,37 @@ import {
   AlertTitle,
   CircularProgress,
 } from '@mui/material';
-import { SmallCard } from './SmallCard';
+import { SmallCard } from '../SmallCard/SmallCard';
 import InfoIcon from '@mui/icons-material/Info';
 import {
   mainBoxContainer,
   colors,
   grid,
   loader,
-} from '../shared/styles/sharedStyles';
-import { fetchAllRecipes } from '../shared/services/recipeService';
-import { getLikes } from '../shared/services/likesService';
+} from '../../shared/styles/sharedStyles';
+import { fetchAllRecipes } from '../../shared/services/recipeService';
+import { getLikes } from '../../shared/services/likesService';
+import { CardType, LikesType } from '../../shared/types';
 
-export const CardsList = () => {
-  const [cardsDataState, setCardsDataState] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [hasFetched, setHasFetched] = useState(false);
-  const [likesData, setLikesData] = useState([]);
+export const CardsList: FC = () => {
+  const [cardsDataState, setCardsDataState] = useState<CardType[]>([]);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [hasFetched, setHasFetched] = useState<boolean>(false);
+  const [likesData, setLikesData] = useState<LikesType[]>([]);
 
   const fetchRecipes = async () => {
     setIsLoading(true);
 
     try {
-      const responseData = await fetchAllRecipes();
+      const responseData: CardType[] = await fetchAllRecipes();
 
       setCardsDataState(responseData);
       setIsLoading(false);
       setHasFetched(true);
-    } catch (err) {
-      if (!err.message === 'Resource not found') {
+    } catch (err: any) {
+      if (err.message !== 'Resource not found') {
         setAlertMessage(err.message);
         setIsOpen(true);
       }
@@ -48,9 +49,9 @@ export const CardsList = () => {
 
   const fetchLikes = async () => {
     try {
-      const likesData = await getLikes();
+      const likesData: LikesType[] = await getLikes();
       setLikesData(likesData);
-    } catch (err) {
+    } catch (err: any) {
       setAlertMessage(err.message);
       setIsOpen(true);
     }
@@ -83,7 +84,7 @@ export const CardsList = () => {
         >
           {cardsDataState.map((card, index) => (
             <Grid item xs={'auto'} key={index}>
-              <SmallCard card={card} likesData={likesData} />
+              <SmallCard card={card} likesData={likesData} isOwn={false} />
             </Grid>
           ))}
         </Grid>
