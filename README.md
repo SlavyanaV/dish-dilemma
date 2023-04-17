@@ -1,6 +1,6 @@
 # [Dish Dilemma](https://dish-dilemma.onrender.com/) 🍴
 
-Dish Dilemma is a web application that allows users to browse, add, edit, and delete recipes. It is built with React, react-router-dom, Material UI, and dayjs.
+Dish Dilemma is a web application that allows users to browse, add, edit, and delete recipes. It is built with TypeScript, React, react-router-dom, Material UI, and dayjs.
 
 ## Features 🌟
 
