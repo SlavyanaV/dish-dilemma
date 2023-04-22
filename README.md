@@ -6,23 +6,23 @@ Dish Dilemma is a web application that allows users to browse, add, edit, and de
 
 ### Home Page 🏠
 
-The home page displays a random recipe with its details such as ingredients, and steps to prepare. Users can click on expand button to view the full recipe details.
-
-### Login Page 🔑
-
-Users can login to their account using their email and password. If they do not have an account, they can navigate to the register page.
+The home page displays a random recipe with its details such as ingredients and steps to prepare. Users can click on the Expand button to view the full recipe details.
 
 ### Register Page 📝
 
-Users can create a new account by providing their name, email, password, and confirm password.
+Users can create a new account by providing their email, password, and confirm the password.
+
+### Login Page 🔑
+
+Users can login to their account using their email and password. If they do not have an account, they can navigate to the Register page.
 
 ### Logout Button 🚪
 
-Users can logout from their account at any time by clicking on the logout button.
+Users can logout from their account at any time by clicking on the Logout button.
 
 ### All Recipes Page 📚
 
-The all recipes page displays all the recipes in the database in a grid-like format. Users can click on see details button to navigate to its full details.
+The All recipes page displays all the recipes in the database in a grid-like format. Users can click on See details button to navigate to its full details.
 
 ### Recipe Details Page 📝
 
