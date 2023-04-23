@@ -23,10 +23,10 @@ import {
   grid,
   loader,
 } from '../shared/styles/sharedStyles';
-import { getUserDetails } from '../shared/services/userService';
 import { fetchAllRecipesByUserId } from '../shared/services/recipeService';
 import { useUserContext } from '../hooks/useUserContext';
 import { CardType } from '../shared/types';
+import { auth } from '../config/firebase';
 
 export const MyProfile: FC = () => {
   const [createdOn, setCreatedOn] = useState<string>('');
@@ -37,7 +37,7 @@ export const MyProfile: FC = () => {
   const [hasFetched, setHasFetched] = useState<boolean>(false);
 
   const {
-    user: { accessToken, _id, email },
+    user: { _id, email },
   } = useUserContext();
 
   dayjs.extend(relativeTime);
@@ -46,9 +46,7 @@ export const MyProfile: FC = () => {
     setIsLoading(true);
 
     try {
-      const responseData = await getUserDetails(accessToken);
-
-      setCreatedOn(dayjs(responseData._createdOn).fromNow());
+      setCreatedOn(dayjs(auth.currentUser?.metadata?.creationTime).fromNow());
       setIsLoading(false);
       setHasFetched(true);
     } catch (err: any) {
