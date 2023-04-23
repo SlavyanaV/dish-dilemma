@@ -103,6 +103,7 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
     } else {
       getRandomRecipe();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cardType]);
 
   const handleOnDelete = async () => {

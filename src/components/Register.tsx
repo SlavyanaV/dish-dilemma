@@ -16,10 +16,10 @@ import {
   mainBoxContainer,
   colors,
 } from '../shared/styles/sharedStyles';
-import { register } from '../shared/services/userService';
 import { formValidation } from '../shared/validations';
-import { useUserContext } from '../hooks/useUserContext';
 import { RegisterType } from '../shared/types';
+import { auth } from '../config/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const initialState = {
   email: '',
@@ -29,8 +29,6 @@ const initialState = {
 
 export const Register: FC = () => {
   const navigate = useNavigate();
-
-  const { onLogin } = useUserContext();
 
   const [registerDataState, setRegisterDataState] =
     useState<RegisterType>(initialState);
@@ -57,9 +55,12 @@ export const Register: FC = () => {
     if (!hasErrors) {
       setIsLoading(true);
       try {
-        const { accessToken, email, _id } = await register(registerDataState);
+        await createUserWithEmailAndPassword(
+          auth,
+          registerDataState.email,
+          registerDataState.password
+        );
 
-        onLogin({ accessToken, email, _id });
         navigate('/');
         setIsLoading(false);
       } catch (err: any) {

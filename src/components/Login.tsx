@@ -17,10 +17,10 @@ import {
   colors,
   link,
 } from '../shared/styles/sharedStyles';
-import { login } from '../shared/services/userService';
 import { formValidation } from '../shared/validations';
-import { useUserContext } from '../hooks/useUserContext';
 import { LoginType } from '../shared/types';
+import { auth } from '../config/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const initialState = {
   email: '',
@@ -29,8 +29,6 @@ const initialState = {
 
 export const Login: FC = () => {
   const navigate = useNavigate();
-
-  const { onLogin } = useUserContext();
 
   const [loginDataState, setLoginDataState] = useState<LoginType>(initialState);
   const [errorState, setErrorState] =
@@ -56,9 +54,12 @@ export const Login: FC = () => {
     if (!hasErrors) {
       setIsLoading(true);
       try {
-        const { accessToken, email, _id } = await login(loginDataState);
+        await signInWithEmailAndPassword(
+          auth,
+          loginDataState.email,
+          loginDataState.password
+        );
 
-        onLogin({ accessToken, email, _id });
         navigate('/my-profile');
         setIsLoading(false);
       } catch (err: any) {

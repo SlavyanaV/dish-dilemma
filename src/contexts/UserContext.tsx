@@ -1,5 +1,6 @@
 import { FC, ReactNode, createContext, useEffect, useState } from 'react';
 import { UserType } from './userContextTypes';
+import { auth } from '../config/firebase';
 
 const initialState: UserType = {
   accessToken: '',
@@ -9,8 +10,6 @@ const initialState: UserType = {
 
 export const UserContext = createContext({
   user: initialState,
-  onLogin: (userData: UserType) => {},
-  onLogout: () => {},
 });
 
 type Props = {
@@ -20,36 +19,19 @@ type Props = {
 export const UserContextProvider: FC<Props> = ({ children }) => {
   const [user, setUser] = useState(initialState);
 
-  const accessToken = localStorage.getItem('accessToken');
-  const email = localStorage.getItem('email');
-  const _id = localStorage.getItem('_id');
-
   useEffect(() => {
-    setUser({
-      accessToken: accessToken as string,
-      email: email as string,
-      _id: _id as string,
+    const subscriber = auth.onAuthStateChanged((firebaseUser: any) => {
+      setUser({
+        accessToken: firebaseUser?.accessToken || '',
+        email: firebaseUser?.email || '',
+        _id: firebaseUser?.uid || '',
+      });
     });
-  }, [accessToken, email, _id]);
 
-  const onLogin = (userData: UserType) => {
-    setUser(userData);
-
-    if (userData.accessToken && userData.email && userData._id) {
-      localStorage.setItem('accessToken', userData.accessToken);
-      localStorage.setItem('email', userData.email);
-      localStorage.setItem('_id', userData._id);
-    }
-  };
-
-  const onLogout = () => {
-    setUser(initialState);
-    localStorage.clear();
-  };
+    return subscriber;
+  }, []);
 
   return (
-    <UserContext.Provider value={{ user, onLogin, onLogout }}>
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
   );
 };

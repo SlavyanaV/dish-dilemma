@@ -14,15 +14,15 @@ import {
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { colors, link } from '../../shared/styles/sharedStyles';
-import { logout } from '../../shared/services/userService';
 import logo from '../../images/logo.png';
 import { useUserContext } from '../../hooks/useUserContext';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../config/firebase';
 
 export const Navbar: FC = () => {
   const navigate = useNavigate();
   const {
     user: { accessToken },
-    onLogout,
   } = useUserContext();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -30,9 +30,7 @@ export const Navbar: FC = () => {
 
   const handleOnLogout = async () => {
     try {
-      await logout(accessToken);
-
-      onLogout();
+      await signOut(auth);
 
       navigate('/login');
     } catch (err: any) {

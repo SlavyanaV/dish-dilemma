@@ -61,6 +61,7 @@ export const MyProfile: FC = () => {
 
   useEffect(() => {
     getUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getUserRecipes = async () => {
@@ -82,6 +83,7 @@ export const MyProfile: FC = () => {
 
   useEffect(() => {
     getUserRecipes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isLoading || !hasFetched) {

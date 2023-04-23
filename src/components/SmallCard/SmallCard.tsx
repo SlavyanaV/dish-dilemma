@@ -40,7 +40,7 @@ export const SmallCard: FC<Props> = ({ card, likesData, isOwn }) => {
       const transformedLikes = transformLikes(likesData, card._id);
       setLikes(transformedLikes);
     }
-  }, [likesData]);
+  }, [card._id, likesData]);
 
   const handleOnLike = async () => {
     try {

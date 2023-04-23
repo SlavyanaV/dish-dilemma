@@ -66,6 +66,7 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
     } else {
       setCardDataState(initalState);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actionType]);
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
