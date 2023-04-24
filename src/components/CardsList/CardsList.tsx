@@ -16,9 +16,9 @@ import {
   grid,
   loader,
 } from '../../shared/styles/sharedStyles';
-import { fetchAllRecipes } from '../../shared/services/recipeService';
 import { getLikes } from '../../shared/services/likesService';
 import { CardType, LikesType } from '../../shared/types';
+import { fetchAllRecipes } from '../../shared/services/recipeService';
 
 export const CardsList: FC = () => {
   const [cardsDataState, setCardsDataState] = useState<CardType[]>([]);
@@ -32,9 +32,9 @@ export const CardsList: FC = () => {
     setIsLoading(true);
 
     try {
-      const responseData: CardType[] = await fetchAllRecipes();
+      const recipes = await fetchAllRecipes();
 
-      setCardsDataState(responseData);
+      setCardsDataState(recipes);
       setIsLoading(false);
       setHasFetched(true);
     } catch (err: any) {
@@ -60,6 +60,7 @@ export const CardsList: FC = () => {
   useEffect(() => {
     fetchRecipes();
     fetchLikes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isLoading || !hasFetched) {

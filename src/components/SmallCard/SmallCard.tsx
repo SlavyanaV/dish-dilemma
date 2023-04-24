@@ -33,18 +33,18 @@ export const SmallCard: FC<Props> = ({ card, likesData, isOwn }) => {
     user: { accessToken, _id },
   } = useUserContext();
 
-  const isLikeDisabled = !_id || card._ownerId === _id || likes?.includes(_id);
+  const isLikeDisabled = !_id || card.ownerId === _id || likes?.includes(_id);
 
   useEffect(() => {
     if (likesData) {
-      const transformedLikes = transformLikes(likesData, card._id);
+      const transformedLikes = transformLikes(likesData, card.id);
       setLikes(transformedLikes);
     }
-  }, [card._id, likesData]);
+  }, [card.id, likesData]);
 
   const handleOnLike = async () => {
     try {
-      await likeRecipe({ cardId: card._id, likedBy: _id }, accessToken);
+      await likeRecipe({ cardId: card.id, likedBy: _id }, accessToken);
 
       setLikes((prevState) => [...prevState, _id]);
       setAlertMessage('Successfully liked the recipe!');
@@ -72,7 +72,7 @@ export const SmallCard: FC<Props> = ({ card, likesData, isOwn }) => {
         disableSpacing
         sx={{ display: 'flex', justifyContent: 'space-between' }}
       >
-        <Link to={`/recipe-details/${card._id}`} style={link}>
+        <Link to={`/recipe-details/${card.id}`} style={link}>
           <Button variant="outlined" color="inherit">
             See details
           </Button>

@@ -3,9 +3,9 @@ export type CardType = {
   description: string;
   picture: string;
   title: string;
-  _createdOn: number;
-  _id: string;
-  _ownerId: string;
+  createdOn: number;
+  id: string;
+  ownerId: string;
 };
 
 export type LikesType = {

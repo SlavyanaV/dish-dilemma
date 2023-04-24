@@ -1,4 +1,6 @@
-import { RecipeType } from '../types';
+import { collection, CollectionReference, getDocs } from 'firebase/firestore';
+import { db } from '../../config/firebase';
+import { CardType, RecipeType } from '../types';
 
 // const recipesUrl = 'http://localhost:3030/data/all-recipes';
 const recipesUrl = 'https://dish-dilemma-api.onrender.com/data/all-recipes';
@@ -51,14 +53,19 @@ export const deleteRecipe = async (accessToken: string, id?: string) => {
 };
 
 export const fetchAllRecipes = async () => {
-  const response = await fetch(recipesUrl);
-  const responseData = await response.json();
+  const recipesCollectionRef = collection(
+    db,
+    'recipes'
+  ) as CollectionReference<CardType>;
 
-  if (!response.ok) {
-    throw new Error(responseData.message);
-  } else {
-    return responseData;
-  }
+  const data = await getDocs(recipesCollectionRef);
+
+  const recipes: CardType[] = data.docs.map((doc) => ({
+    ...doc.data(),
+    id: doc.id,
+  }));
+
+  return recipes;
 };
 
 export const fetchAllRecipesByUserId = async (userId: string) => {
