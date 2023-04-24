@@ -21,14 +21,15 @@ import {
   manageRecipe,
 } from '../../shared/services/recipeService';
 import { formValidation } from '../../shared/validations';
-import { useUserContext } from '../../hooks/useUserContext';
 import { RecipeType } from '../../shared/types';
+import { useUserContext } from '../../hooks/useUserContext';
 
 const initalState = {
   title: '',
   category: '',
   picture: '',
   description: '',
+  id: '',
 };
 
 type Props = {
@@ -37,10 +38,10 @@ type Props = {
 
 export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
   const navigate = useNavigate();
-  const {
-    user: { accessToken },
-  } = useUserContext();
   const { id } = useParams();
+  const {
+    user: { userId },
+  } = useUserContext();
 
   const [cardDataState, setCardDataState] = useState<RecipeType>(initalState);
   const [errorState, setErrorState] =
@@ -51,7 +52,7 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
 
   const getRecipe = async () => {
     try {
-      const responseData = await fetchRecipeById(id);
+      const responseData = await fetchRecipeById(id!);
 
       setCardDataState(responseData);
     } catch (err: any) {
@@ -86,7 +87,7 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
     if (!hasErrors) {
       setIsLoading(true);
       try {
-        await manageRecipe(cardDataState, accessToken, actionType, id);
+        await manageRecipe(cardDataState, userId, id!, actionType);
 
         navigate('/all-recipes');
         setIsLoading(false);

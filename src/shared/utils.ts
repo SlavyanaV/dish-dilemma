@@ -1,4 +1,5 @@
-import { LikesType } from "./types";
+import { DocumentData, QuerySnapshot } from 'firebase/firestore';
+import { LikesType } from './types';
 
 export const transformLikes = (likesData: LikesType[], cardId: string) => {
   const transformedLikes = likesData
@@ -7,3 +8,9 @@ export const transformLikes = (likesData: LikesType[], cardId: string) => {
 
   return transformedLikes;
 };
+
+export const mapFirestoreDocs = (data: QuerySnapshot<DocumentData>) =>
+  data.docs.map((doc) => ({
+    ...doc.data(),
+    id: doc.id,
+  }));

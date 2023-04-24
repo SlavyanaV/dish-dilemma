@@ -1,82 +1,63 @@
-import { collection, CollectionReference, getDocs } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { CardType, RecipeType } from '../types';
+import { mapFirestoreDocs } from '../utils';
 
-// const recipesUrl = 'http://localhost:3030/data/all-recipes';
-const recipesUrl = 'https://dish-dilemma-api.onrender.com/data/all-recipes';
+const recipesCollectionRef = collection(db, 'recipes');
 
-export const fetchRecipeById = async (id?: string) => {
-  const response = await fetch(`${recipesUrl}/${id}`);
-  const responseData = await response.json();
+export const fetchRecipeById = async (id: string) => {
+  const recipeRef = doc(db, 'recipes', id);
+  const recipe = await getDoc(recipeRef);
+  const recipeData = { ...recipe.data(), id: recipe.id } as RecipeType;
 
-  if (!response.ok) {
-    throw new Error(responseData.message);
-  } else {
-    return responseData;
-  }
+  return recipeData;
 };
 
 export const manageRecipe = async (
   cardDataState: RecipeType,
-  accessToken: string,
-  actionType?: string,
-  id?: string
+  ownerId: string,
+  id: string,
+  actionType?: string
 ) => {
-  const response = await fetch(
-    `${recipesUrl}${actionType === 'edit' ? '/' + id : ''}`,
-    {
-      method: `${actionType === 'edit' ? 'PUT' : 'POST'}`,
-      headers: {
-        'X-Authorization': accessToken,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(cardDataState),
-    }
-  );
+  const cardData = { ...cardDataState, ownerId };
 
-  const responseData = await response.json();
-
-  if (!response.ok) {
-    throw new Error(responseData.message);
+  if (actionType === 'edit') {
+    const recipeDoc = doc(db, 'recipes', id);
+    await updateDoc(recipeDoc, cardData);
+  } else {
+    await addDoc(recipesCollectionRef, cardData);
   }
 };
 
-export const deleteRecipe = async (accessToken: string, id?: string) => {
-  const response = await fetch(`${recipesUrl}/${id}`, {
-    method: 'DELETE',
-    headers: { 'X-Authorization': accessToken },
-  });
-
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
+export const deleteRecipe = async (id: string) => {
+  const recipeDoc = doc(db, 'recipes', id);
+  await deleteDoc(recipeDoc);
 };
 
 export const fetchAllRecipes = async () => {
-  const recipesCollectionRef = collection(
-    db,
-    'recipes'
-  ) as CollectionReference<CardType>;
+  const recipesData = await getDocs(recipesCollectionRef);
+  const recipes = mapFirestoreDocs(recipesData);
 
-  const data = await getDocs(recipesCollectionRef);
-
-  const recipes: CardType[] = data.docs.map((doc) => ({
-    ...doc.data(),
-    id: doc.id,
-  }));
-
-  return recipes;
+  return recipes as CardType[];
 };
 
 export const fetchAllRecipesByUserId = async (userId: string) => {
-  const response = await fetch(
-    `${recipesUrl}?where=_ownerId%3D%22${userId}%22`
+  const recipesQuery = query(
+    recipesCollectionRef,
+    where('ownerId', '==', userId)
   );
-  const responseData = await response.json();
+  const userRecipesData = await getDocs(recipesQuery);
+  const userRecipes = mapFirestoreDocs(userRecipesData);
 
-  if (!response.ok) {
-    throw new Error(responseData.message);
-  } else {
-    return responseData;
-  }
+  return userRecipes as CardType[];
 };

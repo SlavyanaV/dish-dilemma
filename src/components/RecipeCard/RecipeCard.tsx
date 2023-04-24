@@ -45,7 +45,7 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const {
-    user: { accessToken, userId },
+    user: { userId },
   } = useUserContext();
 
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
@@ -65,7 +65,7 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
     setIsLoading(true);
 
     try {
-      const responseData = await fetchRecipeById(id);
+      const responseData = await fetchRecipeById(id!);
 
       setCardDataState(responseData);
       setIsLoading(false);
@@ -109,7 +109,7 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
   const handleOnDelete = async () => {
     setIsDeleteLoading(true);
     try {
-      await deleteRecipe(accessToken, cardDataState.id);
+      await deleteRecipe(cardDataState.id);
 
       navigate('/all-recipes');
       setIsDeleteLoading(false);

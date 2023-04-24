@@ -17,13 +17,13 @@ export type LikesType = {
 };
 
 export type RecipeType = {
+  id: string;
   category: string;
   description: string;
   picture: string;
   title: string;
   ingredients?: string[];
   createdOn?: number;
-  id?: string;
   ownerId?: string;
 };
 
