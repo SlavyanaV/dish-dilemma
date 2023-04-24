@@ -11,9 +11,7 @@ export type CardType = {
 export type LikesType = {
   cardId: string;
   likedBy: string;
-  createdOn: number;
   id: string;
-  ownerId: string;
 };
 
 export type RecipeType = {

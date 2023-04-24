@@ -30,7 +30,7 @@ export const SmallCard: FC<Props> = ({ card, likesData, isOwn }) => {
   const [likes, setLikes] = useState<string[]>([]);
 
   const {
-    user: { accessToken, userId },
+    user: { userId },
   } = useUserContext();
 
   const isLikeDisabled =
@@ -45,7 +45,7 @@ export const SmallCard: FC<Props> = ({ card, likesData, isOwn }) => {
 
   const handleOnLike = async () => {
     try {
-      await likeRecipe({ cardId: card.id, likedBy: userId }, accessToken);
+      await likeRecipe({ cardId: card.id, likedBy: userId });
 
       setLikes((prevState) => [...prevState, userId]);
       setAlertMessage('Successfully liked the recipe!');
