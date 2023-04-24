@@ -45,7 +45,7 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const {
-    user: { accessToken, _id },
+    user: { accessToken, userId },
   } = useUserContext();
 
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
@@ -109,7 +109,7 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
   const handleOnDelete = async () => {
     setIsDeleteLoading(true);
     try {
-      await deleteRecipe(accessToken, cardDataState._id);
+      await deleteRecipe(accessToken, cardDataState.id);
 
       navigate('/all-recipes');
       setIsDeleteLoading(false);
@@ -182,9 +182,9 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
                 </Button>
               </Link>
             </Box>
-          ) : _id === cardDataState?._ownerId ? (
+          ) : userId === cardDataState?.ownerId ? (
             <Box>
-              <Link to={`/edit-recipe/${cardDataState?._id}`} style={link}>
+              <Link to={`/edit-recipe/${cardDataState?.id}`} style={link}>
                 <Button variant="outlined" color="inherit" sx={{ m: 1 }}>
                   Edit
                 </Button>

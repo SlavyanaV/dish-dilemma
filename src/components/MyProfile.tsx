@@ -37,7 +37,7 @@ export const MyProfile: FC = () => {
   const [hasFetched, setHasFetched] = useState<boolean>(false);
 
   const {
-    user: { _id, email },
+    user: { userId, email },
   } = useUserContext();
 
   dayjs.extend(relativeTime);
@@ -66,7 +66,7 @@ export const MyProfile: FC = () => {
     setIsLoading(true);
 
     try {
-      const responseData = await fetchAllRecipesByUserId(_id);
+      const responseData = await fetchAllRecipesByUserId(userId);
 
       setCardsDataState(responseData);
       setIsLoading(false);

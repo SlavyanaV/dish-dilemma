@@ -5,7 +5,7 @@ import { auth } from '../config/firebase';
 const initialState: UserType = {
   accessToken: '',
   email: '',
-  _id: '',
+  userId: '',
 };
 
 export const UserContext = createContext({
@@ -24,7 +24,7 @@ export const UserContextProvider: FC<Props> = ({ children }) => {
       setUser({
         accessToken: firebaseUser?.accessToken || '',
         email: firebaseUser?.email || '',
-        _id: firebaseUser?.uid || '',
+        userId: firebaseUser?.uid || '',
       });
     });
 

@@ -30,10 +30,11 @@ export const SmallCard: FC<Props> = ({ card, likesData, isOwn }) => {
   const [likes, setLikes] = useState<string[]>([]);
 
   const {
-    user: { accessToken, _id },
+    user: { accessToken, userId },
   } = useUserContext();
 
-  const isLikeDisabled = !_id || card.ownerId === _id || likes?.includes(_id);
+  const isLikeDisabled =
+    !userId || card.ownerId === userId || likes?.includes(userId);
 
   useEffect(() => {
     if (likesData) {
@@ -44,9 +45,9 @@ export const SmallCard: FC<Props> = ({ card, likesData, isOwn }) => {
 
   const handleOnLike = async () => {
     try {
-      await likeRecipe({ cardId: card.id, likedBy: _id }, accessToken);
+      await likeRecipe({ cardId: card.id, likedBy: userId }, accessToken);
 
-      setLikes((prevState) => [...prevState, _id]);
+      setLikes((prevState) => [...prevState, userId]);
       setAlertMessage('Successfully liked the recipe!');
       setIsOpen(true);
     } catch (err) {
@@ -81,7 +82,9 @@ export const SmallCard: FC<Props> = ({ card, likesData, isOwn }) => {
           <></>
         ) : (
           <Tooltip
-            title={`${likes?.length} likes ${!_id ? '(Log in to like)' : ''}`}
+            title={`${likes?.length} likes ${
+              !userId ? '(Log in to like)' : ''
+            }`}
           >
             <span>
               <Button

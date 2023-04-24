@@ -11,9 +11,9 @@ export type CardType = {
 export type LikesType = {
   cardId: string;
   likedBy: string;
-  _createdOn: number;
-  _id: string;
-  _ownerId: string;
+  createdOn: number;
+  id: string;
+  ownerId: string;
 };
 
 export type RecipeType = {
@@ -22,9 +22,9 @@ export type RecipeType = {
   picture: string;
   title: string;
   ingredients?: string[];
-  _createdOn?: number;
-  _id?: string;
-  _ownerId?: string;
+  createdOn?: number;
+  id?: string;
+  ownerId?: string;
 };
 
 export type LoginType = {
