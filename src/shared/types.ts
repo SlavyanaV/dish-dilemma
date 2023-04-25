@@ -3,8 +3,8 @@ export type CardType = {
   description: string;
   picture: string;
   title: string;
-  createdOn: number;
-  id: string;
+  createdOn?: number;
+  id?: string;
   ownerId: string;
 };
 

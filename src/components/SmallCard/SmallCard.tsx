@@ -38,14 +38,14 @@ export const SmallCard: FC<Props> = ({ card, likesData, isOwn }) => {
 
   useEffect(() => {
     if (likesData) {
-      const transformedLikes = transformLikes(likesData, card.id);
+      const transformedLikes = transformLikes(likesData, card.id!);
       setLikes(transformedLikes);
     }
   }, [card.id, likesData]);
 
   const handleOnLike = async () => {
     try {
-      await likeRecipe({ cardId: card.id, likedBy: userId });
+      await likeRecipe({ cardId: card.id!, likedBy: userId });
 
       setLikes((prevState) => [...prevState, userId]);
       setAlertMessage('Successfully liked the recipe!');

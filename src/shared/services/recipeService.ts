@@ -29,12 +29,13 @@ export const manageRecipe = async (
   id: string,
   actionType?: string
 ) => {
-  const cardData = { ...cardDataState, ownerId };
+  const cardData: CardType = { ...cardDataState, ownerId };
 
   if (actionType === 'edit') {
     const recipeDoc = doc(db, 'recipes', id);
     await updateDoc(recipeDoc, cardData);
   } else {
+    delete cardData.id;
     await addDoc(recipesCollectionRef, cardData);
   }
 };
