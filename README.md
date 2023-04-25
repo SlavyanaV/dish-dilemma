@@ -1,6 +1,6 @@
-# [Dish Dilemma](https://dish-dilemma.onrender.com/) 🍴
+# [Dish Dilemma](https://dish-dilemma.web.app/) 🍴
 
-Dish Dilemma is a web application that allows users to browse, add, edit, and delete recipes. It is built with TypeScript, React, react-router-dom, Material UI, and dayjs.
+Dish Dilemma is a web application that allows users to browse, add, edit, and delete recipes. It is built with TypeScript, React, react-router-dom, Material UI, and dayjs. The application is deployed and running on Firebase.
 
 ## Features 🌟
 
@@ -59,6 +59,4 @@ Contributions to this project are welcome. If you notice any bugs or would like 
 
 ## License 📄
 
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-**Please be aware that this project uses a backend server provided by © SoftUni, which is used for student practice purposes only.**
+This project is licensed under the MIT License. 

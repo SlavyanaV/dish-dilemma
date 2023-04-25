@@ -12,6 +12,7 @@ import {
 import GitHubIcon from '@mui/icons-material/GitHub';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import FilterIcon from '@mui/icons-material/Filter';
+import WhatshotIcon from '@mui/icons-material/Whatshot';
 import { colors, link } from '../shared/styles/sharedStyles';
 import logo from '../images/logo.png';
 import { FC } from 'react';
@@ -57,6 +58,14 @@ export const Footer: FC = () => {
             showLabel={true}
             sx={{ color: colors.light, p: '9px' }}
             icon={<GitHubIcon />}
+          />
+        </Link>
+        <Link to="https://firebase.google.com/" style={link}>
+          <BottomNavigationAction
+            label="Firebase"
+            showLabel={true}
+            sx={{ color: colors.light, p: '9px' }}
+            icon={<WhatshotIcon />}
           />
         </Link>
         <Link to="https://spoonacular.com/food-api" style={link}>
