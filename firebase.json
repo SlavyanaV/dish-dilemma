@@ -6,6 +6,6 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "destination": "/index.html"
+    "destination": "/build/index.html"
   }
 }
