@@ -6,6 +6,8 @@ import {
   CardActions,
   Button,
   Tooltip,
+  Typography,
+  Box,
 } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { Link } from 'react-router-dom';
@@ -79,23 +81,33 @@ export const SmallCard: FC<Props> = ({ card, likesData, isOwn }) => {
         {isOwn ? (
           <></>
         ) : (
-          <Tooltip
-            title={`${likes?.length} likes ${
-              !userId ? '(Log in to like)' : ''
-            }`}
-          >
-            <span>
-              <Button
-                variant="outlined"
-                color="inherit"
-                startIcon={<ThumbUpIcon />}
-                onClick={handleOnLike}
-                disabled={isLikeDisabled}
-              >
-                Like
-              </Button>
-            </span>
-          </Tooltip>
+          <>
+            <Box sx={{ textAlign: 'center' }}>
+              <Typography sx={{ fontSize: 14 }} color={colors.secondary}>
+                Created by:
+              </Typography>
+              <Typography variant="h6" color={colors.dark}>
+                {card.ownerEmail || 'Unknown user'}
+              </Typography>
+            </Box>
+            <Tooltip
+              title={`${likes?.length} likes ${
+                !userId ? '(Log in to like)' : ''
+              }`}
+            >
+              <span>
+                <Button
+                  variant="outlined"
+                  color="inherit"
+                  startIcon={<ThumbUpIcon />}
+                  onClick={handleOnLike}
+                  disabled={isLikeDisabled}
+                >
+                  Like
+                </Button>
+              </span>
+            </Tooltip>
+          </>
         )}
       </CardActions>
       <AlertMessage

@@ -6,6 +6,7 @@ export type CardType = {
   createdOn?: number;
   id?: string;
   ownerId: string;
+  ownerEmail: string;
 };
 
 export type LikesType = {
@@ -23,6 +24,7 @@ export type RecipeType = {
   ingredients?: string[];
   createdOn?: number;
   ownerId?: string;
+  ownerEmail: string;
 };
 
 export type LoginType = {

@@ -9,7 +9,7 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore';
-import { db } from '../../config/firebase';
+import { auth, db } from '../../config/firebase';
 import { CardType, RecipeType } from '../types';
 import { mapFirestoreDocs } from '../utils';
 
@@ -36,7 +36,10 @@ export const manageRecipe = async (
     await updateDoc(recipeDoc, cardData);
   } else {
     delete cardData.id;
-    await addDoc(recipesCollectionRef, cardData);
+    await addDoc(recipesCollectionRef, {
+      ...cardData,
+      ownerEmail: auth?.currentUser?.email,
+    });
   }
 };
 

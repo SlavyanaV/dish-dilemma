@@ -23,6 +23,7 @@ const initalState = {
   picture: '',
   description: '',
   id: '',
+  ownerEmail: '',
 };
 
 type Props = {

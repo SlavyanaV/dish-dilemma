@@ -2,7 +2,7 @@ export const formValidation = (formState: Record<string, any>) => {
   const errors: Record<string, string> = {};
 
   Object.keys(formState)
-    .filter((key: string) => key !== 'id')
+    .filter((key: string) => key !== 'id' && key !== 'ownerEmail')
     .forEach((key) => {
       errors[key] =
         formState[key]?.length < 3
