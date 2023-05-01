@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { Box } from '@mui/material';
-import { Login } from './Login';
+import { Login } from './Login/Login';
 import { RecipeCard } from './RecipeCard/RecipeCard';
 import { Register } from './Register';
 import { CardsList } from './CardsList/CardsList';

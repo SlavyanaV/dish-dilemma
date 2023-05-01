@@ -8,8 +8,6 @@ import {
   Grid,
   Stack,
   Alert,
-  AlertTitle,
-  Snackbar,
   CircularProgress,
 } from '@mui/material';
 import { SmallCard } from './SmallCard/SmallCard';
@@ -27,6 +25,7 @@ import { fetchAllRecipesByUserId } from '../shared/services/recipeService';
 import { useUserContext } from '../hooks/useUserContext';
 import { CardType } from '../shared/types';
 import { auth } from '../config/firebase';
+import { AlertMessage } from '../shared/components/AlertMessage/AlertMessage';
 
 export const MyProfile: FC = () => {
   const [createdOn, setCreatedOn] = useState<string>('');
@@ -150,22 +149,13 @@ export const MyProfile: FC = () => {
           </Alert>
         </Stack>
       )}
-      <Snackbar
-        open={isOpen}
-        autoHideDuration={4000}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        onClose={() => setIsOpen(false)}
-      >
-        <Alert
-          onClose={() => setIsOpen(false)}
-          severity="error"
-          variant="filled"
-          sx={{ width: '100%', color: colors.light }}
-        >
-          <AlertTitle>Error</AlertTitle>
-          {alertMessage}
-        </Alert>
-      </Snackbar>
+      <AlertMessage
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        severity={'error'}
+        alertTitle={'Error'}
+        alertMessage={alertMessage}
+      />
     </Box>
   );
 };

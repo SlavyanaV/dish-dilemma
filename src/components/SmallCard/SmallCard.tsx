@@ -6,9 +6,6 @@ import {
   CardActions,
   Button,
   Tooltip,
-  Snackbar,
-  Alert,
-  AlertTitle,
 } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { Link } from 'react-router-dom';
@@ -17,6 +14,7 @@ import { useUserContext } from '../../hooks/useUserContext';
 import { likeRecipe } from '../../shared/services/likesService';
 import { transformLikes } from '../../shared/utils';
 import { CardType, LikesType } from '../../shared/types';
+import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage';
 
 type Props = {
   card: CardType;
@@ -100,28 +98,17 @@ export const SmallCard: FC<Props> = ({ card, likesData, isOwn }) => {
           </Tooltip>
         )}
       </CardActions>
-      <Snackbar
-        open={isOpen}
-        autoHideDuration={4000}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        onClose={() => setIsOpen(false)}
-      >
-        <Alert
-          onClose={() => setIsOpen(false)}
-          severity={
-            alertMessage === 'Failed to like the recipe!' ? 'error' : 'success'
-          }
-          variant="filled"
-          sx={{ width: '100%', color: colors.light }}
-        >
-          <AlertTitle>
-            {alertMessage === 'Failed to like the recipe!'
-              ? 'Error'
-              : 'Success'}
-          </AlertTitle>
-          {alertMessage}
-        </Alert>
-      </Snackbar>
+      <AlertMessage
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        severity={
+          alertMessage === 'Failed to like the recipe!' ? 'error' : 'success'
+        }
+        alertTitle={
+          alertMessage === 'Failed to like the recipe!' ? 'Error' : 'Success'
+        }
+        alertMessage={alertMessage}
+      />
     </Card>
   );
 };

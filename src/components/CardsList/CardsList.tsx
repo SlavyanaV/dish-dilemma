@@ -1,13 +1,5 @@
 import { useState, useEffect, FC } from 'react';
-import {
-  Grid,
-  Stack,
-  Alert,
-  Box,
-  Snackbar,
-  AlertTitle,
-  CircularProgress,
-} from '@mui/material';
+import { Grid, Stack, Alert, Box, CircularProgress } from '@mui/material';
 import { SmallCard } from '../SmallCard/SmallCard';
 import InfoIcon from '@mui/icons-material/Info';
 import {
@@ -19,6 +11,7 @@ import {
 import { getLikes } from '../../shared/services/likesService';
 import { CardType, LikesType } from '../../shared/types';
 import { fetchAllRecipes } from '../../shared/services/recipeService';
+import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage';
 
 export const CardsList: FC = () => {
   const [cardsDataState, setCardsDataState] = useState<CardType[]>([]);
@@ -105,22 +98,13 @@ export const CardsList: FC = () => {
           </Alert>
         </Stack>
       )}
-      <Snackbar
-        open={isOpen}
-        autoHideDuration={4000}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        onClose={() => setIsOpen(false)}
-      >
-        <Alert
-          onClose={() => setIsOpen(false)}
-          severity="error"
-          variant="filled"
-          sx={{ width: '100%', color: colors.light }}
-        >
-          <AlertTitle>Error</AlertTitle>
-          {alertMessage}
-        </Alert>
-      </Snackbar>
+      <AlertMessage
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        severity={'error'}
+        alertTitle={'Error'}
+        alertMessage={alertMessage}
+      />
     </Box>
   );
 };

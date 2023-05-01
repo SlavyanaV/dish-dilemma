@@ -1,6 +1,5 @@
 import { useState, useEffect, FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import LoadingButton from '@mui/lab/LoadingButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Card,
@@ -14,12 +13,6 @@ import {
   Typography,
   Box,
   Paper,
-  Dialog,
-  DialogTitle,
-  DialogActions,
-  Snackbar,
-  Alert,
-  AlertTitle,
   CircularProgress,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -36,6 +29,8 @@ import {
 } from '../../shared/services/recipeService';
 import { useUserContext } from '../../hooks/useUserContext';
 import { RecipeType } from '../../shared/types';
+import { ConfirmDialog } from '../../shared/components/ConfirmDialog/ConfirmDialog';
+import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage';
 
 type Props = {
   cardType?: string;
@@ -197,35 +192,15 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
               >
                 Delete
               </Button>
-              <Dialog
-                open={isDialogOpen}
-                onClose={() => setIsDialogOpen(false)}
-              >
-                <DialogTitle id="alert-dialog-title">
-                  Are you sure you want to delete this recipe?
-                </DialogTitle>
-                <DialogActions>
-                  <Button
-                    variant="outlined"
-                    color="inherit"
-                    sx={{ m: 1, width: '100%' }}
-                    onClick={() => setIsDialogOpen(false)}
-                  >
-                    No
-                  </Button>
-                  <LoadingButton
-                    variant="outlined"
-                    color="inherit"
-                    sx={{ m: 1, width: '100%' }}
-                    onClick={handleOnDelete}
-                    autoFocus
-                    loading={isDeleteLoading}
-                    loadingPosition="end"
-                  >
-                    Yes
-                  </LoadingButton>
-                </DialogActions>
-              </Dialog>
+              <ConfirmDialog
+                isOpen={isDialogOpen}
+                setIsOpen={setIsDialogOpen}
+                handleOnConfirm={handleOnDelete}
+                isLoading={isDeleteLoading}
+                title={'Are you sure you want to delete this recipe?'}
+                confirmBtn={'Yes'}
+                closeBtn={'No'}
+              />
             </Box>
           ) : (
             <></>
@@ -270,22 +245,13 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
           </CardContent>
         </Collapse>
       </Card>
-      <Snackbar
-        open={isOpen}
-        autoHideDuration={4000}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        onClose={() => setIsOpen(false)}
-      >
-        <Alert
-          onClose={() => setIsOpen(false)}
-          severity="error"
-          variant="filled"
-          sx={{ width: '100%', color: colors.light }}
-        >
-          <AlertTitle>Error</AlertTitle>
-          {alertMessage}
-        </Alert>
-      </Snackbar>
+      <AlertMessage
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        severity={'error'}
+        alertTitle={'Error'}
+        alertMessage={alertMessage}
+      />
     </Box>
   );
 };

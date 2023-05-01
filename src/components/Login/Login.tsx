@@ -1,26 +1,20 @@
 import { ChangeEvent, FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import LoadingButton from '@mui/lab/LoadingButton';
-import {
-  Box,
-  TextField,
-  Paper,
-  Typography,
-  Snackbar,
-  Alert,
-  AlertTitle,
-} from '@mui/material';
-import { innerPaper, outerPaper } from '../shared/styles/formsStyles';
+import { Box, TextField, Paper, Typography } from '@mui/material';
+import { innerPaper, outerPaper } from '../../shared/styles/formsStyles';
 import {
   paperHeading,
   mainBoxContainer,
   colors,
   link,
-} from '../shared/styles/sharedStyles';
-import { formValidation } from '../shared/validations';
-import { LoginType } from '../shared/types';
-import { auth } from '../config/firebase';
+} from '../../shared/styles/sharedStyles';
+import { formValidation } from '../../shared/validations';
+import { LoginType } from '../../shared/types';
+import { auth } from '../../config/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage';
+import { ResetPassword } from './features/ResetPassword';
 
 const initialState = {
   email: '',
@@ -102,6 +96,7 @@ export const Login: FC = () => {
           onChange={handleOnChange}
           className={!!errorState.password ? 'input-error' : 'input-success'}
         />
+        <ResetPassword />
         <LoadingButton
           variant="outlined"
           color="inherit"
@@ -118,22 +113,13 @@ export const Login: FC = () => {
           Not registered yet?
         </Link>
       </Typography>
-      <Snackbar
-        open={isOpen}
-        autoHideDuration={4000}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        onClose={() => setIsOpen(false)}
-      >
-        <Alert
-          onClose={() => setIsOpen(false)}
-          severity="error"
-          variant="filled"
-          sx={{ width: '100%', color: colors.light }}
-        >
-          <AlertTitle>Error</AlertTitle>
-          {alertMessage}
-        </Alert>
-      </Snackbar>
+      <AlertMessage
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        severity={'error'}
+        alertTitle={'Error'}
+        alertMessage={alertMessage}
+      />
     </Paper>
   );
 };

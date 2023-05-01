@@ -1,14 +1,6 @@
 import { useState, useEffect, FC, ChangeEvent } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
-import {
-  Box,
-  TextField,
-  Paper,
-  Typography,
-  Snackbar,
-  Alert,
-  AlertTitle,
-} from '@mui/material';
+import { Box, TextField, Paper, Typography } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { outerPaper } from '../../shared/styles/formsStyles';
 import {
@@ -23,6 +15,7 @@ import {
 import { formValidation } from '../../shared/validations';
 import { RecipeType } from '../../shared/types';
 import { useUserContext } from '../../hooks/useUserContext';
+import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage';
 
 const initalState = {
   title: '',
@@ -182,22 +175,13 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
           {actionType === 'edit' ? 'Edit recipe' : 'Add recipe'}
         </LoadingButton>
       </Box>
-      <Snackbar
-        open={isOpen}
-        autoHideDuration={4000}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        onClose={() => setIsOpen(false)}
-      >
-        <Alert
-          onClose={() => setIsOpen(false)}
-          severity="error"
-          variant="filled"
-          sx={{ width: '100%', color: colors.light }}
-        >
-          <AlertTitle>Error</AlertTitle>
-          {alertMessage}
-        </Alert>
-      </Snackbar>
+      <AlertMessage
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        severity={'error'}
+        alertTitle={'Error'}
+        alertMessage={alertMessage}
+      />
     </Paper>
   );
 };

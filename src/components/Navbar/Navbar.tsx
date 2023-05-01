@@ -8,9 +8,6 @@ import {
   IconButton,
   Avatar,
   Typography,
-  Snackbar,
-  Alert,
-  AlertTitle,
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { colors, link } from '../../shared/styles/sharedStyles';
@@ -18,6 +15,7 @@ import logo from '../../images/logo.png';
 import { useUserContext } from '../../hooks/useUserContext';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../config/firebase';
+import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage';
 
 export const Navbar: FC = () => {
   const navigate = useNavigate();
@@ -108,22 +106,13 @@ export const Navbar: FC = () => {
           </Box>
         </Toolbar>
       </AppBar>
-      <Snackbar
-        open={isOpen}
-        autoHideDuration={4000}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        onClose={() => setIsOpen(false)}
-      >
-        <Alert
-          onClose={() => setIsOpen(false)}
-          severity="error"
-          variant="filled"
-          sx={{ width: '100%', color: colors.light }}
-        >
-          <AlertTitle>Error</AlertTitle>
-          {alertMessage}
-        </Alert>
-      </Snackbar>
+      <AlertMessage
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        severity={'error'}
+        alertTitle={'Error'}
+        alertMessage={alertMessage}
+      />
     </Box>
   );
 };

@@ -1,0 +1,15 @@
+.forgot-pass:hover {
+  cursor: pointer;
+}
+
+.forgot-pass-input > label {
+  color: #e4bf89 !important;
+}
+
+.forgot-pass-input > div {
+  color: #e4bf89 !important;
+  border-color: #e4bf89 !important;
+}
+.forgot-pass-input > div > fieldset {
+  border-color: #e4bf89 !important;
+}

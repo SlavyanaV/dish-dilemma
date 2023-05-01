@@ -1,25 +1,14 @@
 import { ChangeEvent, FC, useState } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
-import {
-  Box,
-  TextField,
-  Paper,
-  Typography,
-  Snackbar,
-  Alert,
-  AlertTitle,
-} from '@mui/material';
+import { Box, TextField, Paper, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { innerPaper, outerPaper } from '../shared/styles/formsStyles';
-import {
-  paperHeading,
-  mainBoxContainer,
-  colors,
-} from '../shared/styles/sharedStyles';
+import { paperHeading, mainBoxContainer } from '../shared/styles/sharedStyles';
 import { formValidation } from '../shared/validations';
 import { RegisterType } from '../shared/types';
 import { auth } from '../config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { AlertMessage } from '../shared/components/AlertMessage/AlertMessage';
 
 const initialState = {
   email: '',
@@ -127,22 +116,13 @@ export const Register: FC = () => {
           Register
         </LoadingButton>
       </Box>
-      <Snackbar
-        open={isOpen}
-        autoHideDuration={4000}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        onClose={() => setIsOpen(false)}
-      >
-        <Alert
-          onClose={() => setIsOpen(false)}
-          severity="error"
-          variant="filled"
-          sx={{ width: '100%', color: colors.light }}
-        >
-          <AlertTitle>Error</AlertTitle>
-          {alertMessage}
-        </Alert>
-      </Snackbar>
+      <AlertMessage
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        severity={'error'}
+        alertTitle={'Error'}
+        alertMessage={alertMessage}
+      />
     </Paper>
   );
 };
