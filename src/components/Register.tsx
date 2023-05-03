@@ -3,7 +3,11 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, TextField, Paper, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { innerPaper, outerPaper } from '../shared/styles/formsStyles';
-import { paperHeading, mainBoxContainer } from '../shared/styles/sharedStyles';
+import {
+  paperHeading,
+  mainBoxContainer,
+  flexCenterContainer,
+} from '../shared/styles/sharedStyles';
 import { formValidation } from '../shared/validations';
 import { RegisterType } from '../shared/types';
 import { auth } from '../config/firebase';
@@ -61,68 +65,72 @@ export const Register: FC = () => {
   };
 
   return (
-    <Paper variant="outlined" sx={outerPaper}>
-      <Box sx={mainBoxContainer}>
-        <Paper elevation={10} sx={innerPaper}>
-          <Typography variant="h4" sx={paperHeading}>
-            Register your profile
-          </Typography>
-        </Paper>
-        <TextField
-          name="email"
-          id="filled-required"
-          label="Email"
-          variant="outlined"
-          helperText={errorState.email}
-          error={!!errorState.email}
-          sx={{ m: 1 }}
-          onChange={handleOnChange}
-          className={!!errorState.email ? 'input-error' : 'input-success'}
+    <Box sx={flexCenterContainer}>
+      <Paper variant="outlined" sx={outerPaper}>
+        <Box sx={mainBoxContainer}>
+          <Paper elevation={10} sx={innerPaper}>
+            <Typography variant="h4" sx={paperHeading}>
+              Register your profile
+            </Typography>
+          </Paper>
+          <TextField
+            name="email"
+            id="filled-required"
+            label="Email"
+            variant="outlined"
+            helperText={errorState.email}
+            error={!!errorState.email}
+            sx={{ m: 1 }}
+            onChange={handleOnChange}
+            className={!!errorState.email ? 'input-error' : 'input-success'}
+          />
+          <TextField
+            name="password"
+            id="filled-password-input"
+            label="Password"
+            type="password"
+            variant="outlined"
+            autoComplete="current-password"
+            helperText={errorState.password}
+            error={!!errorState.password}
+            sx={{ m: 1 }}
+            onChange={handleOnChange}
+            className={!!errorState.password ? 'input-error' : 'input-success'}
+          />
+          <TextField
+            name="repassword"
+            id="filled-repassword-input"
+            label="Repeat password"
+            type="password"
+            variant="outlined"
+            autoComplete="current-password"
+            helperText={errorState.repassword}
+            error={!!errorState.repassword}
+            sx={{ m: 1 }}
+            onChange={handleOnChange}
+            className={
+              !!errorState.repassword ? 'input-error' : 'input-success'
+            }
+          />
+          <LoadingButton
+            variant="outlined"
+            color="inherit"
+            sx={{ m: 1 }}
+            onClick={handleOnSubmit}
+            loading={isLoading}
+            loadingPosition="end"
+          >
+            Register
+          </LoadingButton>
+        </Box>
+        <AlertMessage
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          severity={'error'}
+          alertTitle={'Error'}
+          alertMessage={alertMessage}
         />
-        <TextField
-          name="password"
-          id="filled-password-input"
-          label="Password"
-          type="password"
-          variant="outlined"
-          autoComplete="current-password"
-          helperText={errorState.password}
-          error={!!errorState.password}
-          sx={{ m: 1 }}
-          onChange={handleOnChange}
-          className={!!errorState.password ? 'input-error' : 'input-success'}
-        />
-        <TextField
-          name="repassword"
-          id="filled-repassword-input"
-          label="Repeat password"
-          type="password"
-          variant="outlined"
-          autoComplete="current-password"
-          helperText={errorState.repassword}
-          error={!!errorState.repassword}
-          sx={{ m: 1 }}
-          onChange={handleOnChange}
-          className={!!errorState.repassword ? 'input-error' : 'input-success'}
-        />
-        <LoadingButton
-          variant="outlined"
-          color="inherit"
-          sx={{ m: 1 }}
-          onClick={handleOnSubmit}
-          loading={isLoading}
-          loadingPosition="end"
-        >
-          Register
-        </LoadingButton>
-      </Box>
-      <AlertMessage
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        severity={'error'}
-        alertTitle={'Error'}
-        alertMessage={alertMessage}
-      />
-    </Paper>
+      </Paper>
+    </Box>
   );
 };

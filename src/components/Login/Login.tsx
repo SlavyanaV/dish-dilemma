@@ -8,6 +8,7 @@ import {
   mainBoxContainer,
   colors,
   link,
+  flexCenterContainer,
 } from '../../shared/styles/sharedStyles';
 import { formValidation } from '../../shared/validations';
 import { LoginType } from '../../shared/types';
@@ -65,61 +66,63 @@ export const Login: FC = () => {
   };
 
   return (
-    <Paper variant="outlined" sx={outerPaper}>
-      <Box sx={mainBoxContainer}>
-        <Paper elevation={10} sx={innerPaper}>
-          <Typography variant="h4" sx={paperHeading}>
-            Log into your profile
-          </Typography>
-        </Paper>
-        <TextField
-          name="email"
-          id="filled-required"
-          label="Email"
-          variant="outlined"
-          helperText={errorState.email}
-          error={!!errorState.email}
-          sx={{ m: 1 }}
-          onChange={handleOnChange}
-          className={!!errorState.email ? 'input-error' : 'input-success'}
+    <Box sx={flexCenterContainer}>
+      <Paper variant="outlined" sx={outerPaper}>
+        <Box sx={mainBoxContainer}>
+          <Paper elevation={10} sx={innerPaper}>
+            <Typography variant="h4" sx={paperHeading}>
+              Log into your profile
+            </Typography>
+          </Paper>
+          <TextField
+            name="email"
+            id="filled-required"
+            label="Email"
+            variant="outlined"
+            helperText={errorState.email}
+            error={!!errorState.email}
+            sx={{ m: 1 }}
+            onChange={handleOnChange}
+            className={!!errorState.email ? 'input-error' : 'input-success'}
+          />
+          <TextField
+            name="password"
+            id="filled-password-input"
+            label="Password"
+            type="password"
+            variant="outlined"
+            autoComplete="current-password"
+            helperText={errorState.password}
+            error={!!errorState.password}
+            sx={{ m: 1 }}
+            onChange={handleOnChange}
+            className={!!errorState.password ? 'input-error' : 'input-success'}
+          />
+          <ResetPassword />
+          <LoadingButton
+            variant="outlined"
+            color="inherit"
+            sx={{ m: 1 }}
+            onClick={handleOnSubmit}
+            loading={isLoading}
+            loadingPosition="end"
+          >
+            Login
+          </LoadingButton>
+        </Box>
+        <Typography color={colors.secondary} sx={{ textAlign: 'center' }}>
+          <Link to="/register" style={link}>
+            Not registered yet?
+          </Link>
+        </Typography>
+        <AlertMessage
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          severity={'error'}
+          alertTitle={'Error'}
+          alertMessage={alertMessage}
         />
-        <TextField
-          name="password"
-          id="filled-password-input"
-          label="Password"
-          type="password"
-          variant="outlined"
-          autoComplete="current-password"
-          helperText={errorState.password}
-          error={!!errorState.password}
-          sx={{ m: 1 }}
-          onChange={handleOnChange}
-          className={!!errorState.password ? 'input-error' : 'input-success'}
-        />
-        <ResetPassword />
-        <LoadingButton
-          variant="outlined"
-          color="inherit"
-          sx={{ m: 1 }}
-          onClick={handleOnSubmit}
-          loading={isLoading}
-          loadingPosition="end"
-        >
-          Login
-        </LoadingButton>
-      </Box>
-      <Typography color={colors.secondary} sx={{ textAlign: 'center' }}>
-        <Link to="/register" style={link}>
-          Not registered yet?
-        </Link>
-      </Typography>
-      <AlertMessage
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        severity={'error'}
-        alertTitle={'Error'}
-        alertMessage={alertMessage}
-      />
-    </Paper>
+      </Paper>
+    </Box>
   );
 };

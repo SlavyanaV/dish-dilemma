@@ -7,6 +7,7 @@ import {
   paperHeading,
   mainBoxContainer,
   colors,
+  flexCenterContainer,
 } from '../../shared/styles/sharedStyles';
 import {
   fetchRecipeById,
@@ -94,95 +95,99 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
   };
 
   return (
-    <Paper variant="outlined" sx={outerPaper}>
-      <Box
-        component="form"
-        sx={{
-          width: 700,
-          maxWidth: '100%',
-          ...mainBoxContainer,
-        }}
-        autoComplete="off"
-      >
-        <Paper
-          elevation={10}
-          sx={{ mb: 1.5, mt: 1.5, backgroundColor: colors.dark }}
+    <Box sx={flexCenterContainer}>
+      <Paper variant="outlined" sx={outerPaper}>
+        <Box
+          component="form"
+          sx={{
+            width: 700,
+            maxWidth: '100%',
+            ...mainBoxContainer,
+          }}
+          autoComplete="off"
         >
-          <Typography variant="h4" sx={paperHeading}>
-            {actionType === 'edit' ? 'Edit your recipe' : 'Add your recipe'}
-          </Typography>
-        </Paper>
+          <Paper
+            elevation={10}
+            sx={{ mb: 1.5, mt: 1.5, backgroundColor: colors.dark }}
+          >
+            <Typography variant="h4" sx={paperHeading}>
+              {actionType === 'edit' ? 'Edit your recipe' : 'Add your recipe'}
+            </Typography>
+          </Paper>
 
-        <TextField
-          name="title"
-          value={cardDataState.title}
-          sx={{ mt: 1 }}
-          id="filled-multiline-flexible"
-          label="Recipe title"
-          variant="outlined"
-          helperText={errorState.title}
-          error={!!errorState.title}
-          onChange={handleOnChange}
-          className={!!errorState.title ? 'input-error' : 'input-success'}
+          <TextField
+            name="title"
+            value={cardDataState.title}
+            sx={{ mt: 1 }}
+            id="filled-multiline-flexible"
+            label="Recipe title"
+            variant="outlined"
+            helperText={errorState.title}
+            error={!!errorState.title}
+            onChange={handleOnChange}
+            className={!!errorState.title ? 'input-error' : 'input-success'}
+          />
+          <TextField
+            name="category"
+            value={cardDataState.category}
+            sx={{ mt: 2.5 }}
+            id="filled-multiline-flexible"
+            label="Category"
+            variant="outlined"
+            helperText={errorState.category}
+            error={!!errorState.category}
+            onChange={handleOnChange}
+            className={!!errorState.category ? 'input-error' : 'input-success'}
+          />
+          <TextField
+            name="picture"
+            value={cardDataState.picture}
+            sx={{ mt: 2.5 }}
+            id="filled-multiline-flexible"
+            label="Picture address"
+            multiline
+            maxRows={2}
+            variant="outlined"
+            helperText={errorState.picture}
+            error={!!errorState.picture}
+            onChange={handleOnChange}
+            className={!!errorState.picture ? 'input-error' : 'input-success'}
+          />
+          <TextField
+            name="description"
+            value={cardDataState.description}
+            sx={{ mt: 2.5 }}
+            id="filled-multiline-static"
+            label="Description"
+            multiline
+            rows={8}
+            variant="outlined"
+            helperText={errorState.description}
+            error={!!errorState.description}
+            onChange={handleOnChange}
+            className={
+              !!errorState.description ? 'input-error' : 'input-success'
+            }
+          />
+          <LoadingButton
+            variant="outlined"
+            onClick={handleOnSubmit}
+            sx={{ mt: 2.5 }}
+            color="inherit"
+            loading={isLoading}
+            loadingPosition="end"
+          >
+            {actionType === 'edit' ? 'Edit recipe' : 'Add recipe'}
+          </LoadingButton>
+        </Box>
+        <AlertMessage
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          severity={'error'}
+          alertTitle={'Error'}
+          alertMessage={alertMessage}
         />
-        <TextField
-          name="category"
-          value={cardDataState.category}
-          sx={{ mt: 2.5 }}
-          id="filled-multiline-flexible"
-          label="Category"
-          variant="outlined"
-          helperText={errorState.category}
-          error={!!errorState.category}
-          onChange={handleOnChange}
-          className={!!errorState.category ? 'input-error' : 'input-success'}
-        />
-        <TextField
-          name="picture"
-          value={cardDataState.picture}
-          sx={{ mt: 2.5 }}
-          id="filled-multiline-flexible"
-          label="Picture address"
-          multiline
-          maxRows={2}
-          variant="outlined"
-          helperText={errorState.picture}
-          error={!!errorState.picture}
-          onChange={handleOnChange}
-          className={!!errorState.picture ? 'input-error' : 'input-success'}
-        />
-        <TextField
-          name="description"
-          value={cardDataState.description}
-          sx={{ mt: 2.5 }}
-          id="filled-multiline-static"
-          label="Description"
-          multiline
-          rows={8}
-          variant="outlined"
-          helperText={errorState.description}
-          error={!!errorState.description}
-          onChange={handleOnChange}
-          className={!!errorState.description ? 'input-error' : 'input-success'}
-        />
-        <LoadingButton
-          variant="outlined"
-          onClick={handleOnSubmit}
-          sx={{ mt: 2.5 }}
-          color="inherit"
-          loading={isLoading}
-          loadingPosition="end"
-        >
-          {actionType === 'edit' ? 'Edit recipe' : 'Add recipe'}
-        </LoadingButton>
-      </Box>
-      <AlertMessage
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        severity={'error'}
-        alertTitle={'Error'}
-        alertMessage={alertMessage}
-      />
-    </Paper>
+      </Paper>
+    </Box>
   );
 };

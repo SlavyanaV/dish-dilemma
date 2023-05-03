@@ -15,9 +15,7 @@ export const ContentContainer: FC = () => {
   return (
     <Box
       sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        mt: '50px',
+        minHeight: 'calc(100vh - 171px)',
       }}
     >
       <Routes>

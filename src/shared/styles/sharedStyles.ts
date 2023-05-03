@@ -10,6 +10,11 @@ export const mainBoxContainer = {
   flexDirection: 'column',
 };
 
+export const flexCenterContainer = {
+  display: 'flex',
+  justifyContent: 'center',
+}
+
 export const colors = {
   dark: '#394110',
   light: '#E4BF89',

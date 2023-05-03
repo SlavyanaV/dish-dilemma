@@ -8,7 +8,6 @@ import {
   Grid,
   Stack,
   Alert,
-  CircularProgress,
 } from '@mui/material';
 import { SmallCard } from './SmallCard/SmallCard';
 import dayjs from 'dayjs';
@@ -19,13 +18,14 @@ import {
   mainBoxContainer,
   colors,
   grid,
-  loader,
+  flexCenterContainer,
 } from '../shared/styles/sharedStyles';
 import { fetchAllRecipesByUserId } from '../shared/services/recipeService';
 import { useUserContext } from '../hooks/useUserContext';
 import { CardType } from '../shared/types';
 import { auth } from '../config/firebase';
 import { AlertMessage } from '../shared/components/AlertMessage/AlertMessage';
+import Loader from '../shared/components/Loader/Loader';
 
 export const MyProfile: FC = () => {
   const [createdOn, setCreatedOn] = useState<string>('');
@@ -84,78 +84,72 @@ export const MyProfile: FC = () => {
   }, []);
 
   if (isLoading || !hasFetched) {
-    return <CircularProgress sx={loader} size={100} />;
+    return <Loader />;
   }
 
   return (
-    <Box sx={{ width: '50%', ...mainBoxContainer }}>
-      <Card sx={{ minWidth: 800, mt: '80px', backgroundColor: colors.light }}>
-        <CardContent>
-          <Paper
-            elevation={10}
-            sx={{ m: '5px 10px 20px 10px', backgroundColor: colors.dark }}
-          >
-            <Typography variant="h4" sx={paperHeading}>
-              My profile
-            </Typography>
-          </Paper>
-          <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
-            <Box>
-              <Typography sx={{ fontSize: 14 }} color={colors.secondary}>
-                Email address:
+    <Box sx={flexCenterContainer}>
+      <Box sx={{ width: '50%', ...mainBoxContainer }}>
+        <Card sx={{ minWidth: 800, backgroundColor: colors.light, mb: 2.5 }}>
+          <CardContent>
+            <Paper
+              elevation={10}
+              sx={{ m: '5px 10px 20px 10px', backgroundColor: colors.dark }}
+            >
+              <Typography variant="h4" sx={paperHeading}>
+                My profile
               </Typography>
-              <Typography variant="h5" color={colors.dark}>
-                {email}
-              </Typography>
+            </Paper>
+            <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+              <Box>
+                <Typography sx={{ fontSize: 14 }} color={colors.secondary}>
+                  Email address:
+                </Typography>
+                <Typography variant="h5" color={colors.dark}>
+                  {email}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography sx={{ fontSize: 14 }} color={colors.secondary}>
+                  Created:
+                </Typography>
+                <Typography variant="h5" color={colors.dark}>
+                  {createdOn}
+                </Typography>
+              </Box>
             </Box>
-            <Box>
-              <Typography sx={{ fontSize: 14 }} color={colors.secondary}>
-                Created:
-              </Typography>
-              <Typography variant="h5" color={colors.dark}>
-                {createdOn}
-              </Typography>
-            </Box>
-          </Box>
-        </CardContent>
-      </Card>
-
-      {cardsDataState.length ? (
-        <Grid
-          container
-          sx={{
-            m: '20px 0',
-            ...grid,
-          }}
-        >
-          {cardsDataState.map((card, index) => (
-            <Grid item xs={'auto'} key={index}>
-              <SmallCard card={card} isOwn={true} />
-            </Grid>
-          ))}
-        </Grid>
-      ) : (
-        <Stack sx={{ width: '100%' }} spacing={2}>
-          <Alert
-            severity="info"
-            sx={{
-              backgroundColor: colors.light,
-              color: colors.dark,
-              mt: 1.5,
-            }}
-            icon={<InfoIcon sx={{ color: colors.dark }} />}
-          >
-            Currently there are no recipes added by you
-          </Alert>
-        </Stack>
-      )}
-      <AlertMessage
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        severity={'error'}
-        alertTitle={'Error'}
-        alertMessage={alertMessage}
-      />
+          </CardContent>
+        </Card>
+        {cardsDataState.length ? (
+          <Grid container sx={grid}>
+            {cardsDataState.map((card, index) => (
+              <Grid item xs={'auto'} key={index}>
+                <SmallCard card={card} isOwn={true} />
+              </Grid>
+            ))}
+          </Grid>
+        ) : (
+          <Stack sx={{ width: '100%' }} spacing={2}>
+            <Alert
+              severity="info"
+              sx={{
+                backgroundColor: colors.light,
+                color: colors.dark,
+              }}
+              icon={<InfoIcon sx={{ color: colors.dark }} />}
+            >
+              Currently there are no recipes added by you
+            </Alert>
+          </Stack>
+        )}
+        <AlertMessage
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          severity={'error'}
+          alertTitle={'Error'}
+          alertMessage={alertMessage}
+        />
+      </Box>
     </Box>
   );
 };

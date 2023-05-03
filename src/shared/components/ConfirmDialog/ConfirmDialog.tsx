@@ -24,7 +24,11 @@ export const ConfirmDialog: FC<Props> = ({
   content,
 }) => {
   return (
-    <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
+    <Dialog
+      open={isOpen}
+      onClose={() => setIsOpen(false)}
+      sx={{ overflowY: 'scroll' }}
+    >
       <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
       {content}
       <DialogActions>

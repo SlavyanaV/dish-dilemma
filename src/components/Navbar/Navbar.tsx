@@ -39,7 +39,7 @@ export const Navbar: FC = () => {
 
   return (
     <Box>
-      <AppBar component="nav">
+      <AppBar>
         <Toolbar
           sx={{
             display: 'flex',

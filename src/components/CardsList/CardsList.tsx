@@ -1,17 +1,18 @@
 import { useState, useEffect, FC } from 'react';
-import { Grid, Stack, Alert, Box, CircularProgress } from '@mui/material';
+import { Grid, Stack, Alert, Box } from '@mui/material';
 import { SmallCard } from '../SmallCard/SmallCard';
 import InfoIcon from '@mui/icons-material/Info';
 import {
   mainBoxContainer,
   colors,
   grid,
-  loader,
+  flexCenterContainer,
 } from '../../shared/styles/sharedStyles';
 import { getLikes } from '../../shared/services/likesService';
 import { CardType, LikesType } from '../../shared/types';
 import { fetchAllRecipes } from '../../shared/services/recipeService';
 import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage';
+import Loader from '../../shared/components/Loader/Loader';
 
 export const CardsList: FC = () => {
   const [cardsDataState, setCardsDataState] = useState<CardType[]>([]);
@@ -57,54 +58,54 @@ export const CardsList: FC = () => {
   }, []);
 
   if (isLoading || !hasFetched) {
-    return <CircularProgress sx={loader} size={100} />;
+    return <Loader />;
   }
 
   return (
-    <Box
-      sx={{
-        width: '50%',
-        mt: '50px',
-        ...mainBoxContainer,
-      }}
-    >
-      {cardsDataState.length ? (
-        <Grid
-          container
-          sx={{
-            mb: '50px',
-            ...grid,
-          }}
-        >
-          {cardsDataState.map((card, index) => (
-            <Grid item xs={'auto'} key={index}>
-              <SmallCard card={card} likesData={likesData} isOwn={false} />
-            </Grid>
-          ))}
-        </Grid>
-      ) : (
-        <Stack sx={{ width: '100%' }} spacing={2}>
-          <Alert
-            severity="info"
+    <Box sx={flexCenterContainer}>
+      <Box
+        sx={{
+          width: '50%',
+          ...mainBoxContainer,
+        }}
+      >
+        {cardsDataState.length ? (
+          <Grid
+            container
             sx={{
-              minWidth: 800,
-              backgroundColor: colors.light,
-              color: colors.dark,
-              mt: 1.5,
+              mb: '50px',
+              ...grid,
             }}
-            icon={<InfoIcon sx={{ color: colors.dark }} />}
           >
-            Currently there are no recipes in database
-          </Alert>
-        </Stack>
-      )}
-      <AlertMessage
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        severity={'error'}
-        alertTitle={'Error'}
-        alertMessage={alertMessage}
-      />
+            {cardsDataState.map((card, index) => (
+              <Grid item xs={'auto'} key={index}>
+                <SmallCard card={card} likesData={likesData} isOwn={false} />
+              </Grid>
+            ))}
+          </Grid>
+        ) : (
+          <Stack sx={{ width: '100%' }} spacing={2}>
+            <Alert
+              severity="info"
+              sx={{
+                minWidth: 800,
+                backgroundColor: colors.light,
+                color: colors.dark,
+              }}
+              icon={<InfoIcon sx={{ color: colors.dark }} />}
+            >
+              Currently there are no recipes in database
+            </Alert>
+          </Stack>
+        )}
+        <AlertMessage
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          severity={'error'}
+          alertTitle={'Error'}
+          alertMessage={alertMessage}
+        />
+      </Box>
     </Box>
   );
 };

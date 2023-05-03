@@ -1,6 +1,5 @@
 export const outerPaper = {
   minWidth: 500,
-  mt: '80px',
   padding: '20px',
   backgroundColor: '#E4BF89',
 };
