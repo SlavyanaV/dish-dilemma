@@ -10,12 +10,20 @@ import { PrivateRoutes } from './RoutesGuards/PrivateRoutes';
 import { PublicRoutes } from './RoutesGuards/PublicRoutes';
 import { NotFound } from './NotFound';
 import { FC } from 'react';
+import backgroundImg from '../images/background-image.png';
 
 export const ContentContainer: FC = () => {
   return (
     <Box
       sx={{
-        minHeight: 'calc(100vh - 171px)',
+        minHeight: 'calc(100vh - 56px)',
+        background: `url(${backgroundImg}) #39411099`,
+        backgroundSize: 'cover',
+        backgroundBlendMode: 'multiply',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
+        paddingTop: '6%',
       }}
     >
       <Routes>

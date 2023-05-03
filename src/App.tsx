@@ -5,7 +5,6 @@ import './shared/styles/sharedStyles.css';
 import './shared/styles/scrollStyles.css';
 import './components/Login/login.css';
 import './shared/components/ConfirmDialog/confirmDialog.css';
-import './index.css';
 import { Footer } from './components/Footer';
 import { UserContextProvider } from './contexts/UserContext';
 
