@@ -151,7 +151,7 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
           <CardMedia
             component="img"
             height={'400'}
-            image={cardDataState?.picture}
+            image={cardDataState?.pictureUrl}
             alt="Dish picture"
           />
           <CardContent>

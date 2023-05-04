@@ -1,12 +1,12 @@
 export type CardType = {
   category: string;
   description: string;
-  picture: string;
   title: string;
   createdOn?: number;
   id?: string;
   ownerId: string;
   ownerEmail: string;
+  pictureUrl: string;
 };
 
 export type LikesType = {
@@ -25,6 +25,8 @@ export type RecipeType = {
   createdOn?: number;
   ownerId?: string;
   ownerEmail: string;
+  pictureId: string;
+  pictureUrl: string;
 };
 
 export type LoginType = {

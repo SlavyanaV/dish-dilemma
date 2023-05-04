@@ -13,7 +13,7 @@ export const fetchRandomRecipe = async () => {
   const randomRecipeArr = responseData.recipes.map((recipe: any) => ({
     title: recipe.title,
     category: recipe.cuisines[0] || recipe.dishTypes[0] || '',
-    picture: recipe.image,
+    pictureUrl: recipe.image,
     description: (
       //in order to display properly some of the recipes, that are returned as html string by the api
       <div dangerouslySetInnerHTML={{ __html: recipe.instructions }}></div>

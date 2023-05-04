@@ -17,6 +17,9 @@ import { formValidation } from '../../shared/validations';
 import { RecipeType } from '../../shared/types';
 import { useUserContext } from '../../hooks/useUserContext';
 import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage';
+import { UploadBtn } from '../../shared/components/UploadBtn/UploadBtn';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { v4 } from 'uuid';
 
 const initalState = {
   title: '',
@@ -25,6 +28,8 @@ const initalState = {
   description: '',
   id: '',
   ownerEmail: '',
+  pictureId: '',
+  pictureUrl: '',
 };
 
 type Props = {
@@ -44,6 +49,10 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [pictureFile, setPictureFile] = useState<File>();
+
+  const storage = getStorage();
+  const storageRef = ref(storage, `pictures/${cardDataState.pictureId}`);
 
   const getRecipe = async () => {
     try {
@@ -82,7 +91,17 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
     if (!hasErrors) {
       setIsLoading(true);
       try {
-        await manageRecipe(cardDataState, userId, id!, actionType);
+        if (pictureFile) {
+          await uploadBytes(storageRef, pictureFile);
+        }
+
+        const pictureUrl = await getDownloadURL(
+          ref(storage, `pictures/${cardDataState.pictureId}`)
+        );
+
+        const cardDto = { ...cardDataState, pictureUrl };
+
+        await manageRecipe(cardDto, userId, id!, actionType);
 
         navigate('/all-recipes');
         setIsLoading(false);
@@ -92,6 +111,18 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
         setIsLoading(false);
       }
     }
+  };
+
+  const handleOnUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = (e.target.files as FileList)[0];
+
+    setPictureFile(file);
+
+    setCardDataState({
+      ...cardDataState,
+      picture: file.name,
+      pictureId: v4(),
+    });
   };
 
   return (
@@ -139,20 +170,10 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
             onChange={handleOnChange}
             className={!!errorState.category ? 'input-error' : 'input-success'}
           />
-          <TextField
-            name="picture"
-            value={cardDataState.picture}
-            sx={{ mt: 2.5 }}
-            id="filled-multiline-flexible"
-            label="Picture address"
-            multiline
-            maxRows={2}
-            variant="outlined"
-            helperText={errorState.picture}
-            error={!!errorState.picture}
-            onChange={handleOnChange}
-            className={!!errorState.picture ? 'input-error' : 'input-success'}
-          />
+          <Box display={'flex'} alignItems={'center'}>
+            <UploadBtn onChange={handleOnUpload} />
+            <Typography>{cardDataState.picture}</Typography>
+          </Box>
           <TextField
             name="description"
             value={cardDataState.description}

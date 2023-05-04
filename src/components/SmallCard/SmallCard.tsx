@@ -61,7 +61,7 @@ export const SmallCard: FC<Props> = ({ card, likesData, isOwn }) => {
       <CardMedia
         component="img"
         height="300"
-        image={card?.picture}
+        image={card?.pictureUrl}
         alt="Dish picture"
       />
       <CardHeader
