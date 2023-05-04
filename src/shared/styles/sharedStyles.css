@@ -3,11 +3,13 @@
   color: #e4bf89 !important;
 }
 
+.upload-btn,
 button {
   background-color: #394110 !important;
   color: #e4bf89 !important;
 }
 
+.upload-btn:hover,
 button:hover {
   background-color: #5f6d30 !important;
 }

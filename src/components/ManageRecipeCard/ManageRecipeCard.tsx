@@ -170,10 +170,11 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
             onChange={handleOnChange}
             className={!!errorState.category ? 'input-error' : 'input-success'}
           />
-          <Box display={'flex'} alignItems={'center'}>
-            <UploadBtn onChange={handleOnUpload} />
-            <Typography>{cardDataState.picture}</Typography>
-          </Box>
+          <UploadBtn
+            onChange={handleOnUpload}
+            picture={cardDataState.picture}
+            error={errorState.picture}
+          />
           <TextField
             name="description"
             value={cardDataState.description}
