@@ -26,6 +26,7 @@ export const SmallRecipesList: FC<Props> = ({ cardsDataState, likesData }) => {
 
   const handleOnPageChange = (_: ChangeEvent<unknown>, page: number) => {
     setCurrentPage(page);
+    window.scrollTo({ top: 0 });
   };
 
   return (
