@@ -1,6 +1,6 @@
 import { useState, useEffect, FC } from 'react';
 import { Grid, Stack, Alert, Box } from '@mui/material';
-import { SmallCard } from '../SmallCard/SmallCard';
+import { SmallRecipeCard } from '../SmallRecipeCard/SmallRecipeCard';
 import InfoIcon from '@mui/icons-material/Info';
 import {
   mainBoxContainer,
@@ -79,7 +79,7 @@ export const CardsList: FC = () => {
           >
             {cardsDataState.map((card, index) => (
               <Grid item xs={'auto'} key={index}>
-                <SmallCard card={card} likesData={likesData} isOwn={false} />
+                <SmallRecipeCard card={card} likesData={likesData} isOwn={false} />
               </Grid>
             ))}
           </Grid>

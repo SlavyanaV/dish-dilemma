@@ -9,7 +9,7 @@ import {
   Stack,
   Alert,
 } from '@mui/material';
-import { SmallCard } from './SmallCard/SmallCard';
+import { SmallRecipeCard } from './SmallRecipeCard/SmallRecipeCard';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import InfoIcon from '@mui/icons-material/Info';
@@ -124,7 +124,7 @@ export const MyProfile: FC = () => {
           <Grid container sx={grid}>
             {cardsDataState.map((card, index) => (
               <Grid item xs={'auto'} key={index}>
-                <SmallCard card={card} isOwn={true} />
+                <SmallRecipeCard card={card} isOwn={true} />
               </Grid>
             ))}
           </Grid>
