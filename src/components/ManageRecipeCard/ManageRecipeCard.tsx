@@ -12,13 +12,13 @@ import {
 import {
   fetchRecipeById,
   manageRecipe,
+  uploadRecipePicture,
 } from '../../shared/services/recipeService';
 import { formValidation } from '../../shared/validations';
 import { RecipeType } from '../../shared/types';
 import { useUserContext } from '../../hooks/useUserContext';
 import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage';
 import { UploadBtn } from '../../shared/components/UploadBtn/UploadBtn';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { v4 } from 'uuid';
 
 const initalState = {
@@ -50,9 +50,6 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
   const [alertMessage, setAlertMessage] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [pictureFile, setPictureFile] = useState<File>();
-
-  const storage = getStorage();
-  const storageRef = ref(storage, `pictures/${cardDataState.pictureId}`);
 
   const getRecipe = async () => {
     try {
@@ -91,12 +88,9 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
     if (!hasErrors) {
       setIsLoading(true);
       try {
-        if (pictureFile) {
-          await uploadBytes(storageRef, pictureFile);
-        }
-
-        const pictureUrl = await getDownloadURL(
-          ref(storage, `pictures/${cardDataState.pictureId}`)
+        const pictureUrl = await uploadRecipePicture(
+          pictureFile,
+          cardDataState.pictureId
         );
 
         const cardDto = { ...cardDataState, pictureUrl };
@@ -145,7 +139,6 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
               {actionType === 'edit' ? 'Edit your recipe' : 'Add your recipe'}
             </Typography>
           </Paper>
-
           <TextField
             name="title"
             value={cardDataState.title}

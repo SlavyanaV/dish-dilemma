@@ -14,12 +14,11 @@ import { fetchAllRecipes } from '../../shared/services/recipeService';
 import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage';
 import Loader from '../../shared/components/Loader/Loader';
 
-export const CardsList: FC = () => {
+export const SmallRecipesList: FC = () => {
   const [cardsDataState, setCardsDataState] = useState<CardType[]>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [hasFetched, setHasFetched] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [likesData, setLikesData] = useState<LikesType[]>([]);
 
   const fetchRecipes = async () => {
@@ -30,14 +29,12 @@ export const CardsList: FC = () => {
 
       setCardsDataState(recipes);
       setIsLoading(false);
-      setHasFetched(true);
     } catch (err: any) {
       if (err.message !== 'Resource not found') {
         setAlertMessage(err.message);
         setIsOpen(true);
       }
       setIsLoading(false);
-      setHasFetched(true);
     }
   };
 
@@ -57,7 +54,7 @@ export const CardsList: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (isLoading || !hasFetched) {
+  if (isLoading) {
     return <Loader />;
   }
 
@@ -79,7 +76,11 @@ export const CardsList: FC = () => {
           >
             {cardsDataState.map((card, index) => (
               <Grid item xs={'auto'} key={index}>
-                <SmallRecipeCard card={card} likesData={likesData} isOwn={false} />
+                <SmallRecipeCard
+                  card={card}
+                  likesData={likesData}
+                  isOwn={false}
+                />
               </Grid>
             ))}
           </Grid>

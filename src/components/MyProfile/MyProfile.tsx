@@ -9,7 +9,7 @@ import {
   Stack,
   Alert,
 } from '@mui/material';
-import { SmallRecipeCard } from './SmallRecipeCard/SmallRecipeCard';
+import { SmallRecipeCard } from '../SmallRecipeCard/SmallRecipeCard';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import InfoIcon from '@mui/icons-material/Info';
@@ -19,13 +19,13 @@ import {
   colors,
   grid,
   flexCenterContainer,
-} from '../shared/styles/sharedStyles';
-import { fetchAllRecipesByUserId } from '../shared/services/recipeService';
-import { useUserContext } from '../hooks/useUserContext';
-import { CardType } from '../shared/types';
-import { auth } from '../config/firebase';
-import { AlertMessage } from '../shared/components/AlertMessage/AlertMessage';
-import Loader from '../shared/components/Loader/Loader';
+} from '../../shared/styles/sharedStyles';
+import { fetchAllRecipesByUserId } from '../../shared/services/recipeService';
+import { useUserContext } from '../../hooks/useUserContext';
+import { CardType } from '../../shared/types';
+import { auth } from '../../config/firebase';
+import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage';
+import Loader from '../../shared/components/Loader/Loader';
 
 export const MyProfile: FC = () => {
   const [createdOn, setCreatedOn] = useState<string>('');

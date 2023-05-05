@@ -5,7 +5,7 @@ import './shared/styles/sharedStyles.css';
 import './shared/styles/scrollStyles.css';
 import './components/Login/login.css';
 import './shared/components/ConfirmDialog/confirmDialog.css';
-import { Footer } from './components/Footer';
+import { Footer } from './components/Footer/Footer';
 import { UserContextProvider } from './contexts/UserContext';
 
 export const App = () => {

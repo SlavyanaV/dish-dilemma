@@ -12,8 +12,10 @@ import {
 import { auth, db } from '../../config/firebase';
 import { CardType, RecipeType } from '../types';
 import { mapFirestoreDocs } from '../utils';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 
 const recipesCollectionRef = collection(db, 'recipes');
+const storage = getStorage();
 
 export const fetchRecipeById = async (id: string) => {
   const recipeRef = doc(db, 'recipes', id);
@@ -41,6 +43,23 @@ export const manageRecipe = async (
       ownerEmail: auth?.currentUser?.email,
     });
   }
+};
+
+export const uploadRecipePicture = async (
+  pictureFile: File | undefined,
+  pictureId: string
+) => {
+  const storageRef = ref(storage, `pictures/${pictureId}`);
+
+  if (pictureFile) {
+    await uploadBytes(storageRef, pictureFile);
+  }
+
+  const pictureUrl = await getDownloadURL(
+    ref(storage, `pictures/${pictureId}`)
+  );
+
+  return pictureUrl;
 };
 
 export const deleteRecipe = async (id: string) => {

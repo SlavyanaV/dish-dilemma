@@ -2,17 +2,17 @@ import { ChangeEvent, FC, useState } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box, TextField, Paper, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { innerPaper, outerPaper } from '../shared/styles/formsStyles';
+import { innerPaper, outerPaper } from '../../shared/styles/formsStyles';
 import {
   paperHeading,
   mainBoxContainer,
   flexCenterContainer,
-} from '../shared/styles/sharedStyles';
-import { formValidation } from '../shared/validations';
-import { RegisterType } from '../shared/types';
-import { auth } from '../config/firebase';
+} from '../../shared/styles/sharedStyles';
+import { formValidation } from '../../shared/validations';
+import { RegisterType } from '../../shared/types';
+import { auth } from '../../config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { AlertMessage } from '../shared/components/AlertMessage/AlertMessage';
+import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage';
 
 const initialState = {
   email: '',

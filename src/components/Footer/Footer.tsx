@@ -13,8 +13,8 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import FilterIcon from '@mui/icons-material/Filter';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
-import { colors, link } from '../shared/styles/sharedStyles';
-import logo from '../images/logo.png';
+import { colors, link } from '../../shared/styles/sharedStyles';
+import logo from '../../images/logo.png';
 import { FC } from 'react';
 
 export const Footer: FC = () => {
