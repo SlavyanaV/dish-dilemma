@@ -7,7 +7,6 @@ import {
   CardMedia,
   CardContent,
   CardActions,
-  Collapse,
   IconButton,
   Typography,
   Box,
@@ -26,6 +25,7 @@ import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage'
 import Loader from '../../shared/components/Loader/Loader';
 import { RandomRecipeActions } from './features/RandomRecipeActions';
 import { CustomRecipeActions } from './features/CustomRecipeActions';
+import { ExpandedDetails } from './features/ExpandedDetails';
 
 type Props = {
   cardType?: string;
@@ -51,25 +51,12 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
     setIsLoading(true);
 
     try {
-      const responseData = await fetchRecipeById(id!);
+      const recipe =
+        cardType === 'main'
+          ? await fetchRandomRecipe()
+          : await fetchRecipeById(id!);
 
-      setCardDataState(responseData);
-      setIsLoading(false);
-    } catch (err: any) {
-      setAlertMessage(err.message);
-      setIsAlertOpen(true);
-      setCardDataState({} as RecipeType);
-      setIsLoading(false);
-    }
-  };
-
-  const getRandomRecipe = async () => {
-    setIsLoading(true);
-
-    try {
-      const randomRecipe = await fetchRandomRecipe();
-
-      setCardDataState(randomRecipe);
+      setCardDataState(recipe);
       setIsLoading(false);
     } catch (err: any) {
       setAlertMessage(err.message);
@@ -80,11 +67,8 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
   };
 
   useEffect(() => {
-    if (cardType !== 'main') {
-      getRecipe();
-    } else {
-      getRandomRecipe();
-    }
+    getRecipe();
+    setIsExpanded(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cardType]);
 
@@ -135,7 +119,7 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
           </CardContent>
           <CardActions disableSpacing>
             {cardType === 'main' ? (
-              <RandomRecipeActions getRandomRecipe={getRandomRecipe} />
+              <RandomRecipeActions getRandomRecipe={getRecipe} />
             ) : userId === cardDataState?.ownerId ? (
               <CustomRecipeActions id={cardDataState?.id} />
             ) : (
@@ -150,36 +134,12 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
               <ExpandMoreIcon />
             </IconButton>
           </CardActions>
-          <Collapse in={isExpanded} timeout="auto" unmountOnExit>
-            <CardContent sx={{ maxWidth: 650, color: colors.dark }}>
-              {cardType === 'main' ? (
-                <>
-                  <Typography paragraph sx={{ fontWeight: 'bold' }}>
-                    Ingredients:
-                  </Typography>
-                  <ul>
-                    {cardDataState?.ingredients?.map((ingredient: string) => (
-                      <li key={ingredient}>{ingredient}</li>
-                    ))}
-                  </ul>
-                </>
-              ) : (
-                <></>
-              )}
-              <Typography paragraph sx={{ fontWeight: 'bold' }}>
-                Instructions:
-              </Typography>
-              <Typography
-                paragraph
-                sx={{
-                  textAlign: 'justify',
-                  overflowWrap: 'anywhere',
-                }}
-              >
-                {cardDataState?.description}
-              </Typography>
-            </CardContent>
-          </Collapse>
+          <ExpandedDetails
+            isExpanded={isExpanded}
+            cardType={cardType}
+            ingredients={cardDataState.ingredients}
+            description={cardDataState.description}
+          />
         </Card>
         <AlertMessage
           isOpen={isAlertOpen}
