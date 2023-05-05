@@ -25,7 +25,7 @@ import { useUserContext } from '../../hooks/useUserContext';
 import { CardType } from '../../shared/types';
 import { auth } from '../../config/firebase';
 import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage';
-import Loader from '../../shared/components/Loader/Loader';
+import { Loader } from '../../shared/components/Loader/Loader';
 
 export const MyProfile: FC = () => {
   const [createdOn, setCreatedOn] = useState<string>('');

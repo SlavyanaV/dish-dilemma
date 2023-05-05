@@ -12,7 +12,7 @@ import { getLikes } from '../../shared/services/likesService';
 import { CardType, LikesType } from '../../shared/types';
 import { fetchAllRecipes } from '../../shared/services/recipeService';
 import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage';
-import Loader from '../../shared/components/Loader/Loader';
+import { Loader } from '../../shared/components/Loader/Loader';
 
 export const SmallRecipesList: FC = () => {
   const [cardsDataState, setCardsDataState] = useState<CardType[]>([]);

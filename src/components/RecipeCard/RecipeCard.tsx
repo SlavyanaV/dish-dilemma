@@ -22,7 +22,7 @@ import { fetchRecipeById } from '../../shared/services/recipeService';
 import { useUserContext } from '../../hooks/useUserContext';
 import { RecipeType } from '../../shared/types';
 import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage';
-import Loader from '../../shared/components/Loader/Loader';
+import { Loader } from '../../shared/components/Loader/Loader';
 import { RandomRecipeActions } from './features/RandomRecipeActions';
 import { CustomRecipeActions } from './features/CustomRecipeActions';
 import { ExpandedDetails } from './features/ExpandedDetails';
