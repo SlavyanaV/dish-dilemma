@@ -58,3 +58,7 @@ button:hover {
   background-color: #e4bf89 !important;
   color: #5f6d30 !important;
 }
+
+.Mui-selected:hover {
+  color: #e4bf89 !important;
+}
