@@ -1,5 +1,5 @@
 import { useState, useEffect, FC } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Card,
@@ -8,36 +8,30 @@ import {
   CardContent,
   CardActions,
   Collapse,
-  Button,
   IconButton,
   Typography,
   Box,
   Paper,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
 import {
   colors,
   flexCenterContainer,
-  link,
   paperHeading,
 } from '../../shared/styles/sharedStyles';
 import { fetchRandomRecipe } from '../../shared/services/randomRecipeService';
-import {
-  deleteRecipe,
-  fetchRecipeById,
-} from '../../shared/services/recipeService';
+import { fetchRecipeById } from '../../shared/services/recipeService';
 import { useUserContext } from '../../hooks/useUserContext';
 import { RecipeType } from '../../shared/types';
-import { ConfirmDialog } from '../../shared/components/ConfirmDialog/ConfirmDialog';
 import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage';
 import Loader from '../../shared/components/Loader/Loader';
+import { RandomRecipeActions } from './features/RandomRecipeActions';
+import { CustomRecipeActions } from './features/CustomRecipeActions';
 
 type Props = {
   cardType?: string;
 };
 
 export const RecipeCard: FC<Props> = ({ cardType }) => {
-  const navigate = useNavigate();
   const { id } = useParams();
   const {
     user: { userId },
@@ -45,12 +39,9 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
 
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [cardDataState, setCardDataState] = useState({} as RecipeType);
-  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false);
-  const [hasFetched, setHasFetched] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const handleExpandClick = () => {
     setIsExpanded(!isExpanded);
@@ -64,13 +55,11 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
 
       setCardDataState(responseData);
       setIsLoading(false);
-      setHasFetched(true);
     } catch (err: any) {
       setAlertMessage(err.message);
-      setIsOpen(true);
+      setIsAlertOpen(true);
       setCardDataState({} as RecipeType);
       setIsLoading(false);
-      setHasFetched(true);
     }
   };
 
@@ -82,13 +71,11 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
 
       setCardDataState(randomRecipe);
       setIsLoading(false);
-      setHasFetched(true);
     } catch (err: any) {
       setAlertMessage(err.message);
-      setIsOpen(true);
+      setIsAlertOpen(true);
       setCardDataState({} as RecipeType);
       setIsLoading(false);
-      setHasFetched(true);
     }
   };
 
@@ -101,21 +88,7 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cardType]);
 
-  const handleOnDelete = async () => {
-    setIsDeleteLoading(true);
-    try {
-      await deleteRecipe(cardDataState.id);
-
-      navigate('/all-recipes');
-      setIsDeleteLoading(false);
-    } catch (err: any) {
-      setAlertMessage(err.message);
-      setIsOpen(true);
-      setIsDeleteLoading(false);
-    }
-  };
-
-  if (isLoading || !hasFetched) {
+  if (isLoading) {
     return <Loader />;
   }
 
@@ -162,49 +135,9 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
           </CardContent>
           <CardActions disableSpacing>
             {cardType === 'main' ? (
-              <Box>
-                <Button
-                  variant="outlined"
-                  color="inherit"
-                  sx={{ m: 1 }}
-                  onClick={getRandomRecipe}
-                >
-                  See another recipe
-                </Button>
-                <Link
-                  to="/all-recipes"
-                  style={{ color: 'inherit', textDecoration: 'none' }}
-                >
-                  <Button variant="outlined" color="inherit" sx={{ m: 1 }}>
-                    See all recipes
-                  </Button>
-                </Link>
-              </Box>
+              <RandomRecipeActions getRandomRecipe={getRandomRecipe} />
             ) : userId === cardDataState?.ownerId ? (
-              <Box>
-                <Link to={`/edit-recipe/${cardDataState?.id}`} style={link}>
-                  <Button variant="outlined" color="inherit" sx={{ m: 1 }}>
-                    Edit
-                  </Button>
-                </Link>
-                <Button
-                  variant="outlined"
-                  color="inherit"
-                  sx={{ m: 1 }}
-                  onClick={() => setIsDialogOpen(true)}
-                >
-                  Delete
-                </Button>
-                <ConfirmDialog
-                  isOpen={isDialogOpen}
-                  setIsOpen={setIsDialogOpen}
-                  handleOnConfirm={handleOnDelete}
-                  isLoading={isDeleteLoading}
-                  title={'Are you sure you want to delete this recipe?'}
-                  confirmBtn={'Yes'}
-                  closeBtn={'No'}
-                />
-              </Box>
+              <CustomRecipeActions id={cardDataState?.id} />
             ) : (
               <></>
             )}
@@ -249,8 +182,8 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
           </Collapse>
         </Card>
         <AlertMessage
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
+          isOpen={isAlertOpen}
+          setIsOpen={setIsAlertOpen}
           severity={'error'}
           alertTitle={'Error'}
           alertMessage={alertMessage}
