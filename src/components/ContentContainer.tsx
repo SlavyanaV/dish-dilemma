@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import { Login } from './Login/Login';
 import { RecipeCard } from './RecipeCard/RecipeCard';
 import { Register } from './Register/Register';
-import { SmallRecipesList } from './SmallRecipesList/SmallRecipesList';
+import { AllRecipes } from './AllRecipes/AllRecipes';
 import { ManageRecipeCard } from './ManageRecipeCard/ManageRecipeCard';
 import { MyProfile } from './MyProfile/MyProfile';
 import { PrivateRoutes } from './RoutesGuards/PrivateRoutes';
@@ -28,7 +28,7 @@ export const ContentContainer: FC = () => {
     >
       <Routes>
         <Route path="/" element={<RecipeCard cardType={'main'} />} />
-        <Route path="/all-recipes" element={<SmallRecipesList />} />
+        <Route path="/all-recipes" element={<AllRecipes />} />
         <Route path="/recipe-details/:id" element={<RecipeCard />} />
         <Route element={<PublicRoutes />}>
           <Route path="/register" element={<Register />} />

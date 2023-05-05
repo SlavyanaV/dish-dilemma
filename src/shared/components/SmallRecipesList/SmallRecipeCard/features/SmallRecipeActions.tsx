@@ -1,9 +1,9 @@
 import { CardActions, Button, Box, Typography, Tooltip } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { Link } from 'react-router-dom';
-import { colors, link } from '../../../shared/styles/sharedStyles';
+import { colors, link } from '../../../../styles/sharedStyles';
 import { FC } from 'react';
-import { useUserContext } from '../../../hooks/useUserContext';
+import { useUserContext } from '../../../../../hooks/useUserContext';
 
 type Props = {
   isOwn: boolean;

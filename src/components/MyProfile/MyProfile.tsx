@@ -1,23 +1,11 @@
 import { FC, useEffect, useState } from 'react';
-import {
-  Card,
-  Paper,
-  Box,
-  CardContent,
-  Typography,
-  Grid,
-  Stack,
-  Alert,
-} from '@mui/material';
-import { SmallRecipeCard } from '../SmallRecipeCard/SmallRecipeCard';
+import { Card, Paper, Box, CardContent, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import InfoIcon from '@mui/icons-material/Info';
 import {
   paperHeading,
   mainBoxContainer,
   colors,
-  grid,
   flexCenterContainer,
 } from '../../shared/styles/sharedStyles';
 import { fetchAllRecipesByUserId } from '../../shared/services/recipeService';
@@ -26,6 +14,7 @@ import { CardType } from '../../shared/types';
 import { auth } from '../../config/firebase';
 import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage';
 import { Loader } from '../../shared/components/Loader/Loader';
+import { SmallRecipesList } from '../../shared/components/SmallRecipesList/SmallRecipesList';
 
 export const MyProfile: FC = () => {
   const [createdOn, setCreatedOn] = useState<string>('');
@@ -120,28 +109,7 @@ export const MyProfile: FC = () => {
             </Box>
           </CardContent>
         </Card>
-        {cardsDataState.length ? (
-          <Grid container sx={grid}>
-            {cardsDataState.map((card, index) => (
-              <Grid item xs={'auto'} key={index}>
-                <SmallRecipeCard card={card} isOwn={true} />
-              </Grid>
-            ))}
-          </Grid>
-        ) : (
-          <Stack sx={{ width: '100%' }} spacing={2}>
-            <Alert
-              severity="info"
-              sx={{
-                backgroundColor: colors.light,
-                color: colors.dark,
-              }}
-              icon={<InfoIcon sx={{ color: colors.dark }} />}
-            >
-              Currently there are no recipes added by you
-            </Alert>
-          </Stack>
-        )}
+        <SmallRecipesList cardsDataState={cardsDataState} />
         <AlertMessage
           isOpen={isOpen}
           setIsOpen={setIsOpen}

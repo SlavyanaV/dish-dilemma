@@ -1,11 +1,11 @@
 import { FC, useEffect, useState } from 'react';
 import { Card, CardHeader, CardMedia } from '@mui/material';
-import { colors } from '../../shared/styles/sharedStyles';
-import { useUserContext } from '../../hooks/useUserContext';
-import { likeRecipe } from '../../shared/services/likesService';
-import { transformLikes } from '../../shared/utils';
-import { CardType, LikesType } from '../../shared/types';
-import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage';
+import { colors } from '../../../styles/sharedStyles';
+import { useUserContext } from '../../../../hooks/useUserContext';
+import { likeRecipe } from '../../../services/likesService';
+import { transformLikes } from '../../../utils';
+import { CardType, LikesType } from '../../../types';
+import { AlertMessage } from '../../AlertMessage/AlertMessage';
 import { SmallRecipeActions } from './features/SmallRecipeActions';
 
 type Props = {
