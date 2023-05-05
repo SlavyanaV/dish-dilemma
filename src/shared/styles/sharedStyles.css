@@ -53,3 +53,8 @@ button:hover {
 .MuiAlert-filledSuccess {
   background-color: #5f6d30 !important;
 }
+
+.Mui-selected {
+  background-color: #e4bf89 !important;
+  color: #5f6d30 !important;
+}
