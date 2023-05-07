@@ -42,7 +42,7 @@ export const SmallRecipeActions: FC<Props> = ({
         <>
           <Box sx={{ textAlign: 'center' }}>
             <Typography sx={{ fontSize: 14 }} color={colors.secondary}>
-              Created by:
+              Added by:
             </Typography>
             <Typography variant="h6" color={colors.dark}>
               {ownerEmail || 'Unknown user'}

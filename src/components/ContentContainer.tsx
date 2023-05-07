@@ -24,6 +24,7 @@ export const ContentContainer: FC = () => {
         backgroundRepeat: 'no-repeat',
         backgroundAttachment: 'fixed',
         paddingTop: '6%',
+        paddingBottom: 'calc(6% - 56px)'
       }}
     >
       <Routes>

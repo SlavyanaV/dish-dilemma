@@ -62,15 +62,19 @@ export const RandomRecipeActions: FC<Props> = ({
           See all recipes
         </Button>
       </Link>
-      <Button
-        variant="outlined"
-        color="inherit"
-        sx={{ m: 1 }}
-        onClick={() => setIsDialogOpen(true)}
-        disabled={isAddDisabled}
-      >
-        Add recipe to list
-      </Button>
+      {userId ? (
+        <Button
+          variant="outlined"
+          color="inherit"
+          sx={{ m: 1 }}
+          onClick={() => setIsDialogOpen(true)}
+          disabled={isAddDisabled}
+        >
+          Add recipe
+        </Button>
+      ) : (
+        <></>
+      )}
       <ConfirmDialog
         isOpen={isDialogOpen}
         setIsOpen={setIsDialogOpen}

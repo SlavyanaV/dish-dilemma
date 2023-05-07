@@ -78,6 +78,7 @@ export const Register: FC = () => {
             id="filled-required"
             label="Email"
             variant="outlined"
+            placeholder="Enter an email"
             helperText={errorState.email}
             error={!!errorState.email}
             sx={{ m: 1 }}
@@ -91,6 +92,7 @@ export const Register: FC = () => {
             type="password"
             variant="outlined"
             autoComplete="current-password"
+            placeholder="Enter a password"
             helperText={errorState.password}
             error={!!errorState.password}
             sx={{ m: 1 }}
@@ -104,6 +106,7 @@ export const Register: FC = () => {
             type="password"
             variant="outlined"
             autoComplete="current-password"
+            placeholder="Repeat the password"
             helperText={errorState.repassword}
             error={!!errorState.repassword}
             sx={{ m: 1 }}
@@ -115,7 +118,7 @@ export const Register: FC = () => {
           <LoadingButton
             variant="outlined"
             color="inherit"
-            sx={{ m: 1 }}
+            sx={{ m: 1, p: 1.5 }}
             onClick={handleOnSubmit}
             loading={isLoading}
             loadingPosition="end"

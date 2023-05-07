@@ -51,7 +51,7 @@ export const SmallRecipesList: FC<Props> = ({ cardsDataState, likesData }) => {
             ))}
           </Grid>
           <Pagination
-            sx={{ display: 'flex', justifyContent: 'center', mb: 2.5 }}
+            sx={{ display: 'flex', justifyContent: 'center', }}
             count={count}
             size="large"
             page={currentPage}

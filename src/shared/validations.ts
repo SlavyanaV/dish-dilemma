@@ -23,10 +23,10 @@ export const formValidation = (formState: Record<string, any>) => {
     }
   });
 
-  ingredients.forEach((ingredient: Ingredient) => {
+  ingredients?.forEach((ingredient: Ingredient) => {
     errors.ingredients[ingredient.id] =
-      ingredient.text.length < 5
-        ? 'The field must contain at least 5 symbols'
+      ingredient.text.length < 3
+        ? 'The field must contain at least 3 symbols'
         : '';
   });
 

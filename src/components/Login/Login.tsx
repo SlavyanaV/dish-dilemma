@@ -80,6 +80,7 @@ export const Login: FC = () => {
             label="Email"
             variant="outlined"
             helperText={errorState.email}
+            placeholder="Enter your email"
             error={!!errorState.email}
             sx={{ m: 1 }}
             onChange={handleOnChange}
@@ -93,6 +94,7 @@ export const Login: FC = () => {
             variant="outlined"
             autoComplete="current-password"
             helperText={errorState.password}
+            placeholder="Enter your password"
             error={!!errorState.password}
             sx={{ m: 1 }}
             onChange={handleOnChange}
@@ -102,7 +104,7 @@ export const Login: FC = () => {
           <LoadingButton
             variant="outlined"
             color="inherit"
-            sx={{ m: 1 }}
+            sx={{ m: 1, p: 1.5 }}
             onClick={handleOnSubmit}
             loading={isLoading}
             loadingPosition="end"

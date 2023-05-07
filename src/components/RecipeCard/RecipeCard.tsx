@@ -78,7 +78,7 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
 
   return (
     <Box sx={flexCenterContainer}>
-      <Box sx={{ width: 700, mb: '50px' }}>
+      <Box sx={{ width: 700}}>
         <Card sx={{ backgroundColor: colors.light }}>
           <Paper elevation={10} sx={{ backgroundColor: colors.dark }}>
             <Typography variant="h4" sx={paperHeading}>

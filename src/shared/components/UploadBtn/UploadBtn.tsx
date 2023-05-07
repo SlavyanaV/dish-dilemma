@@ -10,14 +10,14 @@ type Props = {
 
 export const UploadBtn: FC<Props> = ({ onChange, picture, error }) => {
   return (
-    <Stack direction="row" alignItems="center" spacing={2} sx={{ mt: 2.5 }}>
+    <Stack direction="column" spacing={2} sx={{ mt: 2.5 }}>
       <Button
         variant="outlined"
         component="label"
         color="inherit"
         className="upload-btn"
         endIcon={<UploadFileIcon />}
-        sx={{ width: '35%', p: 1 }}
+        sx={{ width: '50%', p: 1 }}
       >
         Upload Picture
         <input
@@ -30,7 +30,6 @@ export const UploadBtn: FC<Props> = ({ onChange, picture, error }) => {
       </Button>
       <TextField
         disabled
-        sx={{ width: '65%' }}
         name="picture"
         value={picture}
         id="filled-multiline-flexible"

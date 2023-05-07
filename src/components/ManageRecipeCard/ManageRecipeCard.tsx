@@ -100,12 +100,19 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
     if (!hasErrors) {
       setIsLoading(true);
       try {
-        const pictureUrl = await uploadRecipePicture(
-          pictureFile,
-          cardDataState.pictureId
-        );
+        let pictureUrl = cardDataState.pictureUrl;
 
-        const cardDto = { ...cardDataState, pictureUrl };
+        if (!pictureUrl) {
+          pictureUrl = await uploadRecipePicture(
+            pictureFile,
+            cardDataState.pictureId
+          );
+        }
+
+        const cardDto = {
+          ...cardDataState,
+          pictureUrl,
+        };
 
         await manageRecipe(cardDto, userId, id!, actionType);
 
@@ -189,7 +196,7 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
             className="upload-btn"
             onClick={handleOnAdd}
             endIcon={<AddBoxOutlinedIcon />}
-            sx={{ width: '35%', p: 1 }}
+            sx={{ width: '50%', p: 1, mt: 2.5 }}
           >
             Add ingredient
           </Button>
@@ -223,7 +230,7 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
           <LoadingButton
             variant="outlined"
             onClick={handleOnSubmit}
-            sx={{ mt: 2.5 }}
+            sx={{ mt: 2.5, p: 1.5 }}
             color="inherit"
             loading={isLoading}
             loadingPosition="end"
