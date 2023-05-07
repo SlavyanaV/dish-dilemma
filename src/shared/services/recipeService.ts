@@ -28,12 +28,12 @@ export const fetchRecipeById = async (id: string) => {
 export const manageRecipe = async (
   cardDataState: RecipeType,
   ownerId: string,
-  id: string,
+  id?: string,
   actionType?: string
 ) => {
   const cardData: CardType = { ...cardDataState, ownerId };
 
-  if (actionType === 'edit') {
+  if (actionType === 'edit' && id) {
     const recipeDoc = doc(db, 'recipes', id);
     await updateDoc(recipeDoc, cardData);
   } else {

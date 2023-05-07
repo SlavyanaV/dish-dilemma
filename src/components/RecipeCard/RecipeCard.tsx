@@ -119,7 +119,10 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
           </CardContent>
           <CardActions disableSpacing>
             {cardType === 'main' ? (
-              <RandomRecipeActions getRandomRecipe={getRecipe} />
+              <RandomRecipeActions
+                getRandomRecipe={getRecipe}
+                cardDataState={cardDataState}
+              />
             ) : userId === cardDataState?.ownerId ? (
               <CustomRecipeActions id={cardDataState?.id} />
             ) : (
@@ -136,7 +139,6 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
           </CardActions>
           <ExpandedDetails
             isExpanded={isExpanded}
-            cardType={cardType}
             ingredients={cardDataState.ingredients}
             description={cardDataState.description}
           />

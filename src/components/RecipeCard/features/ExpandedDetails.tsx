@@ -7,12 +7,10 @@ type Props = {
   isExpanded: boolean;
   description: string;
   ingredients?: Ingredient[];
-  cardType?: string;
 };
 
 export const ExpandedDetails: FC<Props> = ({
   isExpanded,
-  cardType,
   ingredients,
   description,
 }) => {
@@ -32,15 +30,15 @@ export const ExpandedDetails: FC<Props> = ({
         <Typography paragraph sx={{ fontWeight: 'bold' }}>
           Instructions:
         </Typography>
+        {/* in order to display properly some of the recipes, that are returned as html string by the api */}
         <Typography
           paragraph
           sx={{
             textAlign: 'justify',
             overflowWrap: 'anywhere',
           }}
-        >
-          {description}
-        </Typography>
+          dangerouslySetInnerHTML={{ __html: description }}
+        ></Typography>
       </CardContent>
     </Collapse>
   );

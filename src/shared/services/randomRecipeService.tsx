@@ -15,10 +15,7 @@ export const fetchRandomRecipe = async () => {
     title: recipe.title,
     category: recipe.cuisines[0] || recipe.dishTypes[0] || '',
     pictureUrl: recipe.image,
-    description: (
-      //in order to display properly some of the recipes, that are returned as html string by the api
-      <div dangerouslySetInnerHTML={{ __html: recipe.instructions }}></div>
-    ),
+    description: recipe.instructions,
     ingredients: recipe.extendedIngredients.map((ingredient: any) => ({
       id: v4(),
       text: ingredient.original,
