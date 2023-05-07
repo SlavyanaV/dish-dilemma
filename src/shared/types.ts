@@ -15,13 +15,18 @@ export type LikesType = {
   id: string;
 };
 
+export type Ingredient = {
+  id: string;
+  text: string;
+};
+
 export type RecipeType = {
   id: string;
   category: string;
   description: string;
   picture: string;
   title: string;
-  ingredients?: string[];
+  ingredients: Ingredient[];
   createdOn?: number;
   ownerId?: string;
   ownerEmail: string;

@@ -1,6 +1,7 @@
 import { useState, useEffect, FC, ChangeEvent } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, TextField, Paper, Typography } from '@mui/material';
+import { Box, TextField, Paper, Typography, Button } from '@mui/material';
+import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import { useNavigate, useParams } from 'react-router-dom';
 import { outerPaper } from '../../shared/styles/formsStyles';
 import {
@@ -20,6 +21,7 @@ import { useUserContext } from '../../hooks/useUserContext';
 import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage';
 import { UploadBtn } from '../../shared/components/UploadBtn/UploadBtn';
 import { v4 } from 'uuid';
+import { IngredientField } from './features/IngredientField';
 
 const initalState = {
   title: '',
@@ -30,6 +32,7 @@ const initalState = {
   ownerEmail: '',
   pictureId: '',
   pictureUrl: '',
+  ingredients: [{ id: v4(), text: '' }],
 };
 
 type Props = {
@@ -44,8 +47,10 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
   } = useUserContext();
 
   const [cardDataState, setCardDataState] = useState<RecipeType>(initalState);
-  const [errorState, setErrorState] =
-    useState<Record<string, string>>(initalState);
+  const [errorState, setErrorState] = useState<Record<string, any>>({
+    ...initalState,
+    ingredients: {},
+  });
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -77,6 +82,13 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
     setCardDataState({
       ...cardDataState,
       [name]: value,
+    });
+  };
+
+  const handleOnAdd = () => {
+    setCardDataState({
+      ...cardDataState,
+      ingredients: [...cardDataState.ingredients, { id: v4(), text: '' }],
     });
   };
 
@@ -146,6 +158,7 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
             id="filled-multiline-flexible"
             label="Recipe title"
             variant="outlined"
+            placeholder="Enter recipe titile"
             helperText={errorState.title}
             error={!!errorState.title}
             onChange={handleOnChange}
@@ -158,6 +171,7 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
             id="filled-multiline-flexible"
             label="Category"
             variant="outlined"
+            placeholder="Enter recipe category"
             helperText={errorState.category}
             error={!!errorState.category}
             onChange={handleOnChange}
@@ -166,8 +180,29 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
           <UploadBtn
             onChange={handleOnUpload}
             picture={cardDataState.picture}
-            error={errorState.picture}
+            error={errorState.picture as string}
           />
+          <Button
+            variant="outlined"
+            component="label"
+            color="inherit"
+            className="upload-btn"
+            onClick={handleOnAdd}
+            endIcon={<AddBoxOutlinedIcon />}
+            sx={{ width: '35%', p: 1 }}
+          >
+            Add ingredient
+          </Button>
+          {cardDataState.ingredients.map((ingredient, index) => (
+            <IngredientField
+              key={ingredient.id}
+              ingredient={ingredient}
+              error={errorState?.ingredients?.[ingredient.id]}
+              cardDataState={cardDataState}
+              setCardDataState={setCardDataState}
+              index={index}
+            />
+          ))}
           <TextField
             name="description"
             value={cardDataState.description}
@@ -177,6 +212,7 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
             multiline
             rows={8}
             variant="outlined"
+            placeholder="Enter recipe description"
             helperText={errorState.description}
             error={!!errorState.description}
             onChange={handleOnChange}

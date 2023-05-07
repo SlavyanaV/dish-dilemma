@@ -1,4 +1,5 @@
-import { RecipeType } from "../types";
+import { v4 } from 'uuid';
+import { RecipeType } from '../types';
 
 export const fetchRandomRecipe = async () => {
   const response = await fetch('https://api.spoonacular.com/recipes/random', {
@@ -18,9 +19,10 @@ export const fetchRandomRecipe = async () => {
       //in order to display properly some of the recipes, that are returned as html string by the api
       <div dangerouslySetInnerHTML={{ __html: recipe.instructions }}></div>
     ),
-    ingredients: recipe.extendedIngredients.map(
-      (ingredient: any) => ingredient.original
-    ),
+    ingredients: recipe.extendedIngredients.map((ingredient: any) => ({
+      id: v4(),
+      text: ingredient.original,
+    })),
   }));
 
   const randomRecipe: RecipeType = randomRecipeArr[0];
