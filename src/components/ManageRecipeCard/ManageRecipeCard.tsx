@@ -1,12 +1,18 @@
 import { useState, useEffect, FC, ChangeEvent } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, TextField, Paper, Typography, Button } from '@mui/material';
+import {
+  Box,
+  TextField,
+  Paper,
+  Typography,
+  Button,
+  Stack,
+} from '@mui/material';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import { useNavigate, useParams } from 'react-router-dom';
 import { outerPaper } from '../../shared/styles/formsStyles';
 import {
   paperHeading,
-  mainBoxContainer,
   colors,
   flexCenterContainer,
 } from '../../shared/styles/sharedStyles';
@@ -22,6 +28,7 @@ import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage'
 import { UploadBtn } from '../../shared/components/UploadBtn/UploadBtn';
 import { v4 } from 'uuid';
 import { IngredientField } from './features/IngredientField';
+import { FormInput } from '../../shared/components/FormInput/FormInput';
 
 const initalState = {
   title: '',
@@ -141,14 +148,13 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
   return (
     <Box sx={flexCenterContainer}>
       <Paper variant="outlined" sx={outerPaper}>
-        <Box
+        <Stack
+          spacing={2}
           component="form"
+          autoComplete="off"
           sx={{
             width: 700,
-            maxWidth: '100%',
-            ...mainBoxContainer,
           }}
-          autoComplete="off"
         >
           <Paper
             elevation={10}
@@ -158,26 +164,20 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
               {actionType === 'edit' ? 'Edit your recipe' : 'Add your recipe'}
             </Typography>
           </Paper>
-          <TextField
+          <FormInput
             name="title"
             value={cardDataState.title}
-            sx={{ mt: 1 }}
-            id="filled-multiline-flexible"
             label="Recipe title"
-            variant="outlined"
             placeholder="Enter recipe titile"
             helperText={errorState.title}
             error={!!errorState.title}
             onChange={handleOnChange}
             className={!!errorState.title ? 'input-error' : 'input-success'}
           />
-          <TextField
+          <FormInput
             name="category"
             value={cardDataState.category}
-            sx={{ mt: 2.5 }}
-            id="filled-multiline-flexible"
             label="Category"
-            variant="outlined"
             placeholder="Enter recipe category"
             helperText={errorState.category}
             error={!!errorState.category}
@@ -217,8 +217,9 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
             id="filled-multiline-static"
             label="Description"
             multiline
-            rows={8}
+            rows={6}
             variant="outlined"
+            size="small"
             placeholder="Enter recipe description"
             helperText={errorState.description}
             error={!!errorState.description}
@@ -237,7 +238,7 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
           >
             {actionType === 'edit' ? 'Edit recipe' : 'Add recipe'}
           </LoadingButton>
-        </Box>
+        </Stack>
         <AlertMessage
           isOpen={isOpen}
           setIsOpen={setIsOpen}

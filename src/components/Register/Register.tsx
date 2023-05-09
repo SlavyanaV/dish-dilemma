@@ -1,11 +1,10 @@
 import { ChangeEvent, FC, useState } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, TextField, Paper, Typography } from '@mui/material';
+import { Box, Paper, Typography, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { innerPaper, outerPaper } from '../../shared/styles/formsStyles';
 import {
   paperHeading,
-  mainBoxContainer,
   flexCenterContainer,
 } from '../../shared/styles/sharedStyles';
 import { formValidation } from '../../shared/validations';
@@ -13,6 +12,7 @@ import { RegisterType } from '../../shared/types';
 import { auth } from '../../config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage';
+import { FormInput } from '../../shared/components/FormInput/FormInput';
 
 const initialState = {
   email: '',
@@ -67,49 +67,38 @@ export const Register: FC = () => {
   return (
     <Box sx={flexCenterContainer}>
       <Paper variant="outlined" sx={outerPaper}>
-        <Box sx={mainBoxContainer}>
+        <Stack spacing={2} component="form" autoComplete="off">
           <Paper elevation={10} sx={innerPaper}>
             <Typography variant="h4" sx={paperHeading}>
               Register your profile
             </Typography>
           </Paper>
-          <TextField
+          <FormInput
             name="email"
-            id="filled-required"
             label="Email"
-            variant="outlined"
             placeholder="Enter an email"
             helperText={errorState.email}
             error={!!errorState.email}
-            sx={{ m: 1 }}
             onChange={handleOnChange}
             className={!!errorState.email ? 'input-error' : 'input-success'}
           />
-          <TextField
+          <FormInput
             name="password"
-            id="filled-password-input"
             label="Password"
             type="password"
-            variant="outlined"
-            autoComplete="current-password"
             placeholder="Enter a password"
             helperText={errorState.password}
             error={!!errorState.password}
-            sx={{ m: 1 }}
             onChange={handleOnChange}
             className={!!errorState.password ? 'input-error' : 'input-success'}
           />
-          <TextField
+          <FormInput
             name="repassword"
-            id="filled-repassword-input"
             label="Repeat password"
             type="password"
-            variant="outlined"
-            autoComplete="current-password"
             placeholder="Repeat the password"
             helperText={errorState.repassword}
             error={!!errorState.repassword}
-            sx={{ m: 1 }}
             onChange={handleOnChange}
             className={
               !!errorState.repassword ? 'input-error' : 'input-success'
@@ -125,7 +114,7 @@ export const Register: FC = () => {
           >
             Register
           </LoadingButton>
-        </Box>
+        </Stack>
         <AlertMessage
           isOpen={isOpen}
           setIsOpen={setIsOpen}

@@ -1,6 +1,7 @@
 import { ChangeEvent, FC } from 'react';
-import { Button, Stack, TextField } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import { FormInput } from '../FormInput/FormInput';
 
 type Props = {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -10,7 +11,7 @@ type Props = {
 
 export const UploadBtn: FC<Props> = ({ onChange, picture, error }) => {
   return (
-    <Stack direction="column" spacing={2} sx={{ mt: 2.5 }}>
+    <Stack direction="column" spacing={2}>
       <Button
         variant="outlined"
         component="label"
@@ -28,13 +29,11 @@ export const UploadBtn: FC<Props> = ({ onChange, picture, error }) => {
           onChange={onChange}
         />
       </Button>
-      <TextField
+      <FormInput
         disabled
         name="picture"
         value={picture}
-        id="filled-multiline-flexible"
         label="Picture name"
-        variant="outlined"
         helperText={error}
         error={!!error}
         className={!!error ? 'input-error' : 'input-success'}

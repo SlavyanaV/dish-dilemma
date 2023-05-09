@@ -16,7 +16,7 @@ export const ContentContainer: FC = () => {
   return (
     <Box
       sx={{
-        minHeight: 'calc(100vh - 56px)',
+        minHeight: 'calc(100vh - 3.5rem)',
         background: `url(${backgroundImg}) #39411099`,
         backgroundSize: 'cover',
         backgroundBlendMode: 'multiply',
@@ -24,7 +24,7 @@ export const ContentContainer: FC = () => {
         backgroundRepeat: 'no-repeat',
         backgroundAttachment: 'fixed',
         paddingTop: '6%',
-        paddingBottom: 'calc(6% - 56px)'
+        paddingBottom: 'calc(6% - 3.5rem)'
       }}
     >
       <Routes>

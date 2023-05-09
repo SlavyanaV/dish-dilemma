@@ -33,7 +33,7 @@ export const ResetPassword = () => {
     <Box sx={{ display: 'flex', justifyContent: 'end' }}>
       <Typography
         color={colors.secondary}
-        sx={{ m: 1, textAlign: 'right' }}
+        sx={{ textAlign: 'right' }}
         onClick={() => setIsDialogOpen(true)}
         className={'forgot-pass'}
       >

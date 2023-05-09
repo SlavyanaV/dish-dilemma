@@ -1,14 +1,15 @@
-import { Stack, TextField, IconButton } from '@mui/material';
+import { IconButton, Grid } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Ingredient, RecipeType } from '../../../shared/types';
 import { ChangeEvent, FC } from 'react';
+import { FormInput } from '../../../shared/components/FormInput/FormInput';
 
 type Props = {
   ingredient: Ingredient;
   error: string;
   cardDataState: RecipeType;
   setCardDataState: React.Dispatch<React.SetStateAction<RecipeType>>;
-  index: number
+  index: number;
 };
 
 export const IngredientField: FC<Props> = ({
@@ -16,7 +17,7 @@ export const IngredientField: FC<Props> = ({
   error,
   cardDataState,
   setCardDataState,
-  index
+  index,
 }) => {
   const handleOnIngredientChange = (
     index: number,
@@ -41,33 +42,28 @@ export const IngredientField: FC<Props> = ({
   };
 
   return (
-    <Stack
-      key={ingredient.id}
-      direction="row"
-      alignItems="center"
-      justifyContent={'space-between'}
-      spacing={2}
-      sx={{ mt: 2.5 }}
-    >
-      <TextField
-        name="ingredient"
-        value={ingredient.text}
-        sx={{ width: '92%' }}
-        id="filled-multiline-flexible"
-        label="Ingredient"
-        variant="outlined"
-        placeholder="Enter recipe ingredient"
-        helperText={error}
-        error={!!error}
-        onChange={(e) => handleOnIngredientChange(index, e)}
-        className={!!error ? 'input-error' : 'input-success'}
-      />
-      <IconButton
-        disabled={cardDataState?.ingredients?.length <= 1}
-        onClick={() => handleOnRemove(ingredient.id)}
-      >
-        <ClearIcon />
-      </IconButton>
-    </Stack>
+    <Grid container justifyContent={'space-between'}>
+      <Grid item xs={11}>
+        <FormInput
+          name="ingredient"
+          value={ingredient.text}
+          id="filled-multiline-flexible"
+          label="Ingredient"
+          placeholder="Enter recipe ingredient"
+          helperText={error}
+          error={!!error}
+          onChange={(e) => handleOnIngredientChange(index, e)}
+          className={!!error ? 'input-error' : 'input-success'}
+        />
+      </Grid>
+      <Grid item >
+        <IconButton
+          disabled={cardDataState?.ingredients?.length <= 1}
+          onClick={() => handleOnRemove(ingredient.id)}
+        >
+          <ClearIcon />
+        </IconButton>
+      </Grid>
+    </Grid>
   );
 };

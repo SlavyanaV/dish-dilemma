@@ -1,11 +1,10 @@
 import { ChangeEvent, FC, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, TextField, Paper, Typography } from '@mui/material';
+import { Box, Paper, Typography, Stack } from '@mui/material';
 import { innerPaper, outerPaper } from '../../shared/styles/formsStyles';
 import {
   paperHeading,
-  mainBoxContainer,
   colors,
   link,
   flexCenterContainer,
@@ -16,6 +15,7 @@ import { auth } from '../../config/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { AlertMessage } from '../../shared/components/AlertMessage/AlertMessage';
 import { ResetPassword } from './features/ResetPassword';
+import { FormInput } from '../../shared/components/FormInput/FormInput';
 
 const initialState = {
   email: '',
@@ -68,55 +68,50 @@ export const Login: FC = () => {
   return (
     <Box sx={flexCenterContainer}>
       <Paper variant="outlined" sx={outerPaper}>
-        <Box sx={mainBoxContainer}>
-          <Paper elevation={10} sx={innerPaper}>
-            <Typography variant="h4" sx={paperHeading}>
-              Log into your profile
+          <Stack spacing={2} component='form' autoComplete='off'>
+            <Paper elevation={10} sx={innerPaper}>
+              <Typography variant="h4" sx={paperHeading}>
+                Log into your profile
+              </Typography>
+            </Paper>
+            <FormInput
+              name="email"
+              label="Email"
+              helperText={errorState.email}
+              placeholder="Enter your email"
+              error={!!errorState.email}
+              onChange={handleOnChange}
+              className={!!errorState.email ? 'input-error' : 'input-success'}
+            />
+            <FormInput
+              name="password"
+              label="Password"
+              type="password"
+              helperText={errorState.password}
+              placeholder="Enter your password"
+              error={!!errorState.password}
+              onChange={handleOnChange}
+              className={
+                !!errorState.password ? 'input-error' : 'input-success'
+              }
+            />
+            <ResetPassword />
+            <LoadingButton
+              variant="outlined"
+              color="inherit"
+              sx={{ p: 1.5 }}
+              onClick={handleOnSubmit}
+              loading={isLoading}
+              loadingPosition="end"
+            >
+              Login
+            </LoadingButton>
+            <Typography color={colors.secondary} sx={{ textAlign: 'center' }}>
+              <Link to="/register" style={link}>
+                Not registered yet?
+              </Link>
             </Typography>
-          </Paper>
-          <TextField
-            name="email"
-            id="filled-required"
-            label="Email"
-            variant="outlined"
-            helperText={errorState.email}
-            placeholder="Enter your email"
-            error={!!errorState.email}
-            sx={{ m: 1 }}
-            onChange={handleOnChange}
-            className={!!errorState.email ? 'input-error' : 'input-success'}
-          />
-          <TextField
-            name="password"
-            id="filled-password-input"
-            label="Password"
-            type="password"
-            variant="outlined"
-            autoComplete="current-password"
-            helperText={errorState.password}
-            placeholder="Enter your password"
-            error={!!errorState.password}
-            sx={{ m: 1 }}
-            onChange={handleOnChange}
-            className={!!errorState.password ? 'input-error' : 'input-success'}
-          />
-          <ResetPassword />
-          <LoadingButton
-            variant="outlined"
-            color="inherit"
-            sx={{ m: 1, p: 1.5 }}
-            onClick={handleOnSubmit}
-            loading={isLoading}
-            loadingPosition="end"
-          >
-            Login
-          </LoadingButton>
-        </Box>
-        <Typography color={colors.secondary} sx={{ textAlign: 'center' }}>
-          <Link to="/register" style={link}>
-            Not registered yet?
-          </Link>
-        </Typography>
+          </Stack>
         <AlertMessage
           isOpen={isOpen}
           setIsOpen={setIsOpen}
