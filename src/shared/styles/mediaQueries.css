@@ -12,10 +12,18 @@
   .recipe-card {
     margin: 3%;
   }
+
+  .form-container {
+    margin: 3%;
+  }
 }
 
 @media (max-width: 650px) {
   .content {
     padding: 12% 0 6% 0 !important;
+  }
+
+  .form-container {
+    min-width: 24em !important;
   }
 }

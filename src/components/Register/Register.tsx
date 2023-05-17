@@ -66,7 +66,7 @@ export const Register: FC = () => {
 
   return (
     <Box sx={flexCenterContainer}>
-      <Paper variant="outlined" sx={outerPaper}>
+      <Paper variant="outlined" sx={outerPaper} className='form-container'>
         <Stack spacing={2} component="form" autoComplete="off">
           <Paper elevation={10} sx={innerPaper}>
             <Typography variant="h4" sx={paperHeading}>

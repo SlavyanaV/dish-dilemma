@@ -43,7 +43,7 @@ export const IngredientField: FC<Props> = ({
 
   return (
     <Grid container justifyContent={'space-between'}>
-      <Grid item xs={11}>
+      <Grid item xs={10.5}>
         <FormInput
           name="ingredient"
           value={ingredient.text}

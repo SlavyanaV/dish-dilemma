@@ -147,15 +147,12 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
 
   return (
     <Box sx={flexCenterContainer}>
-      <Paper variant="outlined" sx={outerPaper}>
-        <Stack
-          spacing={2}
-          component="form"
-          autoComplete="off"
-          sx={{
-            width: 700,
-          }}
-        >
+      <Paper
+        variant="outlined"
+        sx={{ ...outerPaper, width: '50em' }}
+        className="form-container"
+      >
+        <Stack spacing={2} component="form" autoComplete="off">
           <Paper
             elevation={10}
             sx={{ mb: 1.5, mt: 1.5, backgroundColor: colors.dark }}

@@ -147,7 +147,7 @@ export const Navbar: FC = () => {
                             </Link>
                           </MenuItem>
                           <MenuItem onClick={popupState.close}>
-                            <Button className={'nav-menu-buttons'}
+                            <Button
                               sx={{ color: colors.light }}
                               onClick={handleOnLogout}
                             >
