@@ -40,4 +40,9 @@
   .recipe-list {
     margin: 4%;
   }
+
+  .small-card-actions {
+    flex-direction: column;
+    gap: 0.5em;
+  }
 }

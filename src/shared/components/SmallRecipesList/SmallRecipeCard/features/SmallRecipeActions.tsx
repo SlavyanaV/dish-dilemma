@@ -30,6 +30,7 @@ export const SmallRecipeActions: FC<Props> = ({
     <CardActions
       disableSpacing
       sx={{ display: 'flex', justifyContent: 'space-between' }}
+      className="small-card-actions"
     >
       <Link to={`/recipe-details/${id}`} style={link}>
         <Button variant="outlined" color="inherit">
@@ -44,7 +45,11 @@ export const SmallRecipeActions: FC<Props> = ({
             <Typography sx={{ fontSize: 14 }} color={colors.secondary}>
               Added by:
             </Typography>
-            <Typography variant="h6" color={colors.dark}>
+            <Typography
+              variant="h5"
+              color={colors.dark}
+              sx={{ fontSize: '1.25em' }}
+            >
               {ownerEmail || 'Unknown user'}
             </Typography>
           </Box>
