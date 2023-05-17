@@ -78,7 +78,7 @@ export const MyProfile: FC = () => {
 
   return (
     <Box sx={flexCenterContainer}>
-      <Box sx={mainBoxContainer}>
+      <Box sx={mainBoxContainer} className='recipe-list'>
         <Card
           sx={{
             width: '70%',

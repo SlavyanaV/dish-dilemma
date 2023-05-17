@@ -27,7 +27,6 @@
   .profile-data {
     flex-direction: column;
     align-items: center;
-    margin: 3%;
   }
 
   .profile-data > div > p {
@@ -36,5 +35,9 @@
 
   .small-recipe-card {
     width: 95%;
+  }
+
+  .recipe-list {
+    margin: 4%;
   }
 }

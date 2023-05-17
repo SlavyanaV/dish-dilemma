@@ -48,12 +48,7 @@ export const SmallRecipeCard: FC<Props> = ({ card, likesData, isOwn }) => {
 
   return (
     <Card sx={{ backgroundColor: colors.light, width: '100%' }}>
-      <CardMedia
-        component="img"
-        height="300"
-        image={card?.pictureUrl}
-        alt="Dish picture"
-      />
+      <CardMedia component="img" image={card?.pictureUrl} alt="Dish picture" />
       <CardHeader
         sx={{ textAlign: 'center', color: colors.dark }}
         title={card?.title}

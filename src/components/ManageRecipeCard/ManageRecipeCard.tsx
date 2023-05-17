@@ -30,7 +30,7 @@ import { v4 } from 'uuid';
 import { IngredientField } from './features/IngredientField';
 import { FormInput } from '../../shared/components/FormInput/FormInput';
 
-const initalState = {
+const initialState = () => ({
   title: '',
   category: '',
   picture: '',
@@ -40,7 +40,7 @@ const initalState = {
   pictureId: '',
   pictureUrl: '',
   ingredients: [{ id: v4(), text: '' }],
-};
+});
 
 type Props = {
   actionType?: string;
@@ -53,9 +53,11 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
     user: { userId },
   } = useUserContext();
 
-  const [cardDataState, setCardDataState] = useState<RecipeType>(initalState);
+  const [cardDataState, setCardDataState] = useState<RecipeType>(
+    initialState()
+  );
   const [errorState, setErrorState] = useState<Record<string, any>>({
-    ...initalState,
+    ...initialState(),
     ingredients: {},
   });
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -78,7 +80,7 @@ export const ManageRecipeCard: FC<Props> = ({ actionType }) => {
     if (actionType === 'edit') {
       getRecipe();
     } else {
-      setCardDataState(initalState);
+      setCardDataState(initialState());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actionType]);

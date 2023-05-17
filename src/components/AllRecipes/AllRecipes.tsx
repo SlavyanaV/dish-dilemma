@@ -57,9 +57,7 @@ export const AllRecipes: FC = () => {
 
   return (
     <Box sx={flexCenterContainer}>
-      <Box
-        sx={mainBoxContainer}
-      >
+      <Box sx={mainBoxContainer} className="recipe-list">
         <SmallRecipesList
           cardsDataState={cardsDataState}
           likesData={likesData}
