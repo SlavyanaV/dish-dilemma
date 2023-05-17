@@ -41,7 +41,7 @@ export const SmallRecipesList: FC<Props> = ({ cardsDataState, likesData }) => {
             }}
           >
             {currentPageData.map((card, index) => (
-              <Grid item key={index}>
+              <Grid item key={index} className='small-recipe-card'>
                 <SmallRecipeCard
                   card={card}
                   likesData={likesData}

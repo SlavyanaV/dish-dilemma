@@ -97,7 +97,7 @@ export const MyProfile: FC = () => {
                 My profile
               </Typography>
             </Paper>
-            <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-around' }} className='profile-data'>
               <Box>
                 <Typography sx={{ fontSize: 14 }} color={colors.secondary}>
                   Email address:
