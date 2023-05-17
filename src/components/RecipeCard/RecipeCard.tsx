@@ -78,8 +78,7 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
 
   return (
     <Box sx={flexCenterContainer}>
-      <Box sx={{ width: 700}}>
-        <Card sx={{ backgroundColor: colors.light }}>
+        <Card sx={{ backgroundColor: colors.light, width: '45em'}} className='recipe-card'>
           <Paper elevation={10} sx={{ backgroundColor: colors.dark }}>
             <Typography variant="h4" sx={paperHeading}>
               {cardType === 'main'
@@ -150,7 +149,6 @@ export const RecipeCard: FC<Props> = ({ cardType }) => {
           alertTitle={'Error'}
           alertMessage={alertMessage}
         />
-      </Box>
     </Box>
   );
 };
