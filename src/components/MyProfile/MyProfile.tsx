@@ -78,8 +78,16 @@ export const MyProfile: FC = () => {
 
   return (
     <Box sx={flexCenterContainer}>
-      <Box sx={{ width: '50%', ...mainBoxContainer }}>
-        <Card sx={{ minWidth: 800, backgroundColor: colors.light, mb: 2.5 }}>
+      <Box sx={mainBoxContainer}>
+        <Card
+          sx={{
+            width: '70%',
+            backgroundColor: colors.light,
+            mb: 2.5,
+            alignSelf: 'center',
+          }}
+          className={'profile-data'}
+        >
           <CardContent>
             <Paper
               elevation={10}

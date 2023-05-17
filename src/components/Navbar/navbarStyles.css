@@ -1,0 +1,26 @@
+.menu-links {
+  display: none;
+}
+
+.MuiPopover-paper > ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #e4bf89 !important;
+}
+
+@media (max-width: 850px) {
+  .navbar-links {
+    display: none;
+  }
+  .menu-links {
+    display: block;
+  }
+
+  .MuiMenuItem-gutters,
+  .MuiMenuItem-gutters > a,
+  .MuiMenuItem-gutters > button,
+  .MuiMenuItem-gutters > a > button {
+    width: 100% !important;
+  }
+}

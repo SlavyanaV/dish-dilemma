@@ -20,6 +20,7 @@ import { FC } from 'react';
 export const Footer: FC = () => {
   return (
     <Paper
+      className={'footer-container'}
       sx={{
         width: '100%',
         backgroundColor: colors.dark,
@@ -31,6 +32,7 @@ export const Footer: FC = () => {
       }}
     >
       <Box
+        className={'footer-box'}
         sx={{
           display: 'flex',
           alignItems: 'center',
@@ -47,6 +49,7 @@ export const Footer: FC = () => {
         <Typography>© 2023 Dish Dilemma</Typography>
       </Box>
       <BottomNavigation
+        className={'footer-navigation'}
         sx={{
           backgroundColor: colors.dark,
           mr: 10,

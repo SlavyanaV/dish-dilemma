@@ -1,0 +1,11 @@
+@media (max-width: 850px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-box,
+  .footer-navigation {
+    margin: 0 !important;
+  }
+}

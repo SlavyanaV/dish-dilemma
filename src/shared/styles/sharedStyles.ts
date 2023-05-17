@@ -22,8 +22,8 @@ export const colors = {
 };
 
 export const grid = {
-  display: 'grid',
-  gridTemplateColumns: '500px 500px 500px',
+  display: 'flex',
+  gridTemplateColumns: '1fr 1fr 1fr',
   columnGap: '50px',
   rowGap: '50px',
   justifyContent: 'center',

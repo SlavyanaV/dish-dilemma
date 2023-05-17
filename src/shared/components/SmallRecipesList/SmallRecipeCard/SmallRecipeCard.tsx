@@ -47,7 +47,7 @@ export const SmallRecipeCard: FC<Props> = ({ card, likesData, isOwn }) => {
   };
 
   return (
-    <Card sx={{ backgroundColor: colors.light }}>
+    <Card sx={{ backgroundColor: colors.light, width: '100%' }}>
       <CardMedia
         component="img"
         height="300"

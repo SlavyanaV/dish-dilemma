@@ -14,7 +14,7 @@ import backgroundImg from '../images/background-image.png';
 
 export const ContentContainer: FC = () => {
   return (
-    <Box
+    <Box className={'content'}
       sx={{
         minHeight: 'calc(100vh - 3.5rem)',
         background: `url(${backgroundImg}) #39411099`,

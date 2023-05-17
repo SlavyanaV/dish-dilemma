@@ -8,7 +8,10 @@ import {
   IconButton,
   Avatar,
   Typography,
+  Menu,
+  MenuItem,
 } from '@mui/material';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { Link, useNavigate } from 'react-router-dom';
 import { colors, link } from '../../shared/styles/sharedStyles';
 import logo from '../../images/logo.png';
@@ -75,34 +78,106 @@ export const Navbar: FC = () => {
             </Link>
           </Box>
           <Box>
-            <Link to="/" style={link}>
-              <Button sx={{ color: colors.light }}>Random recipe</Button>
-            </Link>
-            <Link to="/all-recipes" style={link}>
-              <Button sx={{ color: colors.light }}>All recipes</Button>
-            </Link>
-            {!!accessToken ? (
-              <>
-                <Link to="/add-recipe" style={link}>
-                  <Button sx={{ color: colors.light }}>Add recipe</Button>
-                </Link>
-                <Link to="/my-profile" style={link}>
-                  <Button sx={{ color: colors.light }}>My profile</Button>
-                </Link>
-                <Button sx={{ color: colors.light }} onClick={handleOnLogout}>
-                  Logout
-                </Button>
-              </>
-            ) : (
-              <>
-                <Link to="/login" style={link}>
-                  <Button sx={{ color: colors.light }}>Login</Button>
-                </Link>
-                <Link to="/register" style={link}>
-                  <Button sx={{ color: colors.light }}>Register</Button>
-                </Link>
-              </>
-            )}
+            <Box className={'navbar-links'}>
+              <Link to="/" style={link}>
+                <Button sx={{ color: colors.light }}>Random recipe</Button>
+              </Link>
+              <Link to="/all-recipes" style={link}>
+                <Button sx={{ color: colors.light }}>All recipes</Button>
+              </Link>
+              {!!accessToken ? (
+                <>
+                  <Link to="/add-recipe" style={link}>
+                    <Button sx={{ color: colors.light }}>Add recipe</Button>
+                  </Link>
+                  <Link to="/my-profile" style={link}>
+                    <Button sx={{ color: colors.light }}>My profile</Button>
+                  </Link>
+                  <Button sx={{ color: colors.light }} onClick={handleOnLogout}>
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" style={link}>
+                    <Button sx={{ color: colors.light }}>Login</Button>
+                  </Link>
+                  <Link to="/register" style={link}>
+                    <Button sx={{ color: colors.light }}>Register</Button>
+                  </Link>
+                </>
+              )}
+            </Box>
+            <Box className={'menu-links'}>
+              <PopupState variant="popover" popupId="demo-popup-menu">
+                {(popupState) => (
+                  <>
+                    <Button variant="contained" {...bindTrigger(popupState)}>
+                      Menu
+                    </Button>
+                    <Menu {...bindMenu(popupState)}>
+                      <MenuItem onClick={popupState.close}>
+                        <Link to="/" style={link}>
+                          <Button sx={{ color: colors.light }}>
+                            Random recipe
+                          </Button>
+                        </Link>
+                      </MenuItem>
+                      <MenuItem onClick={popupState.close}>
+                        <Link to="/all-recipes" style={link}>
+                          <Button sx={{ color: colors.light }}>
+                            All recipes
+                          </Button>
+                        </Link>
+                      </MenuItem>
+                      {!!accessToken ? (
+                        <>
+                          <MenuItem onClick={popupState.close}>
+                            <Link to="/add-recipe" style={link}>
+                              <Button sx={{ color: colors.light }}>
+                                Add recipe
+                              </Button>
+                            </Link>
+                          </MenuItem>
+                          <MenuItem onClick={popupState.close}>
+                            <Link to="/my-profile" style={link}>
+                              <Button sx={{ color: colors.light }}>
+                                My profile
+                              </Button>
+                            </Link>
+                          </MenuItem>
+                          <MenuItem onClick={popupState.close}>
+                            <Button className={'nav-menu-buttons'}
+                              sx={{ color: colors.light }}
+                              onClick={handleOnLogout}
+                            >
+                              Logout
+                            </Button>
+                          </MenuItem>
+                        </>
+                      ) : (
+                        <>
+                          <MenuItem onClick={popupState.close}>
+                            <Link to="/login" style={link}>
+                              <Button sx={{ color: colors.light }}>
+                                Login
+                              </Button>
+                            </Link>
+                          </MenuItem>
+                          <MenuItem onClick={popupState.close}>
+                            <Link to="/register" style={link}>
+                              <Button sx={{ color: colors.light }}>
+                                Register
+                              </Button>
+                            </Link>
+                          </MenuItem>
+                        </>
+                      )}
+                    </Menu>
+                  </>
+                )}
+              </PopupState>
+            </Box>
           </Box>
         </Toolbar>
       </AppBar>
